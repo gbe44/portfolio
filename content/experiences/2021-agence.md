@@ -1,14 +1,14 @@
 ---
-title: Développeur web
-org: Agence digitale nantaise
-period: 2021 — 2023
-date: 2021-03
+title: Développeur Senior
+org: Bessé
+period: Aout 2025 — Maintenant
+date: 2025-08
 location: Nantes
-tags: PHP, Symfony, Vue.js, MySQL
-summary: Développement de sites et d'applications métier pour des clients grands comptes, avant le passage en freelance.
+tags: Python, Docker, Kubernetes, PostgresSQL
+summary: Automatisation de gestion de dossier d'assurance à la personne
 ---
 
-Deux ans en agence à livrer des projets variés — vitrines, e-commerce, applications métier — pour des clients de tous secteurs.
+Mon rôle au sein de cette mission est le développement de nouvelles fonctionnalités et de scripts d'automatisation de traitement de données en Python. Référent technique de mon équipe, j'ai également travaillé à la mise en place de bonne pratiques (code review, security check, MCO) et une migration complête d'environnement de production de la solution.
 
 - Développement d'une application de gestion logistique (Symfony, Vue.js) utilisée par 300 agents.
 - Refonte complète d'un site e-commerce à fort trafic (~500 000 visites/mois).

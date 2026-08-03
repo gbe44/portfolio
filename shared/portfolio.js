@@ -159,8 +159,10 @@
     return out.join('\n');
   }
 
+  /* cache: 'no-cache' force la revalidation HTTP — sans quoi le navigateur
+     peut resservir un .md périmé après une modification du contenu. */
   function fetchDoc(base, path) {
-    return fetch(base + 'content/' + path).then(function (r) {
+    return fetch(base + 'content/' + path, { cache: 'no-cache' }).then(function (r) {
       if (!r.ok) throw new Error('Impossible de charger ' + path + ' (HTTP ' + r.status + ')');
       return r.text();
     }).then(function (text) {
@@ -170,7 +172,7 @@
   }
 
   function loadPortfolio(base) {
-    return fetch(base + 'content/manifest.json').then(function (r) {
+    return fetch(base + 'content/manifest.json', { cache: 'no-cache' }).then(function (r) {
       if (!r.ok) throw new Error('manifest.json introuvable (HTTP ' + r.status + ')');
       return r.json();
     }).then(function (manifest) {

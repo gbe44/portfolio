@@ -8,7 +8,7 @@ github: https://github.com/votre-compte
 linkedin: https://www.linkedin.com/in/votre-profil
 skills: TypeScript, React, Node.js, Python, PostgreSQL, Docker, CI/CD, AWS
 availability: Disponible pour de nouvelles missions
-years: 5
+years: 8
 ---
 
 Développeur freelance basé à Nantes, j'accompagne startups et PME sur toute la chaîne de fabrication d'un produit web : cadrage technique, développement full-stack, mise en production et fiabilisation.

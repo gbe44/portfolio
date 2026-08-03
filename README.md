@@ -22,6 +22,7 @@ Puis ouvrir <http://localhost:8000> : la page d'accueil liste les 5 prototypes.
 | `prototypes/03-neobrutalisme/` | Bordures épaisses, ombres dures, couleurs franches |
 | `prototypes/04-editorial/` | Typographie Swiss, sections numérotées, bleu Klein |
 | `prototypes/05-bento/` | Grille bento dark mode, cartes verre, vibe dashboard SaaS |
+| `prototypes/06-bento-nasa/` | Hybride : la grille bento du 05 + ADN NASA-punk (ambre, micro-labels console, LEDs, télémétrie) |
 
 Important : servir depuis **la racine du dépôt** (les prototypes vont chercher
 `../../content/`). Ouvrir un `index.html` en double-cliquant (`file://`) ne
