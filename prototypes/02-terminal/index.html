@@ -686,7 +686,7 @@
           h += '<span class="log-period"><span class="brk">[</span>' + esc(m.period) +
             '<span class="brk">]</span></span>';
         }
-        h += '<h3 class="log-title">' + esc(m.title || 'Mission') + '</h3>';
+        h += '<h3 class="log-title">' + esc(m.title || T.mission) + '</h3>';
         if (m.org) h += '<span class="log-org">@ ' + esc(m.org) + '</span>';
         if (m.location) h += '<span class="log-loc">· ' + esc(m.location) + '</span>';
         h += '</header>';
@@ -698,17 +698,14 @@
       }).join('');
 
       /* ---------------- projets ---------------- */
-      var STATUS_CLASS = { 'actif': 'st-actif', 'en pause': 'st-pause', 'archivé': 'st-archive' };
       var projects = data.projects || [];
-      var projOut = '<p class="comment">total ' + projects.length + '</p>';
+      var projOut = '<p class="comment">' + T.projTotal(projects.length) + '</p>';
       projOut += projects.map(function (d) {
         var m = d.meta || {};
         var h = '<header class="proj-head"><h3 class="proj-name">' + esc(slug(m.title || '')) +
           '<span class="slash" aria-hidden="true">/</span></h3>';
         if (m.status) {
-          var cls = STATUS_CLASS[deaccent(m.status.toLowerCase())] ||
-                    STATUS_CLASS[m.status.toLowerCase()] || 'st-archive';
-          h += '<span class="status ' + cls + '">[' + esc(m.status) + ']</span>';
+          h += '<span class="status ' + statusClass(m.status) + '">[' + esc(m.status) + ']</span>';
         }
         if (m.period) h += '<span class="proj-period">' + esc(m.period) + '</span>';
         h += '</header>';
@@ -718,10 +715,10 @@
         b += tagsHtml(m.tags);
         var links = [];
         if (m.repo) {
-          links.push('<a href="' + esc(m.repo) + '" target="_blank" rel="noopener">→ code source</a>');
+          links.push('<a href="' + esc(m.repo) + '" target="_blank" rel="noopener">' + T.srcLink + '</a>');
         }
         if (m.link) {
-          links.push('<a href="' + esc(m.link) + '" target="_blank" rel="noopener">→ voir en ligne</a>');
+          links.push('<a href="' + esc(m.link) + '" target="_blank" rel="noopener">' + T.liveLink + '</a>');
         }
         if (links.length) b += '<p class="proj-links">' + links.join('') + '</p>';
         return '<article class="proj">' + h + b + '</article>';
@@ -741,29 +738,19 @@
           rows.push(['linkedin', '<a href="' + esc(p.linkedin) + '" target="_blank" rel="noopener">' +
             esc(shortUrl(p.linkedin)) + '</a>']);
         }
-        if (p.location) rows.push(['lieu', esc(p.location)]);
-        if (p.availability) rows.push(['statut', '<span class="st-actif">' + esc(p.availability) + '</span>']);
-        if (!rows.length) return '<p class="dim">contact: aucune coordonnée renseignée</p>';
+        if (p.location) rows.push([T.ctLocation, esc(p.location)]);
+        if (p.availability) rows.push([T.ctStatus, '<span class="st-actif">' + esc(p.availability) + '</span>']);
+        if (!rows.length) return '<p class="dim">' + T.contactEmpty + '</p>';
         return '<dl class="contact-list">' + rows.map(function (r) {
           return '<dt>' + r[0] + '</dt><dd>' + r[1] + '</dd>';
         }).join('') + '</dl>';
       }
       var contactOut = contactHtml() +
-        '<p class="contact-hint"># réponse sous 24 h en semaine, devis gratuit</p>';
+        '<p class="contact-hint">' + T.contactHint + '</p>';
 
       /* ---------------- aide (section interactive) ---------------- */
-      var HELP_ROWS = [
-        ['whoami', "l'essentiel en une ligne"],
-        ['a-propos', 'le parcours complet'],
-        ['competences', 'la stack pratiquée'],
-        ['experiences', 'le journal des missions'],
-        ['projets', 'les projets en cours'],
-        ['contact', 'me joindre'],
-        ['clear', "effacer l'écran"],
-        ['exit', 'fermer la session']
-      ];
       function helpHtml() {
-        return '<div class="help">' + HELP_ROWS.map(function (r) {
+        return '<div class="help">' + T.helpRows.map(function (r) {
           return '<button type="button" class="hcmd" data-run="' + r[0] + '">' + r[0] +
             '</button><span class="desc">' + esc(r[1]) + '</span>';
         }).join('') + '</div>';
@@ -771,12 +758,12 @@
 
       var interactiveSection =
         '<section id="interactif" class="shell-block interactive">' +
-        '<h2 class="sr-only">Terminal interactif</h2>' +
+        '<h2 class="sr-only">' + T.secTerm + '</h2>' +
         cmdLine('help') +
         '<div class="out">' + helpHtml() + '</div>' +
         '<div class="term-log" id="term-log" aria-live="polite"></div>' +
         '<form class="prompt-line" id="term-form">' +
-        '<label class="sr-only" for="term-input">Tapez une commande puis validez avec Entrée</label>' +
+        '<label class="sr-only" for="term-input">' + T.promptLabel + '</label>' +
         PS1 +
         '<span class="input-wrap">' +
         '<input class="term-input" id="term-input" type="text" placeholder=" " ' +
@@ -789,20 +776,21 @@
       var main = document.getElementById('contenu');
       main.innerHTML =
         section('accueil', null, 'whoami', heroOut) +
-        section('a-propos', 'À propos', 'cat a-propos.md', aboutOut) +
-        section('competences', 'Compétences', 'ls competences/', skillsOut) +
-        section('experiences', 'Expériences', 'cat journal-missions.log', xpOut) +
-        section('projets', 'Projets', 'ls projets/ --details', projOut) +
-        section('contact', 'Contact', 'contact --all', contactOut) +
+        section('a-propos', T.secAbout, T.cmdAbout, aboutOut) +
+        section('competences', T.secSkills, T.cmdSkills, skillsOut) +
+        section('experiences', T.secXp, T.cmdXp, xpOut) +
+        section('projets', T.secProjects, T.cmdProjects, projOut) +
+        section('contact', T.secContact, T.cmdContact, contactOut) +
         interactiveSection;
 
       document.getElementById('pied').innerHTML =
-        '<p># fin de fichier — © ' + new Date().getFullYear() + ' ' + esc(p.name || '') +
-        ' · fait main, sans framework</p>';
+        '<p>' + T.footer(new Date().getFullYear(), esc(p.name || '')) + '</p>';
 
-      if (p.name) {
-        document.title = p.name + (p.title ? ' — ' + p.title : '');
-      }
+      document.title = p.name
+        ? p.name + (p.title ? ' — ' + p.title : '')
+        : T.docTitle;
+      var metaDescEl = document.querySelector('meta[name="description"]');
+      if (metaDescEl) metaDescEl.setAttribute('content', T.metaDesc);
       document.getElementById('win-title').textContent = HOST + ': ~';
 
       /* ---------------- effet machine à écrire ---------------- */
@@ -855,28 +843,28 @@
         var histIdx = -1;
 
         var miniXp = function () {
-          if (!xps.length) return '<p class="dim">journal vide</p>';
+          if (!xps.length) return '<p class="dim">' + T.xpEmpty + '</p>';
           return '<ul class="mini">' + xps.map(function (d) {
             var m = d.meta || {};
             return '<li>' +
               (m.period ? '<span class="dim">[' + esc(m.period) + ']</span> ' : '') +
-              '<strong>' + esc(m.title || 'Mission') + '</strong>' +
+              '<strong>' + esc(m.title || T.mission) + '</strong>' +
               (m.org ? ' <span class="dim">@ ' + esc(m.org) + '</span>' : '') +
               '</li>';
           }).join('') + '</ul>' +
-            '<p class="dim">→ <a href="#experiences">détail complet plus haut</a></p>';
+            '<p class="dim">→ <a href="#experiences">' + T.detailAbove + '</a></p>';
         };
         var miniProj = function () {
-          if (!projects.length) return '<p class="dim">aucun projet</p>';
+          if (!projects.length) return '<p class="dim">' + T.projEmpty + '</p>';
           return '<ul class="mini">' + projects.map(function (d) {
             var m = d.meta || {};
-            var cls = m.status ? (STATUS_CLASS[deaccent(m.status.toLowerCase())] || 'st-archive') : '';
+            var cls = m.status ? statusClass(m.status) : '';
             return '<li><strong>' + esc(slug(m.title || '')) + '/</strong>' +
               (m.status ? ' <span class="status ' + cls + '">[' + esc(m.status) + ']</span>' : '') +
               (m.summary ? ' <span class="dim">— ' + esc(m.summary) + '</span>' : '') +
               '</li>';
           }).join('') + '</ul>' +
-            '<p class="dim">→ <a href="#projets">détail complet plus haut</a></p>';
+            '<p class="dim">→ <a href="#projets">' + T.detailAbove + '</a></p>';
         };
 
         var COMMANDS = {
@@ -893,21 +881,21 @@
           'contact': contactHtml,
           'ls': function () {
             return '<p class="ls-row">' +
-              '<a href="#a-propos">a-propos.md</a>' +
-              '<a href="#competences">competences/</a>' +
-              '<a href="#experiences">journal-missions.log</a>' +
-              '<a href="#projets">projets/</a>' +
-              '<a href="#contact">contact</a></p>';
+              '<a href="#a-propos">' + T.lsAbout + '</a>' +
+              '<a href="#competences">' + T.lsSkills + '</a>' +
+              '<a href="#experiences">' + T.lsXp + '</a>' +
+              '<a href="#projets">' + T.lsProjects + '</a>' +
+              '<a href="#contact">' + T.lsContact + '</a></p>';
           },
           'exit': function () {
-            return '<p class="dim">logout<br>Session enregistrée — merci de votre visite. ' +
-              "L'onglet reste à vous.</p>";
+            return '<p class="dim">' + T.exitMsg + '</p>';
           }
         };
         var ALIAS = {
           '?': 'help', 'aide': 'help', 'skills': 'competences',
           'apropos': 'a-propos', 'about': 'a-propos', 'xp': 'experiences',
-          'missions': 'experiences', 'projects': 'projets', 'mail': 'contact',
+          'experience': 'experiences', 'missions': 'experiences',
+          'projects': 'projets', 'mail': 'contact',
           'email': 'contact', 'cls': 'clear', 'quit': 'exit', 'logout': 'exit'
         };
 
@@ -921,10 +909,14 @@
           var out;
           if (!shown) {
             out = '';
+          } else if (key === 'lang' || key.indexOf('lang-') === 0) {
+            var target = key === 'lang' ? '' : key.slice(5);
+            if (L[target] && target !== lang) { switchLang(target); return; }
+            out = '<p class="dim">' + (target === lang ? T.langAlready : T.langUsage) + '</p>';
           } else if (COMMANDS[key]) {
             out = COMMANDS[key]();
           } else {
-            out = '<p>bash : ' + esc(shown) + ' : commande introuvable — essayez ' +
+            out = '<p>' + T.cmdNotFound(esc(shown)) +
               '<button type="button" class="hcmd" data-run="help">help</button></p>';
           }
           var exec = document.createElement('div');
@@ -972,6 +964,13 @@
         });
       }
 
+      /* commutateur FR/EN de la barre de titre */
+      Array.prototype.forEach.call(document.querySelectorAll('.lang-btn'), function (btn) {
+        var l = btn.getAttribute('data-lang');
+        btn.setAttribute('aria-pressed', String(l === lang));
+        btn.addEventListener('click', function () { switchLang(l); });
+      });
+
       setupTyping();
       setupPrompt();
     }
@@ -991,8 +990,10 @@
   s.src = BASE + 'shared/portfolio.js';
   s.onload = async () => {
     try {
-      const data = await window.PortfolioShared.loadPortfolio(BASE);
-      initSite(data);
+      const lang = window.PortfolioShared.getLang();
+      document.documentElement.lang = lang;
+      const data = await window.PortfolioShared.loadPortfolio(BASE, lang);
+      initSite(data, lang);
     } catch (e) {
       document.body.innerHTML = '<p style="font-family:monospace;padding:2rem">Erreur de chargement du contenu : ' + e.message + '</p>';
     }
