@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mission Control — Portfolio développeur freelance</title>
+  <meta name="description" content="Portfolio façon salle de contrôle spatiale : profil, journal de mission, projets et contact d'un développeur freelance.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ============ FONDATIONS ============ */
+    :root {
+      --bg: #0a0d12;
+      --panel: #11161d;
+      --panel-2: #151c25;
+      --line: #2a3442;
+      --line-soft: #1d2530;
+      --amber: #ffb000;
+      --amber-soft: #ffcf66;
+      --green: #3fb950;
+      --alert: #ff5c33;
+      --text: #cfd8e3;
+      --muted: #93a1b3;
+      --mono: "IBM Plex Mono", "Cascadia Mono", "Courier New", monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    ::selection { background: var(--amber); color: #0a0d12; }
+    a { color: var(--amber); }
+    a:hover { color: var(--amber-soft); }
+    :focus-visible { outline: 2px dashed var(--amber); outline-offset: 3px; }
+    img { max-width: 100%; }
+
+    /* ============ SCANLINES + GRAIN (CSS pur) ============ */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.16) 0px,
+        rgba(0, 0, 0, 0.16) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      animation: flicker 6s infinite;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 49;
+      pointer-events: none;
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      92% { opacity: 1; }
+      93% { opacity: 0.78; }
+      94% { opacity: 1; }
+    }
+
+    /* ============ SÉQUENCE DE BOOT ============ */
+    #boot {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      background: var(--bg);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: opacity 0.25s ease;
+    }
+    #boot.boot--out { opacity: 0; }
+    .boot-inner { width: min(30rem, 86vw); color: var(--amber); font-size: 0.82rem; }
+    .boot-line {
+      opacity: 0;
+      animation: bootline 0.12s steps(1) forwards;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .boot-line .ok { color: var(--green); }
+    .boot-line:nth-child(1) { animation-delay: 0.05s; }
+    .boot-line:nth-child(2) { animation-delay: 0.35s; }
+    .boot-line:nth-child(3) { animation-delay: 0.65s; }
+    .boot-line:nth-child(4) { animation-delay: 0.95s; }
+    .boot-line:nth-child(5) { animation-delay: 1.25s; }
+    @keyframes bootline { to { opacity: 1; } }
+    .boot-bar {
+      margin-top: 1rem;
+      height: 10px;
+      border: 1px solid var(--amber);
+      padding: 2px;
+    }
+    .boot-bar span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: var(--amber);
+      animation: bootbar 1.6s linear forwards;
+    }
+    @keyframes bootbar { to { width: 100%; } }
+    .boot-skip {
+      margin-top: 0.9rem;
+      color: var(--muted);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      animation: blink 1.2s steps(1) infinite;
+    }
+    @keyframes blink { 50% { opacity: 0.25; } }
+
+    /* ============ STRUCTURE ============ */
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 1rem; }
+    main section { margin: 3.5rem 0; scroll-margin-top: 5rem; }
+
+    .microlabel {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      flex-wrap: wrap;
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.6rem;
+    }
+    .section-head h2 {
+      margin: 0;
+      font-size: 1.05rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-weight: 700;
+    }
+    .section-head .microlabel { margin-left: auto; }
+
+    .panel {
+      position: relative;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 1.4rem 1.5rem;
+    }
+    /* Crochets de coin */
+    .corners::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      pointer-events: none;
+      background:
+        linear-gradient(var(--amber), var(--amber)) left top / 16px 2px,
+        linear-gradient(var(--amber), var(--amber)) left top / 2px 16px,
+        linear-gradient(var(--amber), var(--amber)) right top / 16px 2px,
+        linear-gradient(var(--amber), var(--amber)) right top / 2px 16px,
+        linear-gradient(var(--amber), var(--amber)) left bottom / 16px 2px,
+        linear-gradient(var(--amber), var(--amber)) left bottom / 2px 16px,
+        linear-gradient(var(--amber), var(--amber)) right bottom / 16px 2px,
+        linear-gradient(var(--amber), var(--amber)) right bottom / 2px 16px;
+      background-repeat: no-repeat;
+    }
+
+    /* ============ BARRE SUPÉRIEURE ============ */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(10, 13, 18, 0.92);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(4px);
+    }
+    .topbar .wrap {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      padding-top: 0.55rem;
+      padding-bottom: 0.55rem;
+    }
+    .brand { color: var(--amber); font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700; }
+    .topbar nav { margin-left: auto; display: flex; gap: 0.2rem 1.1rem; flex-wrap: wrap; }
+    .topbar nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.2rem 0;
+    }
+    .topbar nav a:hover { color: var(--amber); }
+
+    /* ============ LEDS ============ */
+    .led {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #414c5c;
+      flex: none;
+      vertical-align: middle;
+    }
+    .led--ok { background: var(--green); box-shadow: 0 0 8px rgba(63, 185, 80, 0.85); }
+    .led--hold { background: var(--amber); box-shadow: 0 0 8px rgba(255, 176, 0, 0.75); }
+    .led--off { background: #4a5563; }
+    .led--blink { animation: ledblink 1.6s steps(1) infinite; }
+    .led--pulse { animation: ledpulse 2.2s ease-in-out infinite; }
+    @keyframes ledblink { 50% { opacity: 0.25; box-shadow: none; } }
+    @keyframes ledpulse {
+      0%, 100% { box-shadow: 0 0 4px rgba(63, 185, 80, 0.5); }
+      50% { box-shadow: 0 0 12px rgba(63, 185, 80, 1); }
+    }
+
+    /* ============ HERO ============ */
+    .hero { margin-top: 2rem; padding: 2rem 1.6rem 1.8rem; }
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.6rem;
+    }
+    .hero-top .nominal { color: var(--green); }
+    .callsign {
+      margin: 0 0 0.4rem;
+      color: var(--green);
+      font-size: 0.78rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      margin: 0 0 0.9rem;
+      font-size: clamp(2rem, 7.5vw, 4.2rem);
+      line-height: 1.02;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--amber);
+      text-shadow: 0 0 24px rgba(255, 176, 0, 0.28);
+      overflow-wrap: anywhere;
+    }
+    .tagline { margin: 0 0 1.8rem; max-width: 42rem; color: var(--text); font-size: 1rem; }
+
+    .telemetry {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      margin-bottom: 1.8rem;
+    }
+    .tele {
+      background: var(--panel-2);
+      padding: 0.7rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      min-width: 0;
+    }
+    .tele-label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .tele-value { font-size: 1.5rem; font-weight: 700; color: var(--amber); line-height: 1; }
+    .tele-live { display: flex; align-items: center; gap: 0.55rem; min-width: 0; }
+    .tele-live .txt {
+      color: var(--green);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1.35;
+    }
+
+    .cta-row { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--amber);
+      background: var(--panel-2);
+      border: 2px solid var(--amber);
+      padding: 0.75rem 1.3rem 0.85rem;
+      box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.55), 0 2px 0 rgba(0, 0, 0, 0.6);
+      cursor: pointer;
+    }
+    .btn:hover { background: #1c2530; color: var(--amber-soft); }
+    .btn:active { transform: translateY(2px); box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.55); }
+    .btn--solid { background: var(--amber); color: #0a0d12; }
+    .btn--solid:hover { background: var(--amber-soft); color: #0a0d12; }
+
+    /* ============ CORPS MARKDOWN ============ */
+    .doc p { margin: 0 0 0.9rem; }
+    .doc p:last-child { margin-bottom: 0; }
+    .doc ul, .doc ol { margin: 0 0 0.9rem; padding-left: 1.1rem; list-style: none; }
+    .doc li { margin: 0.3rem 0; position: relative; padding-left: 1.1rem; }
+    .doc li::before { content: "▸"; position: absolute; left: 0; color: var(--amber); }
+    .doc ol { counter-reset: li; }
+    .doc ol li::before { counter-increment: li; content: counter(li, decimal-leading-zero); font-size: 0.72rem; top: 0.2em; }
+    .doc h1, .doc h2, .doc h3, .doc h4 {
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.95rem;
+      margin: 1.2rem 0 0.6rem;
+    }
+    .doc code {
+      background: #0c1016;
+      border: 1px solid var(--line-soft);
+      padding: 0.05em 0.35em;
+      font-size: 0.88em;
+      color: var(--amber-soft);
+    }
+    .doc pre { background: #0c1016; border: 1px solid var(--line); padding: 0.9rem; overflow-x: auto; }
+    .doc pre code { border: none; padding: 0; background: none; }
+    .doc blockquote { margin: 0 0 0.9rem; padding: 0.2rem 0 0.2rem 1rem; border-left: 3px solid var(--amber); color: var(--muted); }
+    .doc hr { border: none; border-top: 1px dashed var(--line); margin: 1.2rem 0; }
+
+    /* ============ À PROPOS ============ */
+    .about-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 1.4rem; align-items: start; }
+    .about-facts .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px dashed var(--line-soft);
+      font-size: 0.8rem;
+    }
+    .about-facts .row:last-child { border-bottom: none; }
+    .about-facts .k { color: var(--muted); font-size: 0.64rem; letter-spacing: 0.18em; text-transform: uppercase; padding-top: 0.2em; flex: none; }
+    .about-facts .v { text-align: right; color: var(--text); overflow-wrap: anywhere; }
+    .about-facts .v.ok { color: var(--green); }
+
+    /* ============ COMPÉTENCES ============ */
+    .skills { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.6rem; }
+    .skills li {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 0.55rem 0.8rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.7rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .skills .idx { color: var(--amber); font-size: 0.66rem; letter-spacing: 0.1em; flex: none; }
+
+    /* ============ JOURNAL DE MISSION ============ */
+    .log { list-style: none; margin: 0; padding: 0 0 0 1.1rem; border-left: 2px solid var(--line); display: grid; gap: 1.6rem; }
+    .log-entry { position: relative; }
+    .log-entry::before {
+      content: "";
+      position: absolute;
+      left: calc(-1.1rem - 7px);
+      top: 1.5rem;
+      width: 12px;
+      height: 12px;
+      background: var(--bg);
+      border: 2px solid var(--amber);
+      border-radius: 50%;
+    }
+    .stamp {
+      display: inline-block;
+      border: 2px solid var(--amber);
+      color: var(--amber);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      transform: rotate(-1.6deg);
+      margin-bottom: 0.9rem;
+      background: rgba(255, 176, 0, 0.06);
+    }
+    .log-entry h3 { margin: 0 0 0.35rem; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text); }
+    .operator { margin: 0 0 0.15rem; color: var(--amber); font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; }
+    .loc-line { margin: 0 0 0.9rem; color: var(--muted); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; }
+    .lead { color: var(--muted); font-style: italic; margin: 0 0 0.9rem; }
+
+    .modules { list-style: none; margin: 1rem 0 0; padding: 0.8rem 0 0; border-top: 1px dashed var(--line-soft); display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: center; }
+    .modules .mod-label { color: var(--muted); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; margin-right: 0.3rem; }
+    .modules li {
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      color: var(--amber-soft);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.18rem 0.5rem;
+    }
+
+    /* ============ CHARGES UTILES ============ */
+    .payloads { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 1.2rem; }
+    .payload { display: flex; flex-direction: column; }
+    .payload-head { display: flex; align-items: center; gap: 0.55rem; margin-bottom: 0.9rem; flex-wrap: wrap; }
+    .payload-status { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+    .payload-head .period { margin-left: auto; color: var(--muted); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; }
+    .payload h3 { margin: 0 0 0.6rem; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--amber); }
+    .payload .doc { flex: 1; }
+    .payload-links { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1rem; }
+    .payload-links .btn { font-size: 0.66rem; padding: 0.55rem 0.9rem 0.65rem; }
+
+    /* ============ CONTACT ============ */
+    .contact-panel { text-align: center; padding: 2.4rem 1.5rem; }
+    .contact-panel .callsign { margin-bottom: 0.8rem; }
+    .contact-title { margin: 0 0 0.6rem; font-size: clamp(1.3rem, 4vw, 2rem); text-transform: uppercase; letter-spacing: 0.08em; color: var(--amber); }
+    .contact-sub { margin: 0 auto 1.6rem; max-width: 34rem; color: var(--muted); }
+    .contact-actions { display: flex; justify-content: center; gap: 0.9rem; flex-wrap: wrap; }
+    .contact-avail { margin: 1.8rem 0 0; display: inline-flex; align-items: center; gap: 0.6rem; color: var(--green); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; }
+
+    footer { border-top: 1px solid var(--line); margin-top: 3.5rem; }
+    footer .wrap {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.4rem 1.5rem;
+      flex-wrap: wrap;
+      padding-top: 1.1rem;
+      padding-bottom: 1.4rem;
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 720px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .section-head .microlabel { display: none; }
+      .panel { padding: 1.1rem 1rem; }
+      .hero { padding: 1.5rem 1.1rem; }
+    }
+
+    /* ============ REDUCED MOTION ============ */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      body::before, body::after { display: none; }
+      #boot { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Séquence de boot (décorative, retirée par JS / reduced-motion) -->
+  <div id="boot" role="presentation" aria-hidden="true">
+    <div class="boot-inner">
+      <p class="boot-line">&gt; INIT SYS // PORTFOLIO v1.0</p>
+      <p class="boot-line">&gt; VÉRIF. MODULES ............ <span class="ok">OK</span></p>
+      <p class="boot-line">&gt; LIAISON TÉLÉMÉTRIE ........ <span class="ok">OK</span></p>
+      <p class="boot-line">&gt; CHARGEMENT DOSSIER OPÉRATEUR</p>
+      <p class="boot-line">&gt; AFFICHAGE PRINCIPAL ....... <span class="ok">NOMINAL</span></p>
+      <div class="boot-bar"><span></span></div>
+      <p class="boot-skip">▸ Cliquer pour passer</p>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <div class="wrap">
+      <span class="brand">SYS // PORTFOLIO v1.0</span>
+      <nav aria-label="Navigation principale">
+        <a href="#apropos">À propos</a>
+        <a href="#competences">Compétences</a>
+        <a href="#journal">Journal</a>
+        <a href="#charges">Charges utiles</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- ÉCRAN PRINCIPAL -->
+    <section class="hero panel corners" id="hero" aria-labelledby="hero-name">
+      <div class="hero-top">
+        <span class="microlabel">Console principale // Écran 01</span>
+        <span class="microlabel nominal">Telemetry: nominal</span>
+      </div>
+      <p class="callsign" id="hero-callsign"></p>
+      <h1 id="hero-name"></h1>
+      <p class="tagline" id="hero-tagline"></p>
+      <div class="telemetry" id="hero-telemetry" aria-label="Télémétrie"></div>
+      <div class="cta-row" id="hero-cta"></div>
+    </section>
+
+    <!-- À PROPOS -->
+    <section id="apropos" aria-labelledby="apropos-title">
+      <div class="section-head">
+        <h2 id="apropos-title">À propos</h2>
+        <span class="microlabel">Dossier opérateur // REF-001</span>
+      </div>
+      <div class="about-grid">
+        <div class="panel doc" id="about-body"></div>
+        <aside class="panel corners about-facts" id="about-facts" aria-label="Fiche opérateur"></aside>
+      </div>
+    </section>
+
+    <!-- COMPÉTENCES -->
+    <section id="competences" aria-labelledby="competences-title">
+      <div class="section-head">
+        <h2 id="competences-title">Compétences</h2>
+        <span class="microlabel">Modules embarqués // Diag: OK</span>
+      </div>
+      <ul class="skills" id="skills-list"></ul>
+    </section>
+
+    <!-- EXPÉRIENCES -->
+    <section id="journal" aria-labelledby="journal-title">
+      <div class="section-head">
+        <h2 id="journal-title">Journal de mission</h2>
+        <span class="microlabel">Expériences // Archive chronologique</span>
+      </div>
+      <ol class="log" id="log-list"></ol>
+    </section>
+
+    <!-- PROJETS -->
+    <section id="charges" aria-labelledby="charges-title">
+      <div class="section-head">
+        <h2 id="charges-title">Charges utiles</h2>
+        <span class="microlabel">Projets // Inventaire en soute</span>
+      </div>
+      <div class="payloads" id="payloads-list"></div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" aria-labelledby="contact-title">
+      <div class="panel corners contact-panel">
+        <p class="callsign">Canal ouvert // Fréquence libre</p>
+        <h2 class="contact-title" id="contact-title">Établir le contact</h2>
+        <p class="contact-sub">Une mission, un projet, une question ? Le centre de contrôle répond généralement sous 24 h.</p>
+        <div class="contact-actions" id="contact-actions"></div>
+        <p class="contact-avail" id="contact-avail" hidden><span class="led led--ok led--blink" aria-hidden="true"></span><span id="contact-avail-txt"></span></p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span class="microlabel" id="footer-id"></span>
+      <span class="microlabel">Fin de transmission // Signal terminé ▮</span>
+    </div>
+  </footer>
+
+  <script>
+  /* ==================== SÉQUENCE DE BOOT ==================== */
+  (function () {
+    var boot = document.getElementById('boot');
+    if (!boot) return;
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) { boot.remove(); return; }
+    var gone = false;
+    function kill() {
+      if (gone) return;
+      gone = true;
+      boot.classList.add('boot--out');
+      setTimeout(function () { boot.remove(); }, 260);
+    }
+    boot.addEventListener('click', kill);
+    setTimeout(kill, 1800);
+  })();
+
+  /* ==================== RENDU DU SITE ==================== */
+  function initSite(data) {
+    var esc = window.PortfolioShared.escapeHtml;
+    var $ = function (id) { return document.getElementById(id); };
+    var pad2 = function (n) { return String(n).padStart(2, '0'); };
+    var profile = (data.profile && data.profile.meta) || {};
+    var experiences = data.experiences || [];
+    var projects = data.projects || [];
+
+    /* --- Métadonnées du document --- */
+    if (profile.name) {
+      document.title = profile.name + (profile.title ? ' — ' + profile.title : '') + ' · Mission Control';
+    }
+    var descTag = document.querySelector('meta[name="description"]');
+    if (descTag && profile.tagline) {
+      descTag.setAttribute('content', profile.tagline + (profile.name ? ' — Portfolio de ' + profile.name + '.' : ''));
+    }
+
+    /* --- Hero --- */
+    if (profile.title) $('hero-callsign').textContent = 'Indicatif // ' + profile.title;
+    $('hero-name').textContent = profile.name || 'Opérateur inconnu';
+    if (profile.tagline) $('hero-tagline').textContent = profile.tagline;
+
+    var tiles = [
+      { label: 'Missions', value: pad2(experiences.length) },
+      { label: 'Charges utiles', value: pad2(projects.length) }
+    ];
+    if (profile.years) tiles.push({ label: 'Années de vol', value: pad2(profile.years) });
+    if (profile.location) tiles.push({ label: 'Base', value: profile.location, small: true });
+    var teleHtml = tiles.map(function (t) {
+      var cls = t.small ? 'tele-value" style="font-size:0.95rem;padding-top:0.3rem' : 'tele-value';
+      return '<div class="tele"><span class="tele-label">' + esc(t.label) + '</span>' +
+        '<span class="' + cls + '">' + esc(String(t.value)) + '</span></div>';
+    });
+    if (profile.availability) {
+      teleHtml.push(
+        '<div class="tele"><span class="tele-label">Statut</span>' +
+        '<span class="tele-live"><span class="led led--ok led--blink" aria-hidden="true"></span>' +
+        '<span class="txt">' + esc(profile.availability) + '</span></span></div>'
+      );
+    }
+    $('hero-telemetry').innerHTML = teleHtml.join('');
+
+    var cta = [];
+    if (profile.email) {
+      cta.push('<a class="btn btn--solid" href="mailto:' + esc(profile.email) + '">Établir le contact</a>');
+    }
+    cta.push('<a class="btn" href="#journal">Consulter le journal</a>');
+    $('hero-cta').innerHTML = cta.join('');
+
+    /* --- À propos --- */
+    $('about-body').innerHTML = (data.profile && data.profile.html) || '';
+    var facts = [];
+    function fact(k, v, ok) {
+      if (!v) return;
+      facts.push('<div class="row"><span class="k">' + esc(k) + '</span><span class="v' +
+        (ok ? ' ok' : '') + '">' + esc(v) + '</span></div>');
+    }
+    fact('Opérateur', profile.name);
+    fact('Fonction', profile.title);
+    fact('Base', profile.location);
+    fact('Années de vol', profile.years ? pad2(profile.years) : '');
+    fact('Statut', profile.availability, true);
+    $('about-facts').innerHTML =
+      '<div class="row"><span class="k" style="color:var(--amber)">Fiche // ID-01</span><span class="v"></span></div>' + facts.join('');
+
+    /* --- Compétences --- */
+    var skills = profile.skills || [];
+    $('skills-list').innerHTML = skills.map(function (s, i) {
+      return '<li><span class="idx" aria-hidden="true">M' + pad2(i + 1) + '</span>' + esc(s) + '</li>';
+    }).join('');
+
+    /* --- Utilitaires de rendu partagés --- */
+    function modules(tags) {
+      if (!tags || !tags.length) return '';
+      return '<ul class="modules"><span class="mod-label" aria-hidden="true">Modules :</span>' +
+        tags.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>';
+    }
+
+    /* --- Journal de mission (expériences) --- */
+    $('log-list').innerHTML = experiences.map(function (xp) {
+      var m = xp.meta || {};
+      var out = '<li class="log-entry"><article class="panel">';
+      if (m.period || m.date) out += '<div class="stamp">' + esc(m.period || m.date) + '</div>';
+      out += '<h3>' + esc(m.title || 'Mission sans intitulé') + '</h3>';
+      if (m.org) out += '<p class="operator">Opérateur // ' + esc(m.org) + '</p>';
+      if (m.location) out += '<p class="loc-line">Poste // ' + esc(m.location) + '</p>';
+      if (m.summary) out += '<p class="lead">' + esc(m.summary) + '</p>';
+      if (xp.html) out += '<div class="doc">' + xp.html + '</div>';
+      out += modules(m.tags);
+      out += '</article></li>';
+      return out;
+    }).join('');
+
+    /* --- Charges utiles (projets) --- */
+    function statusInfo(status) {
+      var k = (status || '').toLowerCase();
+      if (k === 'actif') return { cls: 'led--ok led--pulse', label: status };
+      if (k === 'en pause') return { cls: 'led--hold', label: status };
+      if (k.indexOf('archiv') === 0) return { cls: 'led--off', label: status };
+      return { cls: 'led--off', label: status || 'statut inconnu' };
+    }
+    $('payloads-list').innerHTML = projects.map(function (pr) {
+      var m = pr.meta || {};
+      var st = statusInfo(m.status);
+      var out = '<article class="payload panel corners">';
+      out += '<header class="payload-head">' +
+        '<span class="led ' + st.cls + '" aria-hidden="true"></span>' +
+        '<span class="payload-status">' + esc(st.label) + '</span>' +
+        (m.period || m.date ? '<span class="period">' + esc(m.period || m.date) + '</span>' : '') +
+        '</header>';
+      out += '<h3>' + esc(m.title || 'Charge utile sans nom') + '</h3>';
+      if (m.summary) out += '<p class="lead">' + esc(m.summary) + '</p>';
+      if (pr.html) out += '<div class="doc">' + pr.html + '</div>';
+      out += modules(m.tags);
+      var links = [];
+      if (m.repo) links.push('<a class="btn" href="' + esc(m.repo) + '" target="_blank" rel="noopener">Dépôt ↗</a>');
+      if (m.link) links.push('<a class="btn" href="' + esc(m.link) + '" target="_blank" rel="noopener">Accès direct ↗</a>');
+      if (links.length) out += '<div class="payload-links">' + links.join('') + '</div>';
+      out += '</article>';
+      return out;
+    }).join('');
+
+    /* --- Contact --- */
+    var actions = [];
+    if (profile.email) {
+      actions.push('<a class="btn btn--solid" href="mailto:' + esc(profile.email) + '">' + esc(profile.email) + '</a>');
+    }
+    if (profile.github) {
+      actions.push('<a class="btn" href="' + esc(profile.github) + '" target="_blank" rel="noopener">GitHub ↗</a>');
+    }
+    if (profile.linkedin) {
+      actions.push('<a class="btn" href="' + esc(profile.linkedin) + '" target="_blank" rel="noopener">LinkedIn ↗</a>');
+    }
+    $('contact-actions').innerHTML = actions.join('');
+    if (profile.availability) {
+      $('contact-avail-txt').textContent = profile.availability;
+      $('contact-avail').hidden = false;
+    }
+
+    /* --- Pied de page --- */
+    if (profile.name) {
+      $('footer-id').textContent = '© ' + new Date().getFullYear() + ' ' + profile.name + ' — Console statique, zéro framework';
+    }
+  }
+  </script>
+
+  <script>
+(async () => {
+  let BASE = null;
+  for (const b of ['./', '../../']) {
+    try { const r = await fetch(b + 'content/manifest.json'); if (r.ok) { BASE = b; break; } } catch (e) {}
+  }
+  if (!BASE) {
+    document.body.innerHTML = '<p style="font-family:monospace;padding:2rem">Contenu introuvable — lancez ./serve.sh depuis la racine du dépôt (voir README).</p>';
+    return;
+  }
+  const s = document.createElement('script');
+  s.src = BASE + 'shared/portfolio.js';
+  s.onload = async () => {
+    try {
+      const data = await window.PortfolioShared.loadPortfolio(BASE);
+      initSite(data);
+    } catch (e) {
+      document.body.innerHTML = '<p style="font-family:monospace;padding:2rem">Erreur de chargement du contenu : ' + e.message + '</p>';
+    }
+  };
+  document.head.appendChild(s);
+})();
+  </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio — choix du prototype</title>
+<meta name="description" content="Hub de sélection des prototypes du portfolio de Guillaume Berthelot.">
+<style>
+  :root {
+    --bg: #0d1017;
+    --panel: #141926;
+    --border: #232b3d;
+    --text: #e8eaf0;
+    --muted: #8b93a7;
+    --accent: #ffb000;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: ui-monospace, "Cascadia Code", "JetBrains Mono", Menlo, monospace;
+    min-height: 100vh;
+    padding: 3rem 1.5rem 4rem;
+  }
+  main { max-width: 720px; margin: 0 auto; }
+  .kicker {
+    color: var(--accent);
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  h1 { font-size: 1.6rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .sub { color: var(--muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 2.5rem; }
+  .sub code { color: var(--text); background: var(--panel); padding: 0.1em 0.4em; border-radius: 4px; }
+  ol.protos { list-style: none; display: grid; gap: 0.75rem; }
+  .protos a {
+    display: block;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .protos a:hover { border-color: var(--accent); transform: translateX(4px); }
+  .protos .num { color: var(--accent); font-size: 0.75rem; }
+  .protos .name { font-size: 1.05rem; font-weight: 600; margin: 0.15rem 0 0.3rem; }
+  .protos .desc { color: var(--muted); font-size: 0.82rem; line-height: 1.5; }
+  footer { margin-top: 3rem; color: var(--muted); font-size: 0.78rem; line-height: 1.7; }
+  footer a { color: var(--accent); }
+  @media (prefers-reduced-motion: reduce) {
+    .protos a { transition: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <p class="kicker">Portfolio // Prototypes</p>
+  <h1>Choisissez une direction artistique</h1>
+  <p class="sub">Cinq pistes pour le même contenu (chargé depuis <code>content/*.md</code>).
+  Testez-les, gardez la meilleure — le README explique comment la promouvoir en page d'accueil.</p>
+  <ol class="protos">
+    <li><a href="prototypes/01-mission-control/">
+      <span class="num">01</span>
+      <p class="name">Mission Control</p>
+      <p class="desc">NASA-punk / cassette futurism — console spatiale ambre et vert phosphore, journal de mission, télémétrie.</p>
+    </a></li>
+    <li><a href="prototypes/02-terminal/">
+      <span class="num">02</span>
+      <p class="name">Terminal</p>
+      <p class="desc">Session shell plein écran — commandes, log de missions, prompt interactif.</p>
+    </a></li>
+    <li><a href="prototypes/03-neobrutalisme/">
+      <span class="num">03</span>
+      <p class="name">Néo-brutalisme</p>
+      <p class="desc">Bordures épaisses, ombres dures, couleurs franches — audacieux mais structuré.</p>
+    </a></li>
+    <li><a href="prototypes/04-editorial/">
+      <span class="num">04</span>
+      <p class="name">Éditorial / Swiss</p>
+      <p class="desc">Typographie reine, sections numérotées, bleu Klein — la valeur sûre élégante.</p>
+    </a></li>
+    <li><a href="prototypes/05-bento/">
+      <span class="num">05</span>
+      <p class="name">Bento dark</p>
+      <p class="desc">Grille bento en mode sombre, cartes verre, halos subtils — vibe dashboard SaaS.</p>
+    </a></li>
+  </ol>
+  <footer>
+    Contenu d'exemple : modifiez les fichiers de <code>content/</code> (voir <a href="README.md">README</a>).
+  </footer>
+</main>
+</body>
+</html>

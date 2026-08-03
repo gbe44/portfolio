@@ -1,0 +1,13 @@
+{
+  "profile": "profile.md",
+  "experiences": [
+    "experiences/2025-neobanque.md",
+    "experiences/2023-devops-retail.md",
+    "experiences/2021-agence.md"
+  ],
+  "projects": [
+    "projects/datapipe.md",
+    "projects/kanbo.md",
+    "projects/portfolio.md"
+  ]
+}
