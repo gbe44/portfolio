@@ -1,9 +1,16 @@
 /*
  * Moteur partagé par tous les prototypes :
- *  - parseFrontmatter(text)  → { meta, body }
- *  - mdToHtml(md)            → chaîne HTML
- *  - loadPortfolio(base)     → Promise<{ profile, experiences[], projects[] }>
+ *  - parseFrontmatter(text)      → { meta, body }
+ *  - mdToHtml(md)                → chaîne HTML
+ *  - loadPortfolio(base, lang)   → Promise<{ profile, experiences[], projects[] }>
  *    où chaque document vaut { meta, html, raw }.
+ *  - getLang() / setLang(l)      → langue courante ('fr' par défaut), persistée
+ *    en localStorage et surchargeable par ?lang=xx dans l'URL.
+ *
+ * Langues : le français est la langue de base (fichiers sans suffixe).
+ * Une variante se nomme <fichier>.<lang>.md (ex. profile.en.md) ; si elle
+ * n'existe pas, le fichier de base est servi à la place. Le manifest ne
+ * liste que les fichiers de base.
  *
  * Les clés `tags` et `skills` du frontmatter sont converties en tableaux
  * (valeurs séparées par des virgules). Tout le reste est une chaîne.
@@ -161,36 +168,62 @@
 
   /* cache: 'no-cache' force la revalidation HTTP — sans quoi le navigateur
      peut resservir un .md périmé après une modification du contenu. */
-  function fetchDoc(base, path) {
-    return fetch(base + 'content/' + path, { cache: 'no-cache' }).then(function (r) {
-      if (!r.ok) throw new Error('Impossible de charger ' + path + ' (HTTP ' + r.status + ')');
+  function fetchText(url) {
+    return fetch(url, { cache: 'no-cache' }).then(function (r) {
+      if (!r.ok) throw new Error('Impossible de charger ' + url + ' (HTTP ' + r.status + ')');
       return r.text();
-    }).then(function (text) {
+    });
+  }
+
+  function fetchDoc(base, path, lang) {
+    var variant = (lang && lang !== 'fr') ? path.replace(/\.md$/i, '.' + lang + '.md') : path;
+    var attempt = fetchText(base + 'content/' + variant);
+    if (variant !== path) {
+      /* variante absente → repli silencieux sur le fichier de base (fr) */
+      attempt = attempt.catch(function () { return fetchText(base + 'content/' + path); });
+    }
+    return attempt.then(function (text) {
       var parsed = parseFrontmatter(text);
       return { meta: parsed.meta, html: mdToHtml(parsed.body), raw: parsed.body };
     });
   }
 
-  function loadPortfolio(base) {
+  function loadPortfolio(base, lang) {
+    lang = lang || 'fr';
     return fetch(base + 'content/manifest.json', { cache: 'no-cache' }).then(function (r) {
       if (!r.ok) throw new Error('manifest.json introuvable (HTTP ' + r.status + ')');
       return r.json();
     }).then(function (manifest) {
       return Promise.all([
-        fetchDoc(base, manifest.profile),
-        Promise.all((manifest.experiences || []).map(function (p) { return fetchDoc(base, p); })),
-        Promise.all((manifest.projects || []).map(function (p) { return fetchDoc(base, p); }))
+        fetchDoc(base, manifest.profile, lang),
+        Promise.all((manifest.experiences || []).map(function (p) { return fetchDoc(base, p, lang); })),
+        Promise.all((manifest.projects || []).map(function (p) { return fetchDoc(base, p, lang); }))
       ]);
     }).then(function (res) {
       return { profile: res[0], experiences: res[1], projects: res[2] };
     });
   }
 
+  var LANG_KEY = 'portfolio-lang';
+
+  function getLang() {
+    var q = null;
+    try { q = new URLSearchParams(window.location.search).get('lang'); } catch (e) {}
+    if (q && /^[a-z]{2}$/.test(q)) { setLang(q); return q; }
+    try { return window.localStorage.getItem(LANG_KEY) || 'fr'; } catch (e) { return 'fr'; }
+  }
+
+  function setLang(lang) {
+    try { window.localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+  }
+
   var api = {
     parseFrontmatter: parseFrontmatter,
     mdToHtml: mdToHtml,
     escapeHtml: escapeHtml,
-    loadPortfolio: loadPortfolio
+    loadPortfolio: loadPortfolio,
+    getLang: getLang,
+    setLang: setLang
   };
 
   if (typeof window !== 'undefined') window.PortfolioShared = api;

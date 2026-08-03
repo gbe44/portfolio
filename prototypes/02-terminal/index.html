@@ -109,8 +109,29 @@
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
       max-width: 55%;
     }
-    .win-mode { margin-left: auto; color: #5c665c; font-size: .78em; }
+    .win-mode { color: #5c665c; font-size: .78em; }
     @media (max-width: 560px) { .win-mode { display: none; } }
+
+    /* ---------- commutateur de langue ---------- */
+    .lang-switch {
+      margin-left: auto;
+      display: flex; align-items: center; gap: .1rem;
+      flex: 0 0 auto;
+      font-size: .82em;
+    }
+    .lang-btn {
+      font: inherit; font-weight: 500;
+      color: var(--dim);
+      background: none; border: none;
+      padding: .1em .15em;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .lang-btn::before { content: "["; color: #4a544a; }
+    .lang-btn::after  { content: "]"; color: #4a544a; }
+    .lang-btn:hover { color: var(--bright); }
+    .lang-btn[aria-pressed="true"] { color: var(--green); font-weight: 700; }
+    .lang-sep { color: #4a544a; }
 
     .screen {
       width: 100%;
@@ -418,6 +439,11 @@
         <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
       </div>
       <span class="win-title" id="win-title">portfolio: ~</span>
+      <nav class="lang-switch" aria-label="Langue / Language">
+        <button type="button" class="lang-btn" data-lang="fr" lang="fr" aria-label="Français" aria-pressed="true">FR</button>
+        <span class="lang-sep" aria-hidden="true">·</span>
+        <button type="button" class="lang-btn" data-lang="en" lang="en" aria-label="English" aria-pressed="false">EN</button>
+      </nav>
       <span class="win-mode" aria-hidden="true">bash · utf-8</span>
     </header>
 
@@ -430,14 +456,125 @@
 
   <noscript>
     <p style="font-family:monospace;padding:2rem">
-      Ce site charge son contenu en JavaScript — merci de l'activer pour consulter le portfolio.
+      Ce site charge son contenu en JavaScript — merci de l'activer pour consulter le portfolio.<br>
+      This site loads its content with JavaScript — please enable it to browse the portfolio.
     </p>
   </noscript>
 
   <script>
     'use strict';
 
-    function initSite(data) {
+    /* ---------------- libellés d'interface FR / EN ---------------- */
+    const L = {
+      fr: {
+        docTitle: 'Portfolio — session terminal',
+        metaDesc: "Portfolio d'un développeur web freelance présenté comme une session de terminal : parcours, compétences, missions, projets et contact.",
+        skip: 'Aller au contenu',
+        boot: 'ouverture de la session…',
+        notFound: 'Contenu introuvable — lancez ./serve.sh depuis la racine du dépôt (voir README).',
+        loadError: 'Erreur de chargement du contenu : ',
+        guest: 'invite',
+        unnamed: 'sans-nom',
+        secAbout: 'À propos', secSkills: 'Compétences', secXp: 'Expériences',
+        secProjects: 'Projets', secContact: 'Contact', secTerm: 'Terminal interactif',
+        cmdAbout: 'cat a-propos.md',
+        cmdSkills: 'ls competences/',
+        cmdXp: 'cat journal-missions.log',
+        cmdProjects: 'ls projets/ --details',
+        cmdContact: 'contact --all',
+        years: function (n) { return n + (n > 1 ? ' ans' : ' an') + " d'expérience"; },
+        emptyDoc: '(vide)',
+        skillsEmpty: 'ls: competences/: répertoire vide',
+        xpCount: function (n) {
+          return '# ' + n + ' entrée' + (n > 1 ? 's' : '') + ' — de la plus récente à la plus ancienne';
+        },
+        mission: 'Mission',
+        projTotal: function (n) { return 'total ' + n; },
+        srcLink: '→ code source', liveLink: '→ voir en ligne',
+        ctLocation: 'lieu', ctStatus: 'statut',
+        contactEmpty: 'contact: aucune coordonnée renseignée',
+        contactHint: '# réponse sous 24 h en semaine, devis gratuit',
+        helpRows: [
+          ['whoami', "l'essentiel en une ligne"],
+          ['a-propos', 'le parcours complet'],
+          ['competences', 'la stack pratiquée'],
+          ['experiences', 'le journal des missions'],
+          ['projets', 'les projets en cours'],
+          ['contact', 'me joindre'],
+          ['lang en', 'switch to English'],
+          ['clear', "effacer l'écran"],
+          ['exit', 'fermer la session']
+        ],
+        promptLabel: 'Tapez une commande puis validez avec Entrée',
+        lsAbout: 'a-propos.md', lsSkills: 'competences/', lsXp: 'journal-missions.log',
+        lsProjects: 'projets/', lsContact: 'contact',
+        xpEmpty: 'journal vide', projEmpty: 'aucun projet',
+        detailAbove: 'détail complet plus haut',
+        exitMsg: "logout<br>Session enregistrée — merci de votre visite. L'onglet reste à vous.",
+        cmdNotFound: function (c) { return 'bash : ' + c + ' : commande introuvable — essayez '; },
+        langUsage: 'usage : lang fr|en',
+        langAlready: 'déjà en français',
+        footer: function (y, name) {
+          return '# fin de fichier — © ' + y + ' ' + name + ' · fait main, sans framework';
+        }
+      },
+      en: {
+        docTitle: 'Portfolio — terminal session',
+        metaDesc: 'Freelance web developer portfolio presented as a terminal session: background, skills, missions, projects and contact.',
+        skip: 'Skip to content',
+        boot: 'opening session…',
+        notFound: 'Content not found — run ./serve.sh from the repository root (see README).',
+        loadError: 'Failed to load content: ',
+        guest: 'guest',
+        unnamed: 'unnamed',
+        secAbout: 'About', secSkills: 'Skills', secXp: 'Experience',
+        secProjects: 'Projects', secContact: 'Contact', secTerm: 'Interactive terminal',
+        cmdAbout: 'cat about.md',
+        cmdSkills: 'ls skills/',
+        cmdXp: 'cat mission-log.log',
+        cmdProjects: 'ls projects/ --details',
+        cmdContact: 'contact --all',
+        years: function (n) { return n + (n > 1 ? ' years' : ' year') + ' of experience'; },
+        emptyDoc: '(empty)',
+        skillsEmpty: 'ls: skills/: empty directory',
+        xpCount: function (n) {
+          return '# ' + n + (n > 1 ? ' entries' : ' entry') + ' — most recent first';
+        },
+        mission: 'Mission',
+        projTotal: function (n) { return 'total ' + n; },
+        srcLink: '→ source code', liveLink: '→ view live',
+        ctLocation: 'location', ctStatus: 'status',
+        contactEmpty: 'contact: no contact details available',
+        contactHint: '# reply within 24 h on weekdays, free quote',
+        helpRows: [
+          ['whoami', 'the essentials in one line'],
+          ['about', 'the full story'],
+          ['skills', 'the stack I work with'],
+          ['experience', 'the mission log'],
+          ['projects', 'current projects'],
+          ['contact', 'get in touch'],
+          ['lang fr', 'passer en français'],
+          ['clear', 'clear the screen'],
+          ['exit', 'close the session']
+        ],
+        promptLabel: 'Type a command and press Enter',
+        lsAbout: 'about.md', lsSkills: 'skills/', lsXp: 'mission-log.log',
+        lsProjects: 'projects/', lsContact: 'contact',
+        xpEmpty: 'empty log', projEmpty: 'no projects',
+        detailAbove: 'full details above',
+        exitMsg: 'logout<br>Session saved — thanks for your visit. The tab is yours to keep.',
+        cmdNotFound: function (c) { return 'bash: ' + c + ': command not found — try '; },
+        langUsage: 'usage: lang fr|en',
+        langAlready: 'already in English',
+        footer: function (y, name) {
+          return '# end of file — © ' + y + ' ' + name + ' · handmade, no framework';
+        }
+      }
+    };
+
+    function initSite(data, lang) {
+      if (!L[lang]) lang = 'fr';
+      var T = L[lang];
       var profile = data.profile;
       var p = profile.meta || {};
       var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -453,13 +590,33 @@
       }
       function slug(s) {
         return deaccent(String(s).toLowerCase())
-          .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'sans-nom';
+          .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || T.unnamed;
+      }
+      function statusClass(status) {
+        var s = deaccent(String(status).toLowerCase());
+        if (s.indexOf('acti') !== -1) return 'st-actif';
+        if (s.indexOf('pause') !== -1) return 'st-pause';
+        if (s.indexOf('archiv') !== -1) return 'st-archive';
+        return 'st-archive';
+      }
+      function switchLang(l) {
+        if (!L[l] || l === lang) return;
+        window.PortfolioShared.setLang(l);
+        try {
+          var url = new URL(window.location.href);
+          if (url.searchParams.has('lang')) {
+            url.searchParams.set('lang', l);
+            window.location.href = url.toString();
+            return;
+          }
+        } catch (e) {}
+        window.location.reload();
       }
       function shortUrl(u) {
         return String(u).replace(/^https?:\/\//, '').replace(/\/$/, '');
       }
 
-      var firstName = p.name ? slug(p.name.trim().split(/\s+/)[0]) : 'invite';
+      var firstName = p.name ? slug(p.name.trim().split(/\s+/)[0]) : T.guest;
       var HOST = firstName + '@freelance';
       var PS1 =
         '<span class="ps1"><span class="ps1-user">' + esc(HOST) + '</span>' +
@@ -496,7 +653,7 @@
       if (p.location) metaBits.push('<span>' + esc(p.location) + '</span>');
       var y = parseInt(p.years, 10);
       if (!isNaN(y)) {
-        metaBits.push('<span>' + y + (y > 1 ? ' ans' : ' an') + " d'expérience</span>");
+        metaBits.push('<span>' + T.years(y) + '</span>');
       } else if (p.years) {
         metaBits.push('<span>' + esc(p.years) + '</span>');
       }
@@ -506,7 +663,8 @@
       }
 
       /* ---------------- à propos ---------------- */
-      var aboutOut = '<div class="doc">' + (profile.html || '<p class="dim">(vide)</p>') + '</div>';
+      var aboutOut = '<div class="doc">' +
+        (profile.html || '<p class="dim">' + T.emptyDoc + '</p>') + '</div>';
 
       /* ---------------- compétences ---------------- */
       var skillsOut;
@@ -515,13 +673,12 @@
           return '<li class="skill">' + esc(s) + '<span class="slash" aria-hidden="true">/</span></li>';
         }).join('') + '</ul>';
       } else {
-        skillsOut = '<p class="dim">ls: competences/: répertoire vide</p>';
+        skillsOut = '<p class="dim">' + T.skillsEmpty + '</p>';
       }
 
       /* ---------------- expériences ---------------- */
       var xps = data.experiences || [];
-      var xpOut = '<p class="comment"># ' + xps.length + ' entrée' + (xps.length > 1 ? 's' : '') +
-        ' — de la plus récente à la plus ancienne</p>';
+      var xpOut = '<p class="comment">' + T.xpCount(xps.length) + '</p>';
       xpOut += xps.map(function (d) {
         var m = d.meta || {};
         var h = '<header class="log-head">';

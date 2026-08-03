@@ -102,6 +102,45 @@
     }
     .topbar__nav a:hover { border-bottom-color: var(--pink); }
 
+    /* ===== Commutateur de langue ===== */
+    .topbar__right {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: .5rem 1.25rem;
+    }
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      background: var(--card);
+      border: var(--bw) solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      transform: rotate(-3deg);
+      padding: .15rem .3rem;
+    }
+    .lang-switch__sep {
+      font-family: var(--font-label);
+      font-weight: 700;
+      padding: 0 .1rem;
+    }
+    .lang-switch__btn {
+      font-family: var(--font-label);
+      font-weight: 700;
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--ink);
+      background: transparent;
+      border: 0;
+      padding: .15rem .5rem;
+      cursor: pointer;
+    }
+    .lang-switch__btn:hover { background: var(--pink); }
+    .lang-switch__btn[aria-pressed="true"] {
+      background: var(--yellow);
+      box-shadow: inset 0 0 0 2px var(--ink);
+    }
+
     /* ===== Hero ===== */
     .hero {
       padding: 4.5rem 0 3.5rem;
@@ -454,9 +493,10 @@
       box-shadow: 2px 2px 0 var(--ink);
       white-space: nowrap;
     }
-    .badge--actif::before { content: "● "; }
+    .badge--actif::before { content: "● "; color: #1f9d55; }
+    .badge--pause { background: var(--yellow); }
     .badge--pause::before { content: "❚❚ "; font-size: .65rem; }
-    .badge--archive { opacity: .8; }
+    .badge--archive { opacity: .8; background: #dcd8cd; }
     .badge--archive::before { content: "✕ "; }
     .proj-card__body { padding: 1.4rem 1.5rem 1.6rem; display: flex; flex-direction: column; flex: 1; }
     .proj-card__period {
@@ -564,15 +604,22 @@
   <header class="topbar">
     <div class="wrap topbar__inner">
       <a class="topbar__brand" href="#" id="brand">Portfolio</a>
-      <nav class="topbar__nav" aria-label="Navigation principale">
-        <ul>
-          <li><a href="#a-propos">À propos</a></li>
-          <li><a href="#competences">Compétences</a></li>
-          <li><a href="#experiences">Expériences</a></li>
-          <li><a href="#projets">Projets</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
+      <div class="topbar__right">
+        <nav class="topbar__nav" aria-label="Navigation principale">
+          <ul>
+            <li><a href="#a-propos">À propos</a></li>
+            <li><a href="#competences">Compétences</a></li>
+            <li><a href="#experiences">Expériences</a></li>
+            <li><a href="#projets">Projets</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="lang-switch" role="group" aria-label="Choix de la langue">
+          <button type="button" class="lang-switch__btn" data-lang="fr" aria-pressed="true">FR</button>
+          <span class="lang-switch__sep" aria-hidden="true">/</span>
+          <button type="button" class="lang-switch__btn" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -646,18 +693,92 @@
   <!-- Contact / pied de page -->
   <footer class="contact" id="contact">
     <div class="wrap">
-      <h2>Travaillons <span>ensemble.</span></h2>
+      <h2 id="contact-head">Travaillons <span>ensemble.</span></h2>
       <p class="contact__pitch" id="contact-pitch" hidden></p>
       <div class="contact__actions" id="contact-actions"></div>
       <div class="contact__foot">
         <span id="foot-copy"></span>
-        <span>Prototype 03 — Néo-brutalisme</span>
+        <span id="foot-proto">Prototype 03 — Néo-brutalisme</span>
       </div>
     </div>
   </footer>
 
   <script>
     'use strict';
+
+    /* ---------- libellés d'interface FR / EN ---------- */
+
+    const L = {
+      fr: {
+        docTitle: 'Portfolio — Développeur freelance',
+        metaDesc: 'Portfolio d’un développeur web freelance : profil, compétences, expériences et projets.',
+        skip: 'Aller au contenu',
+        navAria: 'Navigation principale',
+        heroAria: 'Présentation',
+        navAbout: 'À propos',
+        navSkills: 'Compétences',
+        navExp: 'Expériences',
+        navProj: 'Projets',
+        navContact: 'Contact',
+        headAbout: 'À <mark>propos</mark>',
+        headSkills: 'Compé<mark>tences</mark>',
+        headExp: 'Expé<mark>riences</mark>',
+        headProj: 'Pro<mark>jets</mark>',
+        yearsExp: ' ans d’expérience',
+        basedIn: 'Basé à',
+        expLabel: 'Expérience',
+        yearsUnit: ' ans',
+        statusLabel: 'Statut',
+        defaultRole: 'Mission',
+        defaultProj: 'Projet',
+        techAria: 'Technologies',
+        sourceCode: 'Code source',
+        viewProject: 'Voir le projet',
+        contactHead: 'Travaillons <span>ensemble.</span>',
+        contactPitch: ' — parlez-moi de votre projet, je réponds vite.',
+        footMade: ' — fait à la main, sans framework.',
+        footProto: 'Prototype 03 — Néo-brutalisme',
+        langAria: 'Choix de la langue',
+        notFound: 'Contenu introuvable — lancez ./serve.sh depuis la racine du dépôt (voir README).',
+        loadError: 'Erreur de chargement du contenu : '
+      },
+      en: {
+        docTitle: 'Portfolio — Freelance developer',
+        metaDesc: 'Portfolio of a freelance web developer: profile, skills, experience and projects.',
+        skip: 'Skip to content',
+        navAria: 'Main navigation',
+        heroAria: 'Introduction',
+        navAbout: 'About',
+        navSkills: 'Skills',
+        navExp: 'Experience',
+        navProj: 'Projects',
+        navContact: 'Contact',
+        headAbout: 'About <mark>me</mark>',
+        headSkills: 'Sk<mark>ills</mark>',
+        headExp: 'Expe<mark>rience</mark>',
+        headProj: 'Pro<mark>jects</mark>',
+        yearsExp: ' years of experience',
+        basedIn: 'Based in',
+        expLabel: 'Experience',
+        yearsUnit: ' years',
+        statusLabel: 'Status',
+        defaultRole: 'Role',
+        defaultProj: 'Project',
+        techAria: 'Technologies',
+        sourceCode: 'Source code',
+        viewProject: 'View project',
+        contactHead: 'Let’s work <span>together.</span>',
+        contactPitch: ' — tell me about your project, I answer fast.',
+        footMade: ' — handmade, no framework.',
+        footProto: 'Prototype 03 — Neo-brutalism',
+        langAria: 'Language selection',
+        notFound: 'Content not found — run ./serve.sh from the repository root (see README).',
+        loadError: 'Failed to load content: '
+      }
+    };
+
+    /* Jeu de libellés courant — recalé par applyStatic(lang). */
+    var T = L.fr;
 
     /* ---------- utilitaires ---------- */
 
@@ -684,7 +805,63 @@
     function renderTags(tags) {
       if (!Array.isArray(tags) || tags.length === 0) return '';
       var items = tags.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('');
-      return '<ul class="tags" aria-label="Technologies">' + items + '</ul>';
+      return '<ul class="tags" aria-label="' + esc(T.techAria) + '">' + items + '</ul>';
+    }
+
+    /* ---------- langue ---------- */
+
+    /* Applique le jeu de libellés `lang` aux textes statiques de la page. */
+    function applyStatic(lang) {
+      T = L[lang] || L.fr;
+      document.title = T.docTitle;
+      var desc = document.querySelector('meta[name="description"]');
+      if (desc) desc.setAttribute('content', T.metaDesc);
+
+      document.querySelector('.skip-link').textContent = T.skip;
+      document.querySelector('.topbar__nav').setAttribute('aria-label', T.navAria);
+      document.querySelector('.hero').setAttribute('aria-label', T.heroAria);
+
+      var navLabels = {
+        '#a-propos': T.navAbout,
+        '#competences': T.navSkills,
+        '#experiences': T.navExp,
+        '#projets': T.navProj,
+        '#contact': T.navContact
+      };
+      document.querySelectorAll('.topbar__nav a').forEach(function (a) {
+        var label = navLabels[a.getAttribute('href')];
+        if (label) a.textContent = label;
+      });
+
+      document.querySelector('#a-propos h2').innerHTML = T.headAbout;
+      document.querySelector('#competences h2').innerHTML = T.headSkills;
+      document.querySelector('#experiences h2').innerHTML = T.headExp;
+      document.querySelector('#projets h2').innerHTML = T.headProj;
+      $('contact-head').innerHTML = T.contactHead;
+      $('foot-proto').textContent = T.footProto;
+
+      var sw = document.querySelector('.lang-switch');
+      if (sw) sw.setAttribute('aria-label', T.langAria);
+    }
+
+    /* État + comportement du commutateur FR / EN de la barre du haut. */
+    function initLangSwitch(lang) {
+      document.querySelectorAll('.lang-switch__btn').forEach(function (btn) {
+        var l = btn.getAttribute('data-lang');
+        btn.setAttribute('aria-pressed', l === lang ? 'true' : 'false');
+        btn.addEventListener('click', function () {
+          if (l === lang) return;
+          window.PortfolioShared.setLang(l);
+          /* ?lang= dans l'URL primerait sur localStorage : on le met à jour. */
+          var url = new URL(window.location.href);
+          if (url.searchParams.has('lang')) {
+            url.searchParams.set('lang', l);
+            window.location.href = url.toString();
+          } else {
+            window.location.reload();
+          }
+        });
+      });
     }
 
     /* ---------- sections ---------- */
@@ -701,7 +878,7 @@
       }
       if (m.years) {
         chips.push('<span class="hero__chip">' + esc(m.years) +
-          ' ans d’expérience</span>');
+          esc(T.yearsExp) + '</span>');
       }
       if (m.availability) {
         chips.push('<span class="hero__sticker">' + esc(m.availability) + '</span>');
@@ -725,9 +902,9 @@
       $('about-text').innerHTML = profile.html || '<p>—</p>';
 
       var facts = [];
-      if (m.location) facts.push(['Basé à', m.location]);
-      if (m.years) facts.push(['Expérience', m.years + ' ans']);
-      if (m.availability) facts.push(['Statut', m.availability]);
+      if (m.location) facts.push([T.basedIn, m.location]);
+      if (m.years) facts.push([T.expLabel, m.years + T.yearsUnit]);
+      if (m.availability) facts.push([T.statusLabel, m.availability]);
       if (facts.length) {
         $('about-aside').innerHTML = facts.map(function (f) {
           return '<dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd>';
@@ -750,7 +927,7 @@
         var m = exp.meta || {};
         var parts = ['<article class="exp-card">'];
 
-        parts.push('<div class="exp-card__top"><h3>' + esc(m.title || 'Mission'));
+        parts.push('<div class="exp-card__top"><h3>' + esc(m.title || T.defaultRole));
         if (m.org) parts.push('<span class="exp-card__org">' + esc(m.org) + '</span>');
         parts.push('</h3>');
         if (m.period) parts.push('<span class="stamp">' + esc(m.period) + '</span>');
@@ -771,11 +948,15 @@
       $('experiences').hidden = false;
     }
 
-    var STATUS_CLASS = {
-      'actif': 'badge--actif',
-      'en pause': 'badge--pause',
-      'archivé': 'badge--archive'
-    };
+    /* meta.status peut être en FR ou en EN ('actif'/'active', 'en pause'/'paused',
+       'archivé'/'archived') : test par sous-chaîne, insensible à la casse. */
+    function statusClass(status) {
+      var s = String(status).toLowerCase();
+      if (s.indexOf('acti') !== -1) return 'badge--actif';
+      if (s.indexOf('pause') !== -1) return 'badge--pause';
+      if (s.indexOf('archiv') !== -1) return 'badge--archive';
+      return '';
+    }
     var ACCENTS = ['yellow', 'pink', 'blue'];
 
     function renderProjects(projects) {
@@ -785,10 +966,9 @@
         var accent = ACCENTS[i % ACCENTS.length];
         var parts = ['<article class="proj-card proj-card--' + accent + '">'];
 
-        parts.push('<div class="proj-card__head"><h3>' + esc(m.title || 'Projet') + '</h3>');
+        parts.push('<div class="proj-card__head"><h3>' + esc(m.title || T.defaultProj) + '</h3>');
         if (m.status) {
-          var cls = STATUS_CLASS[m.status.toLowerCase()] || '';
-          parts.push('<span class="badge ' + cls + '">' + esc(m.status) + '</span>');
+          parts.push('<span class="badge ' + statusClass(m.status) + '">' + esc(m.status) + '</span>');
         }
         parts.push('</div>');
 
@@ -805,11 +985,11 @@
         var actions = [];
         if (m.repo) {
           actions.push('<a class="btn btn--ink" href="' + esc(m.repo) +
-            '" target="_blank" rel="noopener">Code source</a>');
+            '" target="_blank" rel="noopener">' + esc(T.sourceCode) + '</a>');
         }
         if (m.link) {
           actions.push('<a class="btn btn--' + accent + '" href="' + esc(m.link) +
-            '" target="_blank" rel="noopener">Voir le projet</a>');
+            '" target="_blank" rel="noopener">' + esc(T.viewProject) + '</a>');
         }
         if (actions.length) {
           parts.push('<div class="proj-card__actions">' + actions.join('') + '</div>');
@@ -824,8 +1004,7 @@
     function renderContact(profile) {
       var m = profile.meta || {};
       if (m.availability) {
-        setText('contact-pitch', m.availability +
-          ' — parlez-moi de votre projet, je réponds vite.');
+        setText('contact-pitch', m.availability + T.contactPitch);
       }
 
       var actions = [];
@@ -845,12 +1024,14 @@
 
       var year = new Date().getFullYear();
       $('foot-copy').textContent = '© ' + year + (m.name ? ' ' + m.name : '') +
-        ' — fait à la main, sans framework.';
+        T.footMade;
     }
 
     /* ---------- point d'entrée ---------- */
 
-    function initSite(data) {
+    function initSite(data, lang) {
+      applyStatic(lang);
+
       var profile = data.profile || { meta: {}, html: '' };
       var m = profile.meta || {};
 
@@ -876,22 +1057,37 @@
 
   <script>
 (async () => {
+  /* Langue lue sans le moteur partagé (pas encore chargé) : même logique
+     que PortfolioShared.getLang — ?lang= dans l'URL, puis localStorage. */
+  const earlyLang = (() => {
+    try {
+      const q = new URLSearchParams(window.location.search).get('lang');
+      if (q && /^[a-z]{2}$/.test(q)) return q;
+    } catch (e) {}
+    try { return window.localStorage.getItem('portfolio-lang') || 'fr'; } catch (e) { return 'fr'; }
+  })();
+
   let BASE = null;
   for (const b of ['./', '../../']) {
     try { const r = await fetch(b + 'content/manifest.json'); if (r.ok) { BASE = b; break; } } catch (e) {}
   }
   if (!BASE) {
-    document.body.innerHTML = '<p style="font-family:monospace;padding:2rem">Contenu introuvable — lancez ./serve.sh depuis la racine du dépôt (voir README).</p>';
+    document.body.innerHTML = '<p style="font-family:monospace;padding:2rem">' +
+      esc((L[earlyLang] || L.fr).notFound) + '</p>';
     return;
   }
   const s = document.createElement('script');
   s.src = BASE + 'shared/portfolio.js';
   s.onload = async () => {
+    const lang = window.PortfolioShared.getLang();
+    document.documentElement.lang = lang;
+    initLangSwitch(lang);
     try {
-      const data = await window.PortfolioShared.loadPortfolio(BASE);
-      initSite(data);
+      const data = await window.PortfolioShared.loadPortfolio(BASE, lang);
+      initSite(data, lang);
     } catch (e) {
-      document.body.innerHTML = '<p style="font-family:monospace;padding:2rem">Erreur de chargement du contenu : ' + e.message + '</p>';
+      document.body.innerHTML = '<p style="font-family:monospace;padding:2rem">' +
+        esc((L[lang] || L.fr).loadError + e.message) + '</p>';
     }
   };
   document.head.appendChild(s);

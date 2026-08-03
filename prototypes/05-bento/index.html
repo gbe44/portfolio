@@ -98,6 +98,44 @@
     padding: 2rem 0;
   }
 
+  /* ============================================================
+     Commutateur de langue (pill segmentée FR | EN)
+     ============================================================ */
+  .lang-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 14px;
+  }
+  .lang-switch {
+    display: inline-flex;
+    gap: 2px;
+    padding: 3px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 999px;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  .lang-switch button {
+    font-family: var(--font);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--text-3);
+    background: transparent;
+    border: 0;
+    border-radius: 999px;
+    padding: 0.28rem 0.72rem;
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+  .lang-switch button:hover { color: var(--text-2); }
+  .lang-switch button[aria-pressed="true"] {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.10);
+    cursor: default;
+  }
+
   .grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
@@ -514,6 +552,69 @@
 <script>
 'use strict';
 
+/* ---------- libellés d'interface FR / EN ---------- */
+const L = {
+  fr: {
+    docTitle: 'Portfolio — Développeur freelance',
+    skip: 'Aller au contenu',
+    loading: 'Chargement du contenu…',
+    notFound: 'Contenu introuvable — lancez ./serve.sh depuis la racine du dépôt (voir README).',
+    loadError: 'Erreur de chargement du contenu : ',
+    heroAria: 'Présentation',
+    contactMe: 'Me contacter',
+    statYears: "Années d'expérience",
+    statProjects: 'Projets personnels',
+    statMissions: 'Missions réalisées',
+    statsAria: 'Quelques chiffres',
+    about: 'À propos',
+    skills: 'Compétences',
+    skillsAria: 'Compétences techniques',
+    experiences: 'Expériences',
+    techAria: 'Technologies',
+    projectFallback: 'Projet',
+    readMore: 'En savoir plus',
+    sourceCode: 'Code source',
+    viewSite: 'Voir le site',
+    projects: 'Projets',
+    contactAria: 'Contact',
+    contactTitle: 'Travaillons ensemble',
+    contactSub: 'Une mission, un produit à construire ou simplement une question ? Écrivez-moi, je réponds vite.',
+    footerNote: 'Site statique, sans framework.',
+    devFallback: 'développeur',
+    langAria: 'Choix de la langue'
+  },
+  en: {
+    docTitle: 'Portfolio — Freelance developer',
+    skip: 'Skip to content',
+    loading: 'Loading content…',
+    notFound: 'Content not found — run ./serve.sh from the repository root (see README).',
+    loadError: 'Failed to load content: ',
+    heroAria: 'Introduction',
+    contactMe: 'Contact me',
+    statYears: 'Years of experience',
+    statProjects: 'Personal projects',
+    statMissions: 'Missions completed',
+    statsAria: 'Key figures',
+    about: 'About',
+    skills: 'Skills',
+    skillsAria: 'Technical skills',
+    experiences: 'Experience',
+    techAria: 'Technologies',
+    projectFallback: 'Project',
+    readMore: 'Read more',
+    sourceCode: 'Source code',
+    viewSite: 'View site',
+    projects: 'Projects',
+    contactAria: 'Contact',
+    contactTitle: "Let's work together",
+    contactSub: 'A mission, a product to build or simply a question? Write to me, I reply quickly.',
+    footerNote: 'Static site, no framework.',
+    devFallback: 'developer',
+    langAria: 'Language selection'
+  }
+};
+let t = L.fr; /* réassigné par initSite(data, lang) */
+
 /* ---------- petits utilitaires DOM ---------- */
 function el(tag, cls, children) {
   const node = document.createElement(tag);
@@ -570,7 +671,7 @@ function proseFrom(html) {
 /* ---------- tuiles ---------- */
 function buildHero(meta) {
   const hero = el('section', 'tile t-hero');
-  hero.setAttribute('aria-label', 'Présentation');
+  hero.setAttribute('aria-label', t.heroAria);
 
   if (meta.availability) {
     const badge = el('p', 'badge-dispo', [el('span', 'dot'), meta.availability]);
@@ -585,7 +686,7 @@ function buildHero(meta) {
     metaRow.appendChild(el('span', 'hero-loc', [svgIcon(ICONS.pin), meta.location]));
   }
   if (meta.email) {
-    const cta = el('a', 'btn-ghost btn-ghost--accent', [svgIcon(ICONS.mail), 'Me contacter']);
+    const cta = el('a', 'btn-ghost btn-ghost--accent', [svgIcon(ICONS.mail), t.contactMe]);
     cta.href = 'mailto:' + meta.email;
     metaRow.appendChild(cta);
   }
@@ -596,13 +697,13 @@ function buildHero(meta) {
 function buildStats(data) {
   const stats = [];
   const years = data.profile.meta.years;
-  if (years) stats.push({ num: years, label: "Années d'expérience" });
-  if (data.projects.length) stats.push({ num: data.projects.length, label: 'Projets personnels' });
-  if (data.experiences.length) stats.push({ num: data.experiences.length, label: 'Missions réalisées' });
+  if (years) stats.push({ num: years, label: t.statYears });
+  if (data.projects.length) stats.push({ num: data.projects.length, label: t.statProjects });
+  if (data.experiences.length) stats.push({ num: data.experiences.length, label: t.statMissions });
 
   const group = el('div', 'contents');
   group.setAttribute('role', 'list');
-  group.setAttribute('aria-label', 'Quelques chiffres');
+  group.setAttribute('aria-label', t.statsAria);
   for (const stat of stats) {
     const tile = el('div', 'tile t-stat', [
       el('span', 'stat-num', stat.num),
@@ -617,7 +718,7 @@ function buildStats(data) {
 function buildAbout(profile) {
   const section = el('section', 'tile t-about');
   section.setAttribute('aria-labelledby', 'h-about');
-  const heading = el('h2', 'tile-heading', 'À propos');
+  const heading = el('h2', 'tile-heading', t.about);
   heading.id = 'h-about';
   section.appendChild(heading);
   section.appendChild(proseFrom(profile.html) || el('p', 'prose', '—'));
@@ -629,10 +730,10 @@ function buildSkills(meta) {
   if (!skills.length) return null;
   const section = el('section', 'tile t-skills');
   section.setAttribute('aria-labelledby', 'h-skills');
-  const heading = el('h2', 'tile-heading', 'Compétences');
+  const heading = el('h2', 'tile-heading', t.skills);
   heading.id = 'h-skills';
   section.appendChild(heading);
-  section.appendChild(chipList(skills, 'Compétences techniques'));
+  section.appendChild(chipList(skills, t.skillsAria));
   return section;
 }
 
@@ -640,7 +741,7 @@ function buildExperiences(experiences) {
   if (!experiences.length) return null;
   const section = el('section', 'tile t-exp');
   section.setAttribute('aria-labelledby', 'h-exp');
-  const heading = el('h2', 'tile-heading', 'Expériences');
+  const heading = el('h2', 'tile-heading', t.experiences);
   heading.id = 'h-exp';
   section.appendChild(heading);
 
@@ -657,7 +758,7 @@ function buildExperiences(experiences) {
     if (meta.location) head.appendChild(el('span', 'exp-loc', meta.location));
     if (head.childNodes.length) item.appendChild(head);
 
-    const chips = chipList(meta.tags, 'Technologies');
+    const chips = chipList(meta.tags, t.techAria);
     if (chips) item.appendChild(chips);
 
     const body = proseFrom(exp.html);
@@ -672,10 +773,12 @@ function buildExperiences(experiences) {
 
 function statusPill(status) {
   if (!status) return null;
+  /* meta.status peut être en FR ou en EN : détection par sous-chaîne,
+     insensible à la casse ('actif'/'active', 'en pause'/'paused', …). */
   const value = String(status).trim().toLowerCase();
   let cls = 'status--archive';
-  if (value === 'actif') cls = 'status--actif';
-  else if (value === 'en pause') cls = 'status--pause';
+  if (value.indexOf('acti') !== -1) cls = 'status--actif';
+  else if (value.indexOf('pause') !== -1) cls = 'status--pause';
   return el('span', 'status ' + cls, status);
 }
 
@@ -684,35 +787,35 @@ function buildProjectTile(project) {
   const article = el('article', 'tile t-project');
 
   const head = el('div', 'proj-head');
-  head.appendChild(el('h3', 'proj-title', meta.title || 'Projet'));
+  head.appendChild(el('h3', 'proj-title', meta.title || t.projectFallback));
   const pill = statusPill(meta.status);
   if (pill) head.appendChild(pill);
   article.appendChild(head);
 
   if (meta.period) article.appendChild(el('time', 'proj-period', meta.period));
 
-  const chips = chipList(meta.tags, 'Technologies');
+  const chips = chipList(meta.tags, t.techAria);
   if (chips) article.appendChild(chips);
 
   if (meta.summary) article.appendChild(el('p', 'proj-summary', meta.summary));
 
   if (project.html && project.html.trim()) {
     const details = el('details', 'proj-details');
-    details.appendChild(el('summary', null, 'En savoir plus'));
+    details.appendChild(el('summary', null, t.readMore));
     details.appendChild(proseFrom(project.html));
     article.appendChild(details);
   }
 
   const links = el('div', 'proj-links');
   if (meta.repo) {
-    const a = el('a', 'btn-ghost', [svgIcon(ICONS.code), 'Code source']);
+    const a = el('a', 'btn-ghost', [svgIcon(ICONS.code), t.sourceCode]);
     a.href = meta.repo;
     a.target = '_blank';
     a.rel = 'noopener';
     links.appendChild(a);
   }
   if (meta.link) {
-    const a = el('a', 'btn-ghost', [svgIcon(ICONS.external), 'Voir le site']);
+    const a = el('a', 'btn-ghost', [svgIcon(ICONS.external), t.viewSite]);
     a.href = meta.link;
     a.target = '_blank';
     a.rel = 'noopener';
@@ -726,7 +829,7 @@ function buildProjects(projects) {
   if (!projects.length) return null;
   const group = el('section', 'contents');
   group.setAttribute('aria-labelledby', 'h-projects');
-  const hidden = el('h2', 'visually-hidden', 'Projets');
+  const hidden = el('h2', 'visually-hidden', t.projects);
   hidden.id = 'h-projects';
   group.appendChild(hidden);
   for (const project of projects) group.appendChild(buildProjectTile(project));
@@ -735,11 +838,10 @@ function buildProjects(projects) {
 
 function buildContact(meta) {
   const footer = el('footer', 'tile t-contact');
-  footer.setAttribute('aria-label', 'Contact');
+  footer.setAttribute('aria-label', t.contactAria);
 
-  footer.appendChild(el('h2', 'contact-title', 'Travaillons ensemble'));
-  footer.appendChild(el('p', 'contact-sub',
-    'Une mission, un produit à construire ou simplement une question ? Écrivez-moi, je réponds vite.'));
+  footer.appendChild(el('h2', 'contact-title', t.contactTitle));
+  footer.appendChild(el('p', 'contact-sub', t.contactSub));
 
   const links = el('div', 'contact-links');
   if (meta.email) {
@@ -765,10 +867,45 @@ function buildContact(meta) {
 
   const year = new Date().getFullYear();
   const note = meta.name
-    ? '© ' + year + ' ' + meta.name + ' — Site statique, sans framework.'
-    : '© ' + year + ' — Site statique, sans framework.';
+    ? '© ' + year + ' ' + meta.name + ' — ' + t.footerNote
+    : '© ' + year + ' — ' + t.footerNote;
   footer.appendChild(el('p', 'footer-note', note));
   return footer;
+}
+
+/* ---------- commutateur de langue ---------- */
+function buildLangSwitch(lang) {
+  const bar = el('div', 'lang-bar');
+  const group = el('div', 'lang-switch');
+  group.setAttribute('role', 'group');
+  group.setAttribute('aria-label', t.langAria);
+
+  for (const code of ['fr', 'en']) {
+    const btn = el('button', null, code.toUpperCase());
+    btn.type = 'button';
+    btn.lang = code;
+    btn.setAttribute('aria-label', code === 'fr' ? 'Français' : 'English');
+    btn.setAttribute('aria-pressed', String(code === lang));
+    if (code !== lang) {
+      btn.addEventListener('click', () => {
+        window.PortfolioShared.setLang(code);
+        /* si ?lang= est présent dans l'URL, il primerait sur localStorage
+           au rechargement : on l'aligne avant de recharger. */
+        try {
+          const url = new URL(window.location.href);
+          if (url.searchParams.has('lang')) {
+            url.searchParams.set('lang', code);
+            window.location.href = url.href;
+            return;
+          }
+        } catch (e) {}
+        window.location.reload();
+      });
+    }
+    group.appendChild(btn);
+  }
+  bar.appendChild(group);
+  return bar;
 }
 
 /* ---------- glow souris (désactivé en reduced-motion) ---------- */
@@ -784,20 +921,28 @@ function attachMouseGlow(grid) {
 }
 
 /* ---------- assemblage ---------- */
-function initSite(data) {
+function initSite(data, lang) {
+  t = L[lang] || L.fr;
   const profileMeta = data.profile.meta;
+
+  const skip = document.querySelector('.skip-link');
+  if (skip) skip.textContent = t.skip;
 
   if (profileMeta.name) {
     document.title = profileMeta.name + (profileMeta.title ? ' — ' + profileMeta.title : '');
     const desc = document.querySelector('meta[name="description"]');
     if (desc && profileMeta.tagline) {
       desc.setAttribute('content',
-        profileMeta.name + ', ' + (profileMeta.title || 'développeur') + '. ' + profileMeta.tagline);
+        profileMeta.name + ', ' + (profileMeta.title || t.devFallback) + '. ' + profileMeta.tagline);
     }
+  } else {
+    document.title = t.docTitle;
   }
 
   const app = document.getElementById('app');
   app.textContent = '';
+
+  app.appendChild(buildLangSwitch(lang));
 
   const grid = el('div', 'grid');
 
@@ -832,22 +977,42 @@ function initSite(data) {
 
 <script>
 (async () => {
+  /* Estimation de la langue avant même le chargement du moteur partagé,
+     pour traduire les textes de chargement / d'erreur (même logique que
+     PortfolioShared.getLang : ?lang= puis localStorage, défaut fr). */
+  let earlyLang = 'fr';
+  try {
+    const q = new URLSearchParams(window.location.search).get('lang');
+    if (q && /^[a-z]{2}$/.test(q)) earlyLang = q;
+    else earlyLang = window.localStorage.getItem('portfolio-lang') || 'fr';
+  } catch (e) {}
+  t = L[earlyLang] || L.fr;
+  document.documentElement.lang = L[earlyLang] ? earlyLang : 'fr';
+
+  const loadingEl = document.querySelector('#app .loading');
+  if (loadingEl) loadingEl.textContent = t.loading;
+  const skip = document.querySelector('.skip-link');
+  if (skip) skip.textContent = t.skip;
+
   let BASE = null;
   for (const b of ['./', '../../']) {
     try { const r = await fetch(b + 'content/manifest.json'); if (r.ok) { BASE = b; break; } } catch (e) {}
   }
   if (!BASE) {
-    document.body.innerHTML = '<p style="font-family:monospace;padding:2rem">Contenu introuvable — lancez ./serve.sh depuis la racine du dépôt (voir README).</p>';
+    document.body.innerHTML = '<p style="font-family:monospace;padding:2rem">' + t.notFound + '</p>';
     return;
   }
   const s = document.createElement('script');
   s.src = BASE + 'shared/portfolio.js';
   s.onload = async () => {
+    const lang = window.PortfolioShared.getLang();
+    document.documentElement.lang = lang;
     try {
-      const data = await window.PortfolioShared.loadPortfolio(BASE);
-      initSite(data);
+      const data = await window.PortfolioShared.loadPortfolio(BASE, lang);
+      initSite(data, lang);
     } catch (e) {
-      document.body.innerHTML = '<p style="font-family:monospace;padding:2rem">Erreur de chargement du contenu : ' + e.message + '</p>';
+      const msg = (L[lang] || L.fr).loadError;
+      document.body.innerHTML = '<p style="font-family:monospace;padding:2rem">' + msg + e.message + '</p>';
     }
   };
   document.head.appendChild(s);

@@ -113,6 +113,46 @@
   }
   .topnav a:hover { color: var(--accent); }
 
+  .topbar-right {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1.6rem;
+  }
+
+  /* ---------- Commutateur de langue ---------- */
+
+  .lang-switch {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5em;
+  }
+  .lang-sep {
+    font-size: 0.72rem;
+    color: var(--rule-strong);
+  }
+  .lang-btn {
+    appearance: none;
+    background: none;
+    border: 0;
+    padding: 0 0 0.2em;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s ease;
+  }
+  .lang-btn:hover { color: var(--accent); }
+  .lang-btn[aria-pressed="true"] {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    cursor: default;
+  }
+
   /* ---------- Hero ---------- */
 
   .hero {
@@ -391,9 +431,9 @@
     flex: none;
     background: var(--muted);
   }
-  .proj-status[data-status="actif"] { color: var(--accent); }
-  .proj-status[data-status="actif"]::before { background: var(--accent); }
-  .proj-status[data-status="en-pause"]::before {
+  .proj-status[data-status="active"] { color: var(--accent); }
+  .proj-status[data-status="active"]::before { background: var(--accent); }
+  .proj-status[data-status="paused"]::before {
     background: transparent;
     box-shadow: inset 0 0 0 1.5px var(--muted);
   }
@@ -552,12 +592,19 @@
   <header class="topbar">
     <div class="wrap">
       <a class="brand" href="#" id="brand" aria-label="Haut de page"></a>
-      <nav class="topnav" aria-label="Navigation principale">
-        <a href="#apropos">À propos</a>
-        <a href="#experiences">Expériences</a>
-        <a href="#projets">Projets</a>
-        <a href="#contact">Contact</a>
-      </nav>
+      <div class="topbar-right">
+        <nav class="topnav" aria-label="Navigation principale">
+          <a href="#apropos">À propos</a>
+          <a href="#experiences">Expériences</a>
+          <a href="#projets">Projets</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div class="lang-switch" role="group" aria-label="Langue">
+          <button type="button" class="lang-btn" data-lang="fr" lang="fr" aria-pressed="true">FR</button>
+          <span class="lang-sep" aria-hidden="true">—</span>
+          <button type="button" class="lang-btn" data-lang="en" lang="en" aria-pressed="false">EN</button>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -618,7 +665,7 @@
         <h2 class="sec-title" id="t-contact">Contact</h2>
       </header>
       <div class="contact-core">
-        <p class="contact-big">Travaillons ensemble.</p>
+        <p class="contact-big" id="contact-big">Travaillons ensemble.</p>
         <a class="contact-mail" id="contact-mail" hidden></a>
         <p class="contact-avail" id="contact-avail" hidden></p>
       </div>
@@ -632,6 +679,78 @@
 
 <script>
 'use strict';
+
+/* ---------- Libellés d'interface (FR / EN) ---------- */
+
+const L = {
+  fr: {
+    docTitle: 'Portfolio — Développeur freelance',
+    docDesc: 'Portfolio d’un développeur freelance : parcours, expériences, projets et contact.',
+    skip: 'Aller au contenu',
+    topOfPage: 'Haut de page',
+    mainNav: 'Navigation principale',
+    intro: 'Présentation',
+    langLabel: 'Langue',
+    navAbout: 'À propos',
+    navExperiences: 'Expériences',
+    navProjects: 'Projets',
+    navContact: 'Contact',
+    secAbout: 'À propos',
+    secSkills: 'Compétences',
+    secExperiences: 'Expériences',
+    secProjects: 'Projets',
+    secContact: 'Contact',
+    workTogether: 'Travaillons ensemble.',
+    yearsExp: 'ans d’expérience',
+    basedIn: 'Basé à',
+    aboutSoon: 'À venir.',
+    skillsSoon: 'Compétences à venir.',
+    noExperience: 'Aucune expérience publiée pour le moment.',
+    noProjects: 'Aucun projet publié pour le moment.',
+    experienceFallback: 'Expérience',
+    projectFallback: 'Projet',
+    sourceCode: 'Code source',
+    viewProject: 'Voir le projet',
+    extLinks: 'Liens externes',
+    notFound: 'Contenu introuvable — lancez ./serve.sh depuis la racine du dépôt (voir README).',
+    loadError: 'Erreur de chargement du contenu : '
+  },
+  en: {
+    docTitle: 'Portfolio — Freelance developer',
+    docDesc: 'Portfolio of a freelance developer: background, experience, projects and contact.',
+    skip: 'Skip to content',
+    topOfPage: 'Top of page',
+    mainNav: 'Main navigation',
+    intro: 'Introduction',
+    langLabel: 'Language',
+    navAbout: 'About',
+    navExperiences: 'Experience',
+    navProjects: 'Projects',
+    navContact: 'Contact',
+    secAbout: 'About',
+    secSkills: 'Skills',
+    secExperiences: 'Experience',
+    secProjects: 'Projects',
+    secContact: 'Contact',
+    workTogether: 'Let’s work together.',
+    yearsExp: 'years of experience',
+    basedIn: 'Based in',
+    aboutSoon: 'Coming soon.',
+    skillsSoon: 'Skills coming soon.',
+    noExperience: 'No experience published yet.',
+    noProjects: 'No projects published yet.',
+    experienceFallback: 'Experience',
+    projectFallback: 'Project',
+    sourceCode: 'Source code',
+    viewProject: 'View project',
+    extLinks: 'External links',
+    notFound: 'Content not found — run ./serve.sh from the repository root (see README).',
+    loadError: 'Failed to load content: '
+  }
+};
+
+/* Libellés de la langue courante — fixé par initSite(). */
+var T = L.fr;
 
 /* Échappe une valeur avant insertion dans du HTML construit à la main.
    (Les corps `html` des documents sont déjà rendus par le moteur partagé.) */
@@ -657,6 +776,61 @@ function setText(id, text) {
     el.hidden = true;
   }
   return el;
+}
+
+/* ---------- Chrome : libellés statiques + commutateur de langue ---------- */
+
+function applyChrome(lang) {
+  T = L[lang] || L.fr;
+
+  document.querySelector('.skip-link').textContent = T.skip;
+  document.getElementById('brand').setAttribute('aria-label', T.topOfPage);
+  document.querySelector('.hero').setAttribute('aria-label', T.intro);
+  document.getElementById('foot-links').setAttribute('aria-label', T.extLinks);
+
+  var nav = document.querySelector('.topnav');
+  nav.setAttribute('aria-label', T.mainNav);
+  var navLabels = {
+    '#apropos': T.navAbout,
+    '#experiences': T.navExperiences,
+    '#projets': T.navProjects,
+    '#contact': T.navContact
+  };
+  Object.keys(navLabels).forEach(function (href) {
+    var a = nav.querySelector('a[href="' + href + '"]');
+    if (a) a.textContent = navLabels[href];
+  });
+
+  document.getElementById('t-apropos').textContent = T.secAbout;
+  document.getElementById('t-competences').textContent = T.secSkills;
+  document.getElementById('t-experiences').textContent = T.secExperiences;
+  document.getElementById('t-projets').textContent = T.secProjects;
+  document.getElementById('t-contact').textContent = T.secContact;
+  document.getElementById('contact-big').textContent = T.workTogether;
+
+  document.title = T.docTitle;
+  var desc = document.querySelector('meta[name="description"]');
+  if (desc) desc.setAttribute('content', T.docDesc);
+
+  var sw = document.querySelector('.lang-switch');
+  sw.setAttribute('aria-label', T.langLabel);
+  sw.querySelectorAll('.lang-btn').forEach(function (btn) {
+    var l = btn.getAttribute('data-lang');
+    btn.setAttribute('aria-pressed', l === lang ? 'true' : 'false');
+    btn.addEventListener('click', function () {
+      if (l === lang) return;
+      window.PortfolioShared.setLang(l);
+      /* Un ?lang= présent dans l'URL primerait sur le choix : on l'aligne. */
+      try {
+        var u = new URL(window.location.href);
+        if (u.searchParams.has('lang')) {
+          u.searchParams.set('lang', l);
+          window.history.replaceState(null, '', u);
+        }
+      } catch (e) {}
+      window.location.reload();
+    });
+  });
 }
 
 /* ---------- Hero + en-tête ---------- */
@@ -690,7 +864,7 @@ function renderHero(profile) {
   var metaParts = [];
   if (m.title) metaParts.push(esc(m.title));
   if (m.location) metaParts.push(esc(m.location));
-  if (m.years) metaParts.push(esc(m.years) + ' ans d’expérience');
+  if (m.years) metaParts.push(esc(m.years) + ' ' + T.yearsExp);
   document.getElementById('hero-meta').innerHTML =
     metaParts.join('<span class="sep" aria-hidden="true">·</span>');
 
@@ -701,11 +875,11 @@ function renderHero(profile) {
 
 function renderAbout(profile) {
   document.getElementById('about-body').innerHTML =
-    profile.html || '<p class="placeholder">À venir.</p>';
+    profile.html || '<p class="placeholder">' + T.aboutSoon + '</p>';
 
   var m = profile.meta || {};
   var aside = [];
-  if (m.location) aside.push('Basé à ' + m.location);
+  if (m.location) aside.push(T.basedIn + ' ' + m.location);
   if (m.availability) aside.push(m.availability.toLowerCase());
   setText('about-aside', aside.join(' — ') + (aside.length ? '.' : ''));
 }
@@ -716,7 +890,7 @@ function renderSkills(profile) {
   var skills = (profile.meta && profile.meta.skills) || [];
   var line = document.getElementById('skills-line');
   if (!skills.length) {
-    line.innerHTML = '<span class="placeholder">Compétences à venir.</span>';
+    line.innerHTML = '<span class="placeholder">' + T.skillsSoon + '</span>';
     return;
   }
   line.innerHTML = skills.map(esc).join('<span class="slash" aria-hidden="true">/</span>');
@@ -727,7 +901,7 @@ function renderSkills(profile) {
 function renderExperiences(experiences) {
   var list = document.getElementById('exp-list');
   if (!experiences.length) {
-    list.innerHTML = '<p class="placeholder">Aucune expérience publiée pour le moment.</p>';
+    list.innerHTML = '<p class="placeholder">' + T.noExperience + '</p>';
     return;
   }
 
@@ -736,7 +910,7 @@ function renderExperiences(experiences) {
     var tags = (m.tags || []).map(esc).join(' · ');
 
     var main = '<span class="exp-main">' +
-      '<span class="exp-title">' + esc(m.title || 'Expérience') + '</span>' +
+      '<span class="exp-title">' + esc(m.title || T.experienceFallback) + '</span>' +
       (m.org ? '<span class="exp-org">' + esc(m.org) + '</span>' : '') +
       '</span>';
 
@@ -759,10 +933,21 @@ function renderExperiences(experiences) {
 
 /* ---------- 04 — Projets ---------- */
 
+/* Le statut peut être rédigé en français ou en anglais ('actif'/'active',
+   'en pause'/'paused', 'archivé'/'archived') : on le normalise par
+   sous-chaîne, insensible à la casse, pour le marquage visuel. */
+function statusKey(status) {
+  var s = String(status).toLowerCase();
+  if (s.indexOf('acti') !== -1) return 'active';
+  if (s.indexOf('pause') !== -1) return 'paused';
+  if (s.indexOf('archiv') !== -1) return 'archived';
+  return '';
+}
+
 function renderProjects(projects) {
   var list = document.getElementById('proj-list');
   if (!projects.length) {
-    list.innerHTML = '<p class="placeholder">Aucun projet publié pour le moment.</p>';
+    list.innerHTML = '<p class="placeholder">' + T.noProjects + '</p>';
     return;
   }
 
@@ -770,7 +955,7 @@ function renderProjects(projects) {
     var m = proj.meta || {};
     var mainLink = m.link || m.repo || '';
 
-    var titleInner = esc(m.title || 'Projet') +
+    var titleInner = esc(m.title || T.projectFallback) +
       '<span class="proj-arrow" aria-hidden="true">→</span>';
     var title = mainLink
       ? '<a href="' + esc(mainLink) + '" target="_blank" rel="noopener">' + titleInner + '</a>'
@@ -779,17 +964,20 @@ function renderProjects(projects) {
     var metaBits = [];
     if (m.period) metaBits.push('<span>' + esc(m.period) + '</span>');
     if (m.status) {
-      var slug = String(m.status).toLowerCase().replace(/\s+/g, '-');
-      metaBits.push('<span class="proj-status" data-status="' + esc(slug) + '">' +
+      var key = statusKey(m.status);
+      metaBits.push('<span class="proj-status"' +
+        (key ? ' data-status="' + key + '"' : '') + '>' +
         esc(m.status) + '</span>');
     }
 
     var links = [];
     if (m.repo) {
-      links.push('<a href="' + esc(m.repo) + '" target="_blank" rel="noopener">Code source</a>');
+      links.push('<a href="' + esc(m.repo) + '" target="_blank" rel="noopener">' +
+        T.sourceCode + '</a>');
     }
     if (m.link) {
-      links.push('<a href="' + esc(m.link) + '" target="_blank" rel="noopener">Voir le projet</a>');
+      links.push('<a href="' + esc(m.link) + '" target="_blank" rel="noopener">' +
+        T.viewProject + '</a>');
     }
 
     return '<article class="proj">' +
@@ -835,7 +1023,8 @@ function renderContact(profile) {
 
 /* ---------- Point d'entrée ---------- */
 
-function initSite(data) {
+function initSite(data, lang) {
+  applyChrome(lang || 'fr');
   renderHero(data.profile);
   renderAbout(data.profile);
   renderSkills(data.profile);
@@ -848,22 +1037,34 @@ function initSite(data) {
 
 <script>
 (async () => {
+  /* Détection minimale avant le chargement du moteur partagé (mêmes
+     sources que getLang : ?lang= puis localStorage), pour les messages. */
+  let early = 'fr';
+  try {
+    early = new URLSearchParams(window.location.search).get('lang') ||
+            window.localStorage.getItem('portfolio-lang') || 'fr';
+  } catch (e) {}
+  if (!L[early]) early = 'fr';
+
   let BASE = null;
   for (const b of ['./', '../../']) {
     try { const r = await fetch(b + 'content/manifest.json'); if (r.ok) { BASE = b; break; } } catch (e) {}
   }
   if (!BASE) {
-    document.body.innerHTML = '<p style="font-family:monospace;padding:2rem">Contenu introuvable — lancez ./serve.sh depuis la racine du dépôt (voir README).</p>';
+    document.body.innerHTML = '<p style="font-family:monospace;padding:2rem">' + L[early].notFound + '</p>';
     return;
   }
   const s = document.createElement('script');
   s.src = BASE + 'shared/portfolio.js';
   s.onload = async () => {
+    const lang = window.PortfolioShared.getLang();
+    document.documentElement.lang = lang;
     try {
-      const data = await window.PortfolioShared.loadPortfolio(BASE);
-      initSite(data);
+      const data = await window.PortfolioShared.loadPortfolio(BASE, lang);
+      initSite(data, lang);
     } catch (e) {
-      document.body.innerHTML = '<p style="font-family:monospace;padding:2rem">Erreur de chargement du contenu : ' + e.message + '</p>';
+      document.body.innerHTML = '<p style="font-family:monospace;padding:2rem">' +
+        (L[lang] || L.fr).loadError + esc(e.message) + '</p>';
     }
   };
   document.head.appendChild(s);

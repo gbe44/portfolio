@@ -62,6 +62,22 @@ Champs par type :
 `tags` et `skills` sont des listes séparées par des virgules ; tous les autres champs
 sont du texte libre. Les champs optionnels absents sont ignorés proprement.
 
+## Bilingue français / anglais
+
+Le français est la langue de base ; l'anglais est optionnel, fichier par fichier :
+
+- La traduction d'un fichier est le même nom avec le suffixe `.en` :
+  `experiences/2025-neobanque.md` → `experiences/2025-neobanque.en.md`.
+- `manifest.json` ne liste **que les fichiers français** — les variantes `.en.md`
+  sont trouvées automatiquement.
+- Si une traduction manque, le site affiche la version française à la place :
+  vous pouvez traduire au fil de l'eau sans rien casser.
+- Le visiteur change de langue via le commutateur FR/EN de chaque prototype ;
+  son choix est mémorisé (localStorage) et une URL avec `?lang=en` force l'anglais
+  (pratique pour partager le site à un contact anglophone).
+- Dans les fichiers anglais, utilisez les statuts `active` / `paused` / `archived`
+  (équivalents de `actif` / `en pause` / `archivé`) — les deux sont reconnus.
+
 ## Choisir un prototype
 
 Quand vous avez choisi votre direction artistique, promouvez-la en page d'accueil :
