@@ -3,5 +3,6 @@
 cd "$(dirname "$0")"
 PORT="${1:-8000}"
 echo "→ Hub des prototypes : http://localhost:${PORT}"
+echo "  Rechargement auto : modifiez un .md ou un index.html, l'onglet se rafraîchit seul."
 echo "  (Ctrl+C pour arrêter)"
-python3 -m http.server "${PORT}"
+exec python3 dev-server.py "${PORT}"

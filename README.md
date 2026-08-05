@@ -13,7 +13,7 @@ fichiers Markdown chargés côté client par un mini-moteur maison (`shared/port
 ./serve.sh          # ou : python3 -m http.server 8000
 ```
 
-Puis ouvrir <http://localhost:8000> : la page d'accueil liste les 5 prototypes.
+Puis ouvrir <http://localhost:8000> : la page d'accueil liste les 6 prototypes.
 
 | Dossier | Style |
 |---|---|
@@ -23,6 +23,20 @@ Puis ouvrir <http://localhost:8000> : la page d'accueil liste les 5 prototypes.
 | `prototypes/04-editorial/` | Typographie Swiss, sections numérotées, bleu Klein |
 | `prototypes/05-bento/` | Grille bento dark mode, cartes verre, vibe dashboard SaaS |
 | `prototypes/06-bento-nasa/` | Hybride : la grille bento du 05 + ADN NASA-punk (ambre, micro-labels console, LEDs, télémétrie) |
+
+### Rechargement automatique
+
+`serve.sh` lance `dev-server.py` (un `http.server` avec des en-têtes anti-cache).
+Tant que la page est ouverte depuis `localhost`, elle surveille la page elle-même,
+`shared/portfolio.js` et tous les fichiers de `content/` : dès que l'un d'eux change
+sur le disque, l'onglet se recharge tout seul. Il n'y a donc **rien à relancer** —
+ni le serveur, ni le navigateur — quand vous éditez un `.md` ou un `index.html`.
+
+Ce mécanisme est **strictement local** : le code ne s'active que sur
+`localhost`/`127.0.0.1` (ou avec `?dev=1` dans l'URL, utile si vous testez depuis
+un téléphone sur le réseau local). En ligne sur GitHub Pages il ne fait rien du
+tout — aucune requête, aucun serveur : le site reste 100 % statique. `dev-server.py`
+n'est jamais exécuté par GitHub Pages, c'est juste un fichier de plus dans le dépôt.
 
 Important : servir depuis **la racine du dépôt** (les prototypes vont chercher
 `../../content/`). Ouvrir un `index.html` en double-cliquant (`file://`) ne
@@ -121,8 +135,9 @@ Notes :
 │   ├── experiences/*.md
 │   ├── projects/*.md
 │   └── manifest.json     # liste + ordre d'affichage des fichiers
-├── shared/portfolio.js   # frontmatter + rendu Markdown + chargement
-├── prototypes/0X-*/      # les 5 directions artistiques
+├── shared/portfolio.js   # frontmatter + rendu Markdown + chargement + reload dev
+├── prototypes/0X-*/      # les 6 directions artistiques
 ├── serve.sh              # serveur local
+├── dev-server.py         # http.server sans cache (développement seulement)
 └── .nojekyll             # désactive Jekyll sur GitHub Pages
 ```
