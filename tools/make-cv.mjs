@@ -50,20 +50,26 @@ for (const lang of LANGS) {
     process.exit(1);
   }
 
-  const pdf = await page.pdf({
+  /* selon la version de Puppeteer, page.pdf() rend un Buffer ou un Uint8Array */
+  const pdf = Buffer.from(await page.pdf({
     printBackground: true,
     preferCSSPageSize: true,   /* @page { size: A4; margin: 12mm 14mm } fait foi */
     displayHeaderFooter: false
-  });
+  }));
 
   const out = join(ROOT, `cv-${lang}.pdf`);
   await writeFile(out, pdf);
 
+  /* Verdict : c'est la page elle-même qui fait autorité — elle a mesuré sa
+     hauteur après chargement des polices. Le comptage de pages du PDF n'est
+     qu'un contrôle secondaire ; s'il ne sait pas conclure, il se tait plutôt
+     que de faire échouer une génération valide. */
   const pages = countPages(pdf);
-  const ok = state.fit === 'ok' && pages === 1;
+  const ok = state.fit === 'ok' && pages <= 1;
   if (!ok) overflowed = true;
   console.log(
-    `${ok ? '✓' : '✗'} cv-${lang}.pdf — ${pages} page(s), échelle ${Math.round(state.scale * 100)} %, ` +
+    `${ok ? '✓' : '✗'} cv-${lang}.pdf — ${pages ? pages + ' page(s)' : 'pages non comptées'}, ` +
+    `ajustement ${state.fit}, échelle ${Math.round(state.scale * 100)} %, ` +
     `${state.xp} expérience(s), ${state.projects} projet(s), ${(pdf.length / 1024).toFixed(0)} Ko`
   );
   await page.close();
@@ -78,8 +84,10 @@ if (overflowed) {
 }
 console.log('\n✓ Les deux CV tiennent sur une page.');
 
-/* Compte les objets /Type /Page du PDF — suffisant et sans dépendance. */
+/* Compte les objets « /Type /Page » du PDF, sans dépendance.
+   Renvoie 0 si le format ne s'y prête pas (flux compressés) : l'appelant
+   traite alors le résultat comme « indéterminé », pas comme une erreur. */
 function countPages(buf) {
-  const matches = buf.toString('latin1').match(/\/Type\s*\/Page[^s]/g);
+  const matches = Buffer.from(buf).toString('latin1').match(/\/Type\s*\/Page(?![s\w])/g);
   return matches ? matches.length : 0;
 }

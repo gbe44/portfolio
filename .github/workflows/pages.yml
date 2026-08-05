@@ -31,18 +31,19 @@ jobs:
       - name: Installer Puppeteer
         run: npm install --no-save puppeteer@23
 
-      - name: Servir le site
+      # Serveur et génération dans la même étape : un processus lancé en fond
+      # ne survit pas de façon fiable d'une étape à l'autre.
+      - name: Générer les CV
         run: |
           python3 dev-server.py 8000 &
+          SERVER=$!
+          trap 'kill $SERVER 2>/dev/null || true' EXIT
           for i in $(seq 1 30); do
-            curl -sf http://127.0.0.1:8000/content/manifest.json >/dev/null && exit 0
+            if curl -sf http://127.0.0.1:8000/content/manifest.json >/dev/null; then break; fi
+            if [ "$i" = 30 ]; then echo "le serveur local n'a pas démarré" >&2; exit 1; fi
             sleep 1
           done
-          echo "le serveur local n'a pas démarré" >&2
-          exit 1
-
-      - name: Générer les CV
-        run: node tools/make-cv.mjs http://127.0.0.1:8000
+          node tools/make-cv.mjs http://127.0.0.1:8000
 
       - uses: actions/upload-artifact@v4
         with:
