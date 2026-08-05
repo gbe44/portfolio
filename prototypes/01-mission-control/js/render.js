@@ -90,7 +90,16 @@ function initSite(data, lang) {
     cta.push('<a class="btn btn--solid" href="mailto:' + esc(profile.email) + '">' + esc(T.ctaContact) + '</a>');
   }
   cta.push('<a class="btn" href="#journal">' + esc(T.ctaLog) + '</a>');
+  /* Le PDF est produit par la GitHub Action ; s'il manque (dépôt fraîchement
+     cloné, génération en échec), le bouton s'efface plutôt que de mener à un 404. */
+  var cvUrl = (window.SITE_BASE || './') + 'cv-' + lang + '.pdf';
+  var cvName = 'CV' + (profile.name ? ' - ' + profile.name : '') + ' (' + lang.toUpperCase() + ').pdf';
+  cta.push('<a class="btn" id="cta-cv" href="' + esc(cvUrl) + '" download="' + esc(cvName) + '">' +
+    esc(T.ctaCv) + '</a>');
   $('hero-cta').innerHTML = cta.join('');
+  fetch(cvUrl, { method: 'HEAD' })
+    .then(function (r) { if (!r.ok) throw 0; })
+    .catch(function () { var b = $('cta-cv'); if (b) b.remove(); });
 
   /* --- À propos --- */
   $('about-body').innerHTML = (data.profile && data.profile.html) || '';
@@ -217,6 +226,7 @@ function initSite(data, lang) {
     return;
   }
   const s = document.createElement('script');
+  window.SITE_BASE = BASE;
   s.src = BASE + 'shared/portfolio.js';
   s.onload = async () => {
     const lang = window.PortfolioShared.getLang();

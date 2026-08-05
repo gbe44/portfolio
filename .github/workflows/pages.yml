@@ -1,0 +1,77 @@
+name: Publier le site et régénérer le CV
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  # Génère cv-fr.pdf / cv-en.pdf en imprimant la page /cv/ avec un vrai Chrome.
+  # continue-on-error : un CV trop long ne doit jamais bloquer la mise en ligne
+  # du site — le job apparaît en échec, mais la publication a lieu.
+  cv:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Installer Puppeteer
+        run: npm install --no-save puppeteer@23
+
+      - name: Servir le site
+        run: |
+          python3 dev-server.py 8000 &
+          for i in $(seq 1 30); do
+            curl -sf http://127.0.0.1:8000/content/manifest.json >/dev/null && exit 0
+            sleep 1
+          done
+          echo "le serveur local n'a pas démarré" >&2
+          exit 1
+
+      - name: Générer les CV
+        run: node tools/make-cv.mjs http://127.0.0.1:8000
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdf
+          path: cv-*.pdf
+          if-no-files-found: error
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: cv
+    if: always()
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Récupérer les CV générés
+        uses: actions/download-artifact@v4
+        continue-on-error: true   # site publié même si la génération a échoué
+        with:
+          name: cv-pdf
+
+      - uses: actions/configure-pages@v5
+
+      - name: Préparer l'artefact du site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

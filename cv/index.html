@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CV — Guillaume Berthelot</title>
+  <meta name="description" content="Curriculum vitae généré depuis les fichiers Markdown du portfolio.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Écran seulement : rappel de ce qu'est cette page + alerte de débordement -->
+  <div class="screen-bar" id="screen-bar">
+    <span id="fit-msg"></span>
+    <span class="hint">Cette page est le gabarit du PDF — <code>?lang=en</code> pour la version anglaise.</span>
+  </div>
+
+  <main class="sheet" id="sheet" aria-busy="true">
+    <header class="cv-head">
+      <p class="job" id="cv-job"></p>
+      <h1 id="cv-name"></h1>
+      <p class="contact" id="cv-contact"></p>
+    </header>
+
+    <p class="intro" id="cv-intro"></p>
+
+    <section class="block" id="block-xp">
+      <h2 id="cv-xp-title"></h2>
+      <div id="cv-xp"></div>
+    </section>
+
+    <section class="block" id="block-proj">
+      <h2 id="cv-proj-title"></h2>
+      <ul class="names" id="cv-proj"></ul>
+    </section>
+
+    <section class="block" id="block-skills">
+      <h2 id="cv-skills-title"></h2>
+      <p class="skills" id="cv-skills"></p>
+    </section>
+  </main>
+
+  <script src="../shared/portfolio.js"></script>
+  <script src="render.js"></script>
+</body>
+</html>

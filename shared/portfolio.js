@@ -18,7 +18,10 @@
 (function () {
   'use strict';
 
+  /* Listes écrites sur une ligne, séparées par des virgules. */
   var LIST_KEYS = { tags: true, skills: true };
+  /* Vrai / faux : `cv: true` fait entrer un document dans le CV PDF. */
+  var BOOL_KEYS = { cv: true };
 
   function parseFrontmatter(text) {
     var meta = {};
@@ -33,10 +36,28 @@
         var key = lines[i].slice(0, idx).trim();
         var value = lines[i].slice(idx + 1).trim();
         if (!key) continue;
+
+        /* Liste sur plusieurs lignes :
+             cv_points:
+               - premier point
+               - second point
+           La clé est suivie d'une valeur vide, puis de lignes « - … » indentées. */
+        if (!value && /^\s*-\s+/.test(lines[i + 1] || '')) {
+          var items = [];
+          while (i + 1 < lines.length && /^\s*-\s+/.test(lines[i + 1])) {
+            items.push(lines[i + 1].replace(/^\s*-\s+/, '').trim());
+            i++;
+          }
+          meta[key] = items;
+          continue;
+        }
+
         if (LIST_KEYS[key]) {
           meta[key] = value
             ? value.split(',').map(function (s) { return s.trim(); }).filter(Boolean)
             : [];
+        } else if (BOOL_KEYS[key]) {
+          meta[key] = /^(true|oui|yes|1)$/i.test(value);
         } else {
           meta[key] = value;
         }
@@ -175,6 +196,17 @@
     });
   }
 
+  /* Les `cv_points` du frontmatter sont rendus comme la liste à puces qu'ils
+     étaient dans le corps Markdown : le site les affiche exactement pareil,
+     mais le générateur de CV sait où les trouver. */
+  function pointsToHtml(points) {
+    if (!points || !points.length) return '';
+    /* même mise en forme que mdToHtml pour une liste « - … » */
+    return ['<ul>'].concat(points.map(function (p) {
+      return '<li>' + inline(escapeHtml(p)) + '</li>';
+    }), '</ul>').join('\n');
+  }
+
   function fetchDoc(base, path, lang) {
     var variant = (lang && lang !== 'fr') ? path.replace(/\.md$/i, '.' + lang + '.md') : path;
     var attempt = fetchText(base + 'content/' + variant);
@@ -184,7 +216,13 @@
     }
     return attempt.then(function (text) {
       var parsed = parseFrontmatter(text);
-      return { meta: parsed.meta, html: mdToHtml(parsed.body), raw: parsed.body };
+      var points = pointsToHtml(parsed.meta.cv_points);
+      var html = mdToHtml(parsed.body);
+      return {
+        meta: parsed.meta,
+        html: html && points ? html + '\n' + points : html + points,
+        raw: parsed.body
+      };
     });
   }
 
@@ -236,6 +274,9 @@
   var DEV_START_DELAY_MS = 500;
 
   function isDevHost() {
+    /* dev=0 coupe la surveillance même en local : la génération du PDF s'en
+       sert pour que la page n'émette plus aucune requête une fois rendue. */
+    if (window.location.search.indexOf('dev=0') !== -1) return false;
     if (DEV_HOSTS[window.location.hostname]) return true;
     return window.location.search.indexOf('dev=1') !== -1;
   }
