@@ -6,7 +6,7 @@ location: Nantes, France
 email: guillaume.berthelot44@gmail.com
 github: https://github.com/votre-compte
 linkedin: https://www.linkedin.com/in/votre-profil
-skills: TypeScript, React, Node.js, Python, PostgreSQL, Docker, CI/CD, AWS
+skills: Python, React, PostgresSQL, MySQL, Docker, Linux, CI/CD, Celery
 availability: Disponible pour de nouvelles missions
 years: 8
 ---
