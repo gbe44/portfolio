@@ -17,7 +17,7 @@ Puis ouvrir <http://localhost:8000> : la page d'accueil liste les 6 prototypes.
 
 | Dossier | Style |
 |---|---|
-| `prototypes/01-mission-control/` | NASA-punk / cassette futurism — console spatiale, ambre + vert phosphore |
+| `prototypes/01-mission-control/` | NASA-punk / cassette futurism — console spatiale, ambre + vert phosphore **(direction retenue)** |
 | `prototypes/02-terminal/` | Session shell plein écran, prompt interactif |
 | `prototypes/03-neobrutalisme/` | Bordures épaisses, ombres dures, couleurs franches |
 | `prototypes/04-editorial/` | Typographie Swiss, sections numérotées, bleu Klein |
@@ -26,17 +26,23 @@ Puis ouvrir <http://localhost:8000> : la page d'accueil liste les 6 prototypes.
 
 ### Rechargement automatique
 
-`serve.sh` lance `dev-server.py` (un `http.server` avec des en-têtes anti-cache).
-Tant que la page est ouverte depuis `localhost`, elle surveille la page elle-même,
-`shared/portfolio.js` et tous les fichiers de `content/` : dès que l'un d'eux change
-sur le disque, l'onglet se recharge tout seul. Il n'y a donc **rien à relancer** —
-ni le serveur, ni le navigateur — quand vous éditez un `.md` ou un `index.html`.
+`serve.sh` lance `dev-server.py` : un `http.server` standard (multi-thread, HTTP/1.1)
+avec des en-têtes anti-cache et un point d'entrée `/__watch` qui renvoie une empreinte
+de l'arborescence. Tant que la page est ouverte depuis `localhost`, elle interroge
+`/__watch` une fois par seconde — une seule requête, démarrée après l'affichage pour
+ne pas ralentir le chargement — et se recharge dès qu'un fichier du dépôt est modifié,
+créé ou supprimé. Il n'y a donc **rien à relancer** — ni le serveur, ni le navigateur —
+quand vous éditez un `.md`, un CSS ou un `index.html`.
 
 Ce mécanisme est **strictement local** : le code ne s'active que sur
 `localhost`/`127.0.0.1` (ou avec `?dev=1` dans l'URL, utile si vous testez depuis
 un téléphone sur le réseau local). En ligne sur GitHub Pages il ne fait rien du
 tout — aucune requête, aucun serveur : le site reste 100 % statique. `dev-server.py`
 n'est jamais exécuté par GitHub Pages, c'est juste un fichier de plus dans le dépôt.
+
+Avec un `python3 -m http.server` lancé à la main, `/__watch` n'existe pas : la page
+le signale dans la console et fonctionne normalement, simplement sans rechargement
+automatique.
 
 Important : servir depuis **la racine du dépôt** (les prototypes vont chercher
 `../../content/`). Ouvrir un `index.html` en double-cliquant (`file://`) ne
@@ -92,12 +98,41 @@ Le français est la langue de base ; l'anglais est optionnel, fichier par fichie
 - Dans les fichiers anglais, utilisez les statuts `active` / `paused` / `archived`
   (équivalents de `actif` / `en pause` / `archivé`) — les deux sont reconnus.
 
+## Anatomie du prototype 01 (celui retenu)
+
+Les prototypes 02 à 06 sont des fichiers uniques auto-portants. Le 01, sur lequel le
+travail continue, est découpé en briques — une par section du site, style et rendu
+séparés. Toujours zéro build : ce sont des `<link>` et des `<script src>`.
+
+```
+prototypes/01-mission-control/
+├── index.html          structure HTML seule (~130 lignes)
+├── css/
+│   ├── 00-base.css     variables, typographie, primitives (.panel, .btn, .led, .doc)
+│   ├── 10-topbar.css   barre supérieure + commutateur de langue
+│   ├── 20-hero.css     écran principal + télémétrie
+│   ├── 30-about.css    à propos + compétences
+│   ├── 40-log.css      journal de mission (expériences)
+│   ├── 50-payloads.css projets — le manifeste de soute
+│   ├── 60-contact.css  contact + pied de page
+│   ├── 70-boot.css     séquence de démarrage
+│   └── 99-motion.css   « mouvement réduit » — doit rester chargée en dernier
+└── js/
+    ├── i18n.js         libellés d'interface FR / EN
+    └── render.js       applyI18n() + initSite() + amorçage
+```
+
+Le préfixe numérique des CSS **fait la cascade** : les `<link>` sont dans cet ordre
+dans `index.html`, et `99-motion.css` doit rester le dernier pour que ses `!important`
+priment. Chaque brique embarque ses propres media queries.
+
 ## Choisir un prototype
 
 Quand vous avez choisi votre direction artistique, promouvez-la en page d'accueil :
 
 ```bash
-cp prototypes/04-editorial/index.html index.html   # exemple avec le n°4
+cp prototypes/04-editorial/index.html index.html          # prototype en un seul fichier
+cp -r prototypes/01-mission-control/{index.html,css,js} . # le 01, avec ses briques
 ```
 
 C'est tout : chaque prototype détecte automatiquement s'il tourne à la racine ou dans
@@ -136,7 +171,7 @@ Notes :
 │   ├── projects/*.md
 │   └── manifest.json     # liste + ordre d'affichage des fichiers
 ├── shared/portfolio.js   # frontmatter + rendu Markdown + chargement + reload dev
-├── prototypes/0X-*/      # les 6 directions artistiques
+├── prototypes/0X-*/      # les 6 directions artistiques (le 01 est découpé en css/ + js/)
 ├── serve.sh              # serveur local
 ├── dev-server.py         # http.server sans cache (développement seulement)
 └── .nojekyll             # désactive Jekyll sur GitHub Pages

@@ -1,0 +1,20 @@
+/* Contact et pied de page
+   Brique de style du prototype « Mission Control ».
+   Chargée par index.html — l'ordre des <link> fait la cascade. */
+
+.contact-panel { text-align: center; padding: 2.4rem 1.5rem; }
+.contact-panel .callsign { margin-bottom: 0.8rem; }
+.contact-title { margin: 0 0 0.6rem; font-size: clamp(1.3rem, 4vw, 2rem); text-transform: uppercase; letter-spacing: 0.08em; color: var(--amber); }
+.contact-sub { margin: 0 auto 1.6rem; max-width: 34rem; color: var(--muted); }
+.contact-actions { display: flex; justify-content: center; gap: 0.9rem; flex-wrap: wrap; }
+.contact-avail { margin: 1.8rem 0 0; display: inline-flex; align-items: center; gap: 0.6rem; color: var(--green); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; }
+
+footer { border-top: 1px solid var(--line); margin-top: 3.5rem; }
+footer .wrap {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.4rem 1.5rem;
+  flex-wrap: wrap;
+  padding-top: 1.1rem;
+  padding-bottom: 1.4rem;
+}

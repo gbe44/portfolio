@@ -1,0 +1,10 @@
+/* Préférence « mouvement réduit » — doit rester chargée en dernier
+   Brique de style du prototype « Mission Control ».
+   Chargée par index.html — l'ordre des <link> fait la cascade. */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  body::before, body::after { display: none; }
+  #boot { display: none; }
+}

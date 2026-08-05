@@ -225,20 +225,23 @@
    * strictement rien : le site reste 100 % statique, aucun serveur,
    * aucune requête supplémentaire.
    *
-   * Principe : une requête HEAD périodique sur la page courante, ce
-   * script et chaque fichier de contenu. Dès qu'une date de
-   * modification (ou une taille) change, l'onglet se recharge.
+   * Principe : dev-server.py expose /__watch, un jeton qui change dès
+   * qu'un fichier du dépôt bouge. On l'interroge une fois par seconde
+   * — une seule requête, et seulement après l'affichage de la page,
+   * pour ne jamais concurrencer le chargement du contenu.
    * --------------------------------------------------------------- */
 
   var DEV_HOSTS = { 'localhost': 1, '127.0.0.1': 1, '::1': 1, '[::1]': 1, '0.0.0.0': 1 };
   var DEV_POLL_MS = 1000;
+  var DEV_START_DELAY_MS = 500;
 
   function isDevHost() {
     if (DEV_HOSTS[window.location.hostname]) return true;
     return window.location.search.indexOf('dev=1') !== -1;
   }
 
-  /* Base du site déduite de l'URL de ce script (…/shared/portfolio.js). */
+  /* Base du site déduite de l'URL de ce script (…/shared/portfolio.js).
+     À appeler pendant l'exécution synchrone : currentScript s'efface après. */
   function scriptBase() {
     var el = document.currentScript;
     var src = el ? el.src : '';
@@ -246,56 +249,29 @@
     return i >= 0 ? src.slice(0, i) : '';
   }
 
-  /* Empreinte d'un fichier : null = requête ratée (on ignore ce tour). */
-  function fileStamp(url) {
-    return fetch(url, { method: 'HEAD', cache: 'no-store' }).then(function (r) {
-      if (r.status === 404) return '404';
-      if (!r.ok) return null;
-      return [r.headers.get('Last-Modified'), r.headers.get('Content-Length'), r.headers.get('ETag')].join('|');
+  /* null = endpoint absent ou requête ratée (on ignore ce tour). */
+  function watchToken(url) {
+    return fetch(url, { cache: 'no-store' }).then(function (r) {
+      return r.ok ? r.text() : null;
     }).catch(function () { return null; });
   }
 
   function startDevReload(base) {
-    var urls = [window.location.href, base + 'shared/portfolio.js', base + 'content/manifest.json'];
-
-    fetch(base + 'content/manifest.json', { cache: 'no-store' }).then(function (r) {
-      return r.ok ? r.json() : null;
-    }).catch(function () {
-      return null;
-    }).then(function (manifest) {
-      if (manifest) {
-        [manifest.profile]
-          .concat(manifest.experiences || [], manifest.projects || [])
-          .forEach(function (p) {
-            if (!p) return;
-            urls.push(base + 'content/' + p);
-            /* les variantes .en sont surveillées même absentes (404) :
-               en créer une déclenche donc aussi un rechargement */
-            urls.push(base + 'content/' + p.replace(/\.md$/i, '.en.md'));
-          });
+    var url = base + '__watch';
+    watchToken(url).then(function (known) {
+      if (known === null) {
+        console.info('[portfolio] rechargement auto indisponible — lancez ./serve.sh');
+        return;
       }
-      return Promise.all(urls.map(fileStamp));
-    }).then(function (initial) {
-      var watched = [];
-      var known = {};
-      urls.forEach(function (u, i) {
-        if (initial[i] === null || known[u] !== undefined) return;
-        watched.push(u);
-        known[u] = initial[i];
-      });
-      if (!watched.length) return;
-      console.info('[portfolio] rechargement auto actif — ' + watched.length + ' fichiers surveillés');
-
+      console.info('[portfolio] rechargement auto actif');
       (function tick() {
         window.setTimeout(function () {
           if (document.hidden) { tick(); return; }
-          Promise.all(watched.map(fileStamp)).then(function (now) {
-            for (var i = 0; i < watched.length; i++) {
-              if (now[i] !== null && now[i] !== known[watched[i]]) {
-                console.info('[portfolio] modification détectée → rechargement');
-                window.location.reload();
-                return;
-              }
+          watchToken(url).then(function (now) {
+            if (now !== null && now !== known) {
+              console.info('[portfolio] modification détectée → rechargement');
+              window.location.reload();
+              return;
             }
             tick();
           });
@@ -305,7 +281,12 @@
   }
 
   if (typeof window !== 'undefined' && typeof document !== 'undefined' && isDevHost()) {
-    startDevReload(scriptBase());
+    var devBase = scriptBase();
+    var startWatching = function () {
+      window.setTimeout(function () { startDevReload(devBase); }, DEV_START_DELAY_MS);
+    };
+    if (document.readyState === 'complete') startWatching();
+    else window.addEventListener('load', startWatching);
   }
 
   var api = {

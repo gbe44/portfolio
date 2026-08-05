@@ -1,0 +1,55 @@
+/* Séquence de démarrage (décorative)
+   Brique de style du prototype « Mission Control ».
+   Chargée par index.html — l'ordre des <link> fait la cascade. */
+
+#boot {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: var(--bg);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+}
+#boot.boot--out { opacity: 0; }
+.boot-inner { width: min(30rem, 86vw); color: var(--amber); font-size: 0.82rem; }
+.boot-line {
+  opacity: 0;
+  animation: bootline 0.12s steps(1) forwards;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.boot-line .ok { color: var(--green); }
+.boot-line:nth-child(1) { animation-delay: 0.05s; }
+.boot-line:nth-child(2) { animation-delay: 0.35s; }
+.boot-line:nth-child(3) { animation-delay: 0.65s; }
+.boot-line:nth-child(4) { animation-delay: 0.95s; }
+.boot-line:nth-child(5) { animation-delay: 1.25s; }
+@keyframes bootline { to { opacity: 1; } }
+.boot-bar {
+  margin-top: 1rem;
+  height: 10px;
+  border: 1px solid var(--amber);
+  padding: 2px;
+}
+.boot-bar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--amber);
+  animation: bootbar 1.6s linear forwards;
+}
+@keyframes bootbar { to { width: 100%; } }
+.boot-skip {
+  margin-top: 0.9rem;
+  color: var(--muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  animation: blink 1.2s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0.25; } }

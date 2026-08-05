@@ -1,0 +1,97 @@
+/* Projets : le manifeste de soute (lignes dépliables)
+   Brique de style du prototype « Mission Control ».
+   Chargée par index.html — l'ordre des <link> fait la cascade. */
+
+/* Une ligne = un projet ; le détail se déplie via <details>/<summary>. */
+.payloads { padding: 0; }
+.payload { border-top: 1px solid var(--line); }
+.payloads > .payload:first-child { border-top: none; }
+
+.payload > summary,
+.payload > .pl-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem 0.85rem;
+  flex-wrap: wrap;
+  padding: 0.8rem 1.1rem;
+  cursor: pointer;
+  list-style: none;
+  transition: background 0.18s ease;
+}
+.payload > .pl-row { cursor: default; }
+.payload > summary::-webkit-details-marker { display: none; }
+.payload > summary:hover { background: var(--panel-2); }
+.payload > summary:focus-visible { outline: 2px solid var(--amber); outline-offset: -2px; }
+.payload[open] > summary { background: var(--panel-2); }
+
+.pl-id { flex: none; color: var(--muted); font-size: 0.62rem; letter-spacing: 0.16em; }
+.pl-title {
+  flex: none;
+  color: var(--amber);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.payload[open] .pl-title,
+.payload > summary:hover .pl-title { color: var(--amber-soft); }
+.pl-sum {
+  flex: 1 1 10rem;
+  min-width: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pl-right { margin-left: auto; display: flex; align-items: center; gap: 0.85rem; flex: none; }
+.pl-status { color: var(--muted); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+.pl-period { color: var(--muted); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; }
+
+.deploy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.32rem 0.6rem 0.38rem;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+}
+.deploy .chev { display: inline-block; transition: transform 0.18s ease; }
+.payload > summary:hover .deploy,
+.payload[open] .deploy { color: var(--amber); border-color: var(--amber); }
+.payload[open] .deploy .chev { transform: rotate(90deg); }
+/* Un seul des deux libellés est présent dans le DOM à la fois (a11y). */
+.payload:not([open]) .on-open,
+.payload[open] .on-closed { display: none; }
+
+.payload-body { padding: 1.1rem 1.1rem 1.3rem; border-top: 1px dashed var(--line-soft); animation: deploy-in 0.22s ease-out; }
+/* le résumé est déjà dans la ligne repliée — sauf quand elle le masque (écrans étroits) */
+.payload-body > .lead { display: none; }
+.payload-body .modules { margin-top: 1rem; }
+.payload-links { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1.1rem; }
+.payload-links .btn { font-size: 0.66rem; padding: 0.55rem 0.9rem 0.65rem; }
+@keyframes deploy-in { from { opacity: 0; transform: translateY(-5px); } }
+
+/* ---- Responsive ---- */
+@media (max-width: 900px) {
+  /* la ligne devient trop dense : le résumé bascule dans le détail déplié */
+  .pl-sum { display: none; }
+  .payload-body > .lead { display: block; }
+}
+@media (max-width: 720px) {
+  .payloads { padding: 0; }
+}
+@media (max-width: 560px) {
+  .payload > summary,
+  .payload > .pl-row { padding: 0.75rem 0.9rem; }
+  .payload-body { padding: 1rem 0.9rem 1.2rem; }
+  .pl-period { display: none; }
+  .pl-right { gap: 0.7rem; }
+}

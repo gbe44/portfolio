@@ -1,0 +1,63 @@
+/* Écran principal : identité, télémétrie, appels à l'action
+   Brique de style du prototype « Mission Control ».
+   Chargée par index.html — l'ordre des <link> fait la cascade. */
+
+.hero { margin-top: 2rem; padding: 2rem 1.6rem 1.8rem; }
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.6rem;
+}
+.hero-top .nominal { color: var(--green); }
+.callsign {
+  margin: 0 0 0.4rem;
+  color: var(--green);
+  font-size: 0.78rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.hero h1 {
+  margin: 0 0 0.9rem;
+  font-size: clamp(2rem, 7.5vw, 4.2rem);
+  line-height: 1.02;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--amber);
+  text-shadow: 0 0 24px rgba(255, 176, 0, 0.28);
+  overflow-wrap: anywhere;
+}
+.tagline { margin: 0 0 1.8rem; max-width: 42rem; color: var(--text); font-size: 1rem; }
+
+.telemetry {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-bottom: 1.8rem;
+}
+.tele {
+  background: var(--panel-2);
+  padding: 0.7rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+.tele-label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.tele-value { font-size: 1.5rem; font-weight: 700; color: var(--amber); line-height: 1; }
+.tele-live { display: flex; align-items: center; gap: 0.55rem; min-width: 0; }
+.tele-live .txt {
+  color: var(--green);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.35;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 720px) {
+  .hero { padding: 1.5rem 1.1rem; }
+}

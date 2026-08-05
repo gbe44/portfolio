@@ -1,0 +1,46 @@
+/* Journal de mission : la frise des expériences
+   Brique de style du prototype « Mission Control ».
+   Chargée par index.html — l'ordre des <link> fait la cascade. */
+
+.log { list-style: none; margin: 0; padding: 0 0 0 1.1rem; border-left: 2px solid var(--line); display: grid; gap: 1.6rem; }
+.log-entry { position: relative; }
+.log-entry::before {
+  content: "";
+  position: absolute;
+  left: calc(-1.1rem - 7px);
+  top: 1.5rem;
+  width: 12px;
+  height: 12px;
+  background: var(--bg);
+  border: 2px solid var(--amber);
+  border-radius: 50%;
+}
+.stamp {
+  display: inline-block;
+  border: 2px solid var(--amber);
+  color: var(--amber);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  transform: rotate(-1.6deg);
+  margin-bottom: 0.9rem;
+  background: rgba(255, 176, 0, 0.06);
+}
+.log-entry h3 { margin: 0 0 0.35rem; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text); }
+.operator { margin: 0 0 0.15rem; color: var(--amber); font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; }
+.loc-line { margin: 0 0 0.9rem; color: var(--muted); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; }
+.lead { color: var(--muted); font-style: italic; margin: 0 0 0.9rem; }
+
+.modules { list-style: none; margin: 1rem 0 0; padding: 0.8rem 0 0; border-top: 1px dashed var(--line-soft); display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: center; }
+.modules .mod-label { color: var(--muted); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; margin-right: 0.3rem; }
+.modules li {
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  color: var(--amber-soft);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.5rem;
+}
