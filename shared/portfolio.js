@@ -196,19 +196,6 @@
     });
   }
 
-  /* Les `cv_points` du frontmatter sont rendus comme la liste à puces qu'ils
-     étaient dans le corps Markdown : le site les affiche exactement pareil,
-     mais le générateur de CV sait où les trouver. */
-  function pointsToHtml(points) {
-    if (!points || !points.length) return '';
-    /* même mise en forme que mdToHtml pour une liste « - … ».
-       Le préfixe « ! » marque un point fort pour le CV (rendu en bleu là-bas) ;
-       sur le site il est simplement retiré. */
-    return ['<ul>'].concat(points.map(function (p) {
-      return '<li>' + inline(escapeHtml(p.replace(/^!\s+/, ''))) + '</li>';
-    }), '</ul>').join('\n');
-  }
-
   function fetchDoc(base, path, lang) {
     var variant = (lang && lang !== 'fr') ? path.replace(/\.md$/i, '.' + lang + '.md') : path;
     var attempt = fetchText(base + 'content/' + variant);
@@ -218,11 +205,11 @@
     }
     return attempt.then(function (text) {
       var parsed = parseFrontmatter(text);
-      var points = pointsToHtml(parsed.meta.cv_points);
-      var html = mdToHtml(parsed.body);
+      /* Les `cv_points` et le `summary` restent dans meta : le générateur de
+         CV les consomme, le site n'affiche que la prose du corps Markdown. */
       return {
         meta: parsed.meta,
-        html: html && points ? html + '\n' + points : html + points,
+        html: mdToHtml(parsed.body),
         raw: parsed.body
       };
     });

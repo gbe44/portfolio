@@ -139,7 +139,6 @@ function initSite(data, lang) {
     out += '</div>';
     if (m.org) out += '<p class="operator">' + esc(T.operatorPrefix) + esc(m.org) + '</p>';
     if (m.location) out += '<p class="loc-line">' + esc(T.positionPrefix) + esc(m.location) + '</p>';
-    if (m.summary) out += '<p class="lead">' + esc(m.summary) + '</p>';
     if (xp.html) out += '<div class="doc">' + xp.html + '</div>';
     out += modules(m.tags);
     out += '</article></li>';
