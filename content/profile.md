@@ -3,7 +3,8 @@ name: Guillaume Berthelot
 title: Ingénieur Logiciel Freelance (Sécurité)
 tagline: J'aide les équipes à concevoir, construire et sécuriser leurs produits, du cadrage à la mise en production.
 location: Nantes, France
-email: guillaume.berthelot44@gmail.com
+email_user: guillaume.berthelot44
+email_domain: gmail.com
 phone: 
 github: https://github.com/gbe44
 linkedin: https://www.linkedin.com/in/guillaumeberthelot/

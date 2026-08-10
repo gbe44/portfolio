@@ -242,6 +242,13 @@
         manifest.education ? fetchDoc(base, manifest.education, lang) : Promise.resolve(null)
       ]);
     }).then(function (res) {
+      /* Anti-moisson : l'adresse email n'existe en clair dans aucun fichier
+         servi (email_user + email_domain dans profile.md) ; elle n'est
+         réassemblée qu'ici, dans le navigateur du visiteur. */
+      var pm = res[0] && res[0].meta;
+      if (pm && !pm.email && pm.email_user && pm.email_domain) {
+        pm.email = pm.email_user + '@' + pm.email_domain;
+      }
       return { profile: res[0], experiences: res[1], projects: res[2], education: res[3] };
     });
   }
