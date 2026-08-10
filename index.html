@@ -1,103 +1,132 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Portfolio — choix du prototype</title>
-<meta name="description" content="Hub de sélection des prototypes du portfolio de Guillaume Berthelot.">
-<style>
-  :root {
-    --bg: #0d1017;
-    --panel: #141926;
-    --border: #232b3d;
-    --text: #e8eaf0;
-    --muted: #8b93a7;
-    --accent: #ffb000;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: ui-monospace, "Cascadia Code", "JetBrains Mono", Menlo, monospace;
-    min-height: 100vh;
-    padding: 3rem 1.5rem 4rem;
-  }
-  main { max-width: 720px; margin: 0 auto; }
-  .kicker {
-    color: var(--accent);
-    font-size: 0.75rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
-  }
-  h1 { font-size: 1.6rem; font-weight: 600; margin-bottom: 0.5rem; }
-  .sub { color: var(--muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 2.5rem; }
-  .sub code { color: var(--text); background: var(--panel); padding: 0.1em 0.4em; border-radius: 4px; }
-  ol.protos { list-style: none; display: grid; gap: 0.75rem; }
-  .protos a {
-    display: block;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1rem 1.25rem;
-    text-decoration: none;
-    color: inherit;
-    transition: border-color 0.15s, transform 0.15s;
-  }
-  .protos a:hover { border-color: var(--accent); transform: translateX(4px); }
-  .protos .num { color: var(--accent); font-size: 0.75rem; }
-  .protos .name { font-size: 1.05rem; font-weight: 600; margin: 0.15rem 0 0.3rem; }
-  .protos .desc { color: var(--muted); font-size: 0.82rem; line-height: 1.5; }
-  footer { margin-top: 3rem; color: var(--muted); font-size: 0.78rem; line-height: 1.7; }
-  footer a { color: var(--accent); }
-  @media (prefers-reduced-motion: reduce) {
-    .protos a { transition: none; }
-  }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mission Control — Portfolio développeur freelance</title>
+  <meta name="description" content="Portfolio façon salle de contrôle spatiale : profil, journal de mission, projets et contact d'un développeur freelance.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/00-base.css">
+  <link rel="stylesheet" href="css/10-topbar.css">
+  <link rel="stylesheet" href="css/20-hero.css">
+  <link rel="stylesheet" href="css/30-about.css">
+  <link rel="stylesheet" href="css/40-log.css">
+  <link rel="stylesheet" href="css/50-payloads.css">
+  <link rel="stylesheet" href="css/60-contact.css">
+  <link rel="stylesheet" href="css/70-boot.css">
+  <link rel="stylesheet" href="css/99-motion.css">
 </head>
 <body>
-<main>
-  <p class="kicker">Portfolio // Prototypes</p>
-  <h1>Choisissez une direction artistique</h1>
-  <p class="sub">Cinq pistes pour le même contenu (chargé depuis <code>content/*.md</code>).
-  Testez-les, gardez la meilleure — le README explique comment la promouvoir en page d'accueil.</p>
-  <ol class="protos">
-    <li><a href="prototypes/01-mission-control/">
-      <span class="num">01</span>
-      <p class="name">Mission Control</p>
-      <p class="desc">NASA-punk / cassette futurism — console spatiale ambre et vert phosphore, journal de mission, télémétrie.</p>
-    </a></li>
-    <li><a href="prototypes/02-terminal/">
-      <span class="num">02</span>
-      <p class="name">Terminal</p>
-      <p class="desc">Session shell plein écran — commandes, log de missions, prompt interactif.</p>
-    </a></li>
-    <li><a href="prototypes/03-neobrutalisme/">
-      <span class="num">03</span>
-      <p class="name">Néo-brutalisme</p>
-      <p class="desc">Bordures épaisses, ombres dures, couleurs franches — audacieux mais structuré.</p>
-    </a></li>
-    <li><a href="prototypes/04-editorial/">
-      <span class="num">04</span>
-      <p class="name">Éditorial / Swiss</p>
-      <p class="desc">Typographie reine, sections numérotées, bleu Klein — la valeur sûre élégante.</p>
-    </a></li>
-    <li><a href="prototypes/05-bento/">
-      <span class="num">05</span>
-      <p class="name">Bento dark</p>
-      <p class="desc">Grille bento en mode sombre, cartes verre, halos subtils — vibe dashboard SaaS.</p>
-    </a></li>
-    <li><a href="prototypes/06-bento-nasa/">
-      <span class="num">06</span>
-      <p class="name">Bento × NASA-punk</p>
-      <p class="desc">La grille bento du 05 avec l'ADN mission control : ambre, micro-labels console, LEDs de statut, télémétrie.</p>
-    </a></li>
-  </ol>
+
+  <!-- Séquence de boot (décorative, retirée par JS / reduced-motion) -->
+  <div id="boot" role="presentation" aria-hidden="true">
+    <div class="boot-inner">
+      <p class="boot-line" data-i18n-html="boot1">&gt; INIT SYS // PORTFOLIO v1.0</p>
+      <p class="boot-line" data-i18n-html="boot2">&gt; VÉRIF. MODULES ............ <span class="ok">OK</span></p>
+      <p class="boot-line" data-i18n-html="boot3">&gt; LIAISON TÉLÉMÉTRIE ........ <span class="ok">OK</span></p>
+      <p class="boot-line" data-i18n-html="boot4">&gt; CHARGEMENT DOSSIER OPÉRATEUR</p>
+      <p class="boot-line" data-i18n-html="boot5">&gt; AFFICHAGE PRINCIPAL ....... <span class="ok">NOMINAL</span></p>
+      <div class="boot-bar"><span></span></div>
+      <p class="boot-skip" data-i18n="bootSkip">▸ Cliquer pour passer</p>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <div class="wrap">
+      <span class="brand">SYS // PORTFOLIO v1.0</span>
+      <nav aria-label="Navigation principale" data-i18n-aria="navAria">
+        <a href="#apropos" data-i18n="navAbout">À propos</a>
+        <a href="#competences" data-i18n="navSkills">Compétences</a>
+        <a href="#journal" data-i18n="navLog">Journal</a>
+        <a href="#charges" data-i18n="navPayloads">Charges utiles</a>
+        <a href="#contact" data-i18n="navContact">Contact</a>
+      </nav>
+      <div class="lang-switch" role="group" aria-label="Langue" data-i18n-aria="langAria">
+        <span class="microlabel" aria-hidden="true">Lang:</span>
+        <button type="button" class="lang-btn" data-lang="fr" aria-pressed="true">FR</button>
+        <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- ÉCRAN PRINCIPAL -->
+    <section class="hero panel corners" id="hero" aria-labelledby="hero-name">
+      <div class="hero-top">
+        <!-- <span class="microlabel" data-i18n="heroConsole">Console principale // Écran 01</span> -->
+        <!-- <span class="microlabel nominal" data-i18n="heroTelemetry">Telemetry: nominal</span> -->
+      </div>
+      <p class="callsign" id="hero-callsign"></p>
+      <h1 id="hero-name"></h1>
+      <p class="tagline" id="hero-tagline"></p>
+      <div class="telemetry" id="hero-telemetry" aria-label="Télémétrie" data-i18n-aria="telemetryAria"></div>
+      <div class="cta-row" id="hero-cta"></div>
+    </section>
+
+    <!-- À PROPOS -->
+    <section id="apropos" aria-labelledby="apropos-title">
+      <div class="section-head">
+        <h2 id="apropos-title" data-i18n="aboutTitle">À propos</h2>
+        <span class="microlabel" data-i18n="aboutMicro">Dossier opérateur // REF-001</span>
+      </div>
+      <div class="about-grid">
+        <div class="panel doc" id="about-body"></div>
+        <aside class="panel corners about-facts" id="about-facts" aria-label="Fiche opérateur" data-i18n-aria="factsAria"></aside>
+      </div>
+    </section>
+
+    <!-- COMPÉTENCES -->
+    <section id="competences" aria-labelledby="competences-title">
+      <div class="section-head">
+        <h2 id="competences-title" data-i18n="skillsTitle">Compétences</h2>
+        <span class="microlabel" data-i18n="skillsMicro">Modules embarqués // Diag: OK</span>
+      </div>
+      <ul class="skills" id="skills-list"></ul>
+    </section>
+
+    <!-- EXPÉRIENCES -->
+    <section id="journal" aria-labelledby="journal-title">
+      <div class="section-head">
+        <h2 id="journal-title" data-i18n="logTitle">Journal de mission</h2>
+        <span class="microlabel" data-i18n="logMicro">Expériences // Archive chronologique</span>
+      </div>
+      <ol class="log" id="log-list"></ol>
+    </section>
+
+    <!-- PROJETS -->
+    <section id="charges" aria-labelledby="charges-title">
+      <div class="section-head">
+        <h2 id="charges-title" data-i18n="payloadsTitle">Projets personnels</h2>
+        <span class="microlabel" data-i18n="payloadsMicro">Projets // Inventaire en soute</span>
+      </div>
+      <div class="payloads panel corners" id="payloads-list"></div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" aria-labelledby="contact-title">
+      <div class="panel corners contact-panel">
+        <p class="callsign" data-i18n="contactCallsign">Canal ouvert // Fréquence libre</p>
+        <h2 class="contact-title" id="contact-title" data-i18n="contactTitle">Établir le contact</h2>
+        <p class="contact-sub" data-i18n="contactSub">Une mission, un projet, une question ? Le centre de contrôle répond généralement sous 24 h.</p>
+        <div class="contact-actions" id="contact-actions"></div>
+        <p class="contact-avail" id="contact-avail" hidden><span class="led led--ok led--blink" aria-hidden="true"></span><span id="contact-avail-txt"></span></p>
+      </div>
+    </section>
+
+  </main>
+
   <footer>
-    Contenu d'exemple : modifiez les fichiers de <code>content/</code> (voir <a href="README.md">README</a>).
+    <div class="wrap">
+      <span class="microlabel" id="footer-id"></span>
+      <span class="microlabel" data-i18n="footerEnd">Fin de transmission // Signal terminé ▮</span>
+    </div>
   </footer>
-</main>
-<!-- Charge le moteur partagé : ici il ne sert qu'au rechargement auto en local (inerte en ligne). -->
-<script src="shared/portfolio.js"></script>
+
+
+  <script src="js/i18n.js"></script>
+  <script src="js/render.js"></script>
 </body>
 </html>

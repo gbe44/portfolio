@@ -13,16 +13,13 @@ fichiers Markdown chargés côté client par un mini-moteur maison (`shared/port
 ./serve.sh          # ou : python3 -m http.server 8000
 ```
 
-Puis ouvrir <http://localhost:8000> : la page d'accueil liste les 6 prototypes.
+Puis ouvrir <http://localhost:8000> : la page d'accueil est le site lui-même
+(design « Mission Control », NASA-punk / cassette futurism).
 
-| Dossier | Style |
-|---|---|
-| `prototypes/01-mission-control/` | NASA-punk / cassette futurism — console spatiale, ambre + vert phosphore **(direction retenue)** |
-| `prototypes/02-terminal/` | Session shell plein écran, prompt interactif |
-| `prototypes/03-neobrutalisme/` | Bordures épaisses, ombres dures, couleurs franches |
-| `prototypes/04-editorial/` | Typographie Swiss, sections numérotées, bleu Klein |
-| `prototypes/05-bento/` | Grille bento dark mode, cartes verre, vibe dashboard SaaS |
-| `prototypes/06-bento-nasa/` | Hybride : la grille bento du 05 + ADN NASA-punk (ambre, micro-labels console, LEDs, télémétrie) |
+> Les cinq autres directions artistiques explorées (terminal, néo-brutalisme,
+> éditorial Swiss, bento dark, bento × NASA-punk) sont archivées sur la branche
+> [`prototypes`](../../tree/prototypes), avec leur hub de comparaison :
+> `git switch prototypes && ./serve.sh` pour les revoir.
 
 ### Rechargement automatique
 
@@ -157,14 +154,13 @@ Le français est la langue de base ; l'anglais est optionnel, fichier par fichie
 - Dans les fichiers anglais, utilisez les statuts `active` / `paused` / `archived`
   (équivalents de `actif` / `en pause` / `archivé`) — les deux sont reconnus.
 
-## Anatomie du prototype 01 (celui retenu)
+## Anatomie du site
 
-Les prototypes 02 à 06 sont des fichiers uniques auto-portants. Le 01, sur lequel le
-travail continue, est découpé en briques — une par section du site, style et rendu
-séparés. Toujours zéro build : ce sont des `<link>` et des `<script src>`.
+Le site est découpé en briques — une par section, style et rendu séparés.
+Toujours zéro build : ce sont des `<link>` et des `<script src>`.
 
 ```
-prototypes/01-mission-control/
+(racine du dépôt)
 ├── index.html          structure HTML seule (~130 lignes)
 ├── css/
 │   ├── 00-base.css     variables, typographie, primitives (.panel, .btn, .led, .doc)
@@ -185,17 +181,18 @@ Le préfixe numérique des CSS **fait la cascade** : les `<link>` sont dans cet 
 dans `index.html`, et `99-motion.css` doit rester le dernier pour que ses `!important`
 priment. Chaque brique embarque ses propres media queries.
 
-## Choisir un prototype
+## Changer de direction artistique
 
-Quand vous avez choisi votre direction artistique, promouvez-la en page d'accueil :
+Le design retenu (Mission Control) vit à la racine. Pour repartir d'un autre
+prototype, récupérez-le depuis la branche `prototypes` :
 
 ```bash
-cp prototypes/04-editorial/index.html index.html          # prototype en un seul fichier
-cp -r prototypes/01-mission-control/{index.html,css,js} . # le 01, avec ses briques
+git switch prototypes -- prototypes/04-editorial/   # exemple
+cp prototypes/04-editorial/index.html index.html
 ```
 
-C'est tout : chaque prototype détecte automatiquement s'il tourne à la racine ou dans
-`prototypes/`. Vous pouvez ensuite supprimer les dossiers des prototypes écartés.
+Chaque prototype détecte automatiquement s'il tourne à la racine ou dans
+`prototypes/`.
 
 ## Mettre en ligne sur GitHub Pages
 
@@ -230,7 +227,9 @@ Notes :
 ## Structure
 
 ```
-├── index.html            # Page d'accueil (hub des prototypes, puis votre choix)
+├── index.html            # Le site (design Mission Control)
+├── css/                  # styles du site, une brique par section
+├── js/                   # i18n.js + render.js
 ├── content/              # ← votre contenu, en Markdown
 │   ├── profile.md
 │   ├── experiences/*.md
@@ -240,8 +239,9 @@ Notes :
 ├── tools/make-cv.mjs     # imprime cv/ en cv-fr.pdf et cv-en.pdf (Chrome headless)
 ├── .github/workflows/    # génère les CV puis publie le site
 ├── shared/portfolio.js   # frontmatter + rendu Markdown + chargement + reload dev
-├── prototypes/0X-*/      # les 6 directions artistiques (le 01 est découpé en css/ + js/)
 ├── serve.sh              # serveur local
 ├── dev-server.py         # http.server sans cache (développement seulement)
 └── .nojekyll             # désactive Jekyll sur GitHub Pages
 ```
+
+Les six prototypes d'origine restent consultables sur la branche `prototypes`.
