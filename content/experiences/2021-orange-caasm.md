@@ -14,7 +14,7 @@ cv_points:
   - Inventaire centralisé (150k+ actifs) via l'intégration de 5 API tierces (Netbox et autres inventaires internes)
   - Collecte asynchrone de différentes sources de données et de scanners de vulnérabilités event-driven
   - Conception et mise en œuvre de pipelines CI/CD avec déploiement des images vers Artifactory
-  - 70 jours/an économisés pour l'utilisateur principal, 50+ scans automatisés/semaine et réduction significative des vulnérabilités
+  - ! 70 jours/an économisés pour l'utilisateur principal, 50+ scans automatisés/semaine et réduction significative des vulnérabilités
 ---
 
 Quatre ans comme référent technique d'un outil de Cyber Asset Attack Surface Management : cartographier l'ensemble des actifs exposés, croiser les sources d'inventaire et orchestrer les scanners de vulnérabilités pour donner au VOC une vision consolidée de la surface d'attaque.

@@ -14,7 +14,7 @@ cv_points:
   - Centralized inventory (150k+ assets) via the integration of 5 third-party APIs (Netbox and other internal inventories)
   - Asynchronous collection of various data sources and event-driven vulnerability scanners
   - Design and implementation of CI/CD pipelines with deployment of images to Artifactory
-  - 70 days/year saved for the main user, 50+ automated scans/week and significant reduction of vulnerabilities
+  - ! 70 days/year saved for the main user, 50+ automated scans/week and significant reduction of vulnerabilities
 ---
 
 Four years as technical lead of a Cyber Asset Attack Surface Management tool: mapping every exposed asset, cross-referencing inventory sources and orchestrating vulnerability scanners to give the VOC a consolidated view of the attack surface.

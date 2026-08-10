@@ -16,10 +16,10 @@
 
   var L = {
     fr: {
-      xp: 'Expérience professionnelle',
-      projects: 'Projets personnels',
-      skills: 'Compétences',
-      edu: 'Formation et certifications',
+      xp: 'Expérience Professionnelle',
+      projects: 'Projets Personnels',
+      skills: 'Compétences Techniques',
+      edu: 'Formation et Certifications',
       docTitle: 'CV',
       fitOk: 'Tient sur une page',
       fitOverflow: 'DÉBORDE SUR UNE 2e PAGE — retirez une expérience ou raccourcissez des points',
@@ -27,10 +27,10 @@
       error: 'Erreur de chargement du contenu :'
     },
     en: {
-      xp: 'Professional experience',
-      projects: 'Personal projects',
-      skills: 'Skills',
-      edu: 'Education and certifications',
+      xp: 'Professional Experience',
+      projects: 'Personal Projects',
+      skills: 'Technical Skills',
+      edu: 'Education and Certifications',
       docTitle: 'Resume',
       fitOk: 'Fits on one page',
       fitOverflow: 'OVERFLOWS ONTO A 2nd PAGE — remove an experience or shorten some points',
@@ -61,48 +61,66 @@
     document.title = T.docTitle + (p.name ? ' — ' + p.name : '');
     $('cv-job').textContent = p.title || '';
     $('cv-name').textContent = p.name || '';
+    /* Ligne de contact des .tex : LinkedIn (affiché avec le nom) | email | téléphone. */
     $('cv-contact').innerHTML = join([
+      p.linkedin ? '<a href="' + esc(p.linkedin) + '">' + esc(p.name || pretty(p.linkedin)) + '</a>' : '',
       p.email ? '<a href="mailto:' + esc(p.email) + '">' + esc(p.email) + '</a>' : '',
-      p.github ? '<a href="' + esc(p.github) + '">' + esc(pretty(p.github)) + '</a>' : '',
-      p.linkedin ? '<a href="' + esc(p.linkedin) + '">' + esc(pretty(p.linkedin)) + '</a>' : '',
-      p.location ? esc(p.location) : ''
+      p.phone ? '<a href="tel:' + esc(String(p.phone).replace(/\s+/g, '')) + '">' + esc(p.phone) + '</a>' : ''
     ]);
-    $('cv-intro').textContent = p.tagline || '';
-    if (!p.tagline) $('cv-intro').hidden = true;
 
-    /* --- Expériences retenues (`cv: true`), réduites à leurs points --- */
+    /* --- Expériences retenues (`cv: true`), réduites à leurs points ---
+       Un point préfixé « ! » est un point fort : rendu en bleu, comme
+       les \cvitem{\color{myBlue}…} des .tex. */
     var kept = (data.experiences || []).filter(function (xp) { return (xp.meta || {}).cv === true; });
     $('cv-xp-title').textContent = T.xp;
     $('cv-xp').innerHTML = kept.map(function (xp) {
       var m = xp.meta || {};
       var points = m.cv_points || [];
       var out = '<article class="xp">';
-      out += '<div class="xp-head"><p class="xp-role">' + esc(m.title || '') +
-        (m.org ? ' <span class="org">— ' + esc(m.org) + '</span>' : '') + '</p>' +
+      out += '<div class="xp-head"><p class="xp-role">' + esc(m.title || '') + '</p>' +
         (m.period ? '<span class="xp-when">' + esc(m.period) + '</span>' : '') + '</div>';
-      if (m.location) out += '<p class="xp-where">' + esc(m.location) + '</p>';
+      if (m.org || m.location) {
+        out += '<div class="xp-sub"><span class="xp-org">' + esc(m.org || '') + '</span>' +
+          (m.location ? '<span class="xp-where">' + esc(m.location) + '</span>' : '') + '</div>';
+      }
       if (points.length) {
         out += '<ul>' + points.map(function (pt) {
-          return '<li>' + esc(pt) + '</li>';
+          var strong = /^!\s+/.test(pt);
+          return '<li' + (strong ? ' class="accent"' : '') + '>' +
+            esc(pt.replace(/^!\s+/, '')) + '</li>';
         }).join('') + '</ul>';
+      } else if (m.summary) {
+        /* pas de points (« Autres expériences ») → la ligne de résumé seule */
+        out += '<p class="xp-summary">' + esc(m.summary) + '</p>';
       }
       return out + '</article>';
     }).join('');
     $('block-xp').hidden = !kept.length;
 
-    /* --- Projets personnels : les noms seuls --- */
+    /* --- Projets personnels : une ligne descriptive par projet, comme les .tex --- */
     var projects = (data.projects || []).filter(function (pr) { return (pr.meta || {}).cv !== false; });
     $('cv-proj-title').textContent = T.projects;
     $('cv-proj').innerHTML = projects.map(function (pr) {
-      return '<li>' + esc((pr.meta || {}).title || '') + '</li>';
+      var m = pr.meta || {};
+      return '<li>' + esc(m.summary || m.title || '') + '</li>';
     }).join('');
     $('block-proj').hidden = !projects.length;
 
-    /* --- Compétences, en bas --- */
-    var skills = p.skills || [];
+    /* --- Compétences : par catégories (« Catégorie | a, b, c »), sinon la liste plate --- */
     $('cv-skills-title').textContent = T.skills;
-    $('cv-skills').innerHTML = skills.map(esc).join('<span class="sep">·</span>');
-    $('block-skills').hidden = !skills.length;
+    var groups = p.skill_groups || [];
+    if (groups.length) {
+      $('cv-skills').innerHTML = groups.map(function (g) {
+        var sep = g.indexOf('|');
+        var cat = sep !== -1 ? g.slice(0, sep).trim() : '';
+        var items = sep !== -1 ? g.slice(sep + 1).trim() : g.trim();
+        return '<p class="skill-line">' + (cat ? '<strong>' + esc(cat) + '</strong> : ' : '') +
+          esc(items) + '</p>';
+      }).join('');
+    } else {
+      $('cv-skills').innerHTML = '<p class="skill-line">' + (p.skills || []).map(esc).join(', ') + '</p>';
+    }
+    $('block-skills').hidden = !groups.length && !(p.skills || []).length;
 
     /* --- Formation / certifications : « année | libellé » dans education.md --- */
     var edu = (data.education && data.education.meta && data.education.meta.entries) || [];

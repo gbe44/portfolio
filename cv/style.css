@@ -1,18 +1,16 @@
-/* Gabarit du CV PDF.
-   Sobre et sur une seule colonne : les logiciels de tri de CV (ATS) lisent mal
-   les mises en page multi-colonnes, les tableaux et le texte dans des images.
-   Tout est du texte réel, noir sur blanc, avec un seul accent de couleur.
+/* Gabarit du CV PDF, calqué sur le rendu des cv_fr.tex / cv_en.tex :
+   serif académique, en-tête centré, sections soulignées d'un filet bleu,
+   puces carrées bleues, points forts en bleu.
 
    Toutes les tailles sont en `em` : réduire --cv-scale rétrécit le CV entier
    proportionnellement, ce dont se sert render.js pour le faire tenir sur une page. */
 
 :root {
-  --ink: #101418;
-  --soft: #4a5560;
-  --line: #c8cfd6;
-  --accent: #b06f00;   /* l'ambre du site, assombri pour rester lisible à l'impression */
-  --page-w: 182mm;     /* A4 (210 mm) moins 2 × 14 mm de marge */
-  --page-h: 273mm;     /* A4 (297 mm) moins 2 × 12 mm de marge */
+  --ink: #000;
+  --soft: #333;
+  --accent: #366dbf;   /* le myBlue des .tex (RGB 54, 109, 191) */
+  --page-w: 190mm;     /* A4 (210 mm) moins 2 × 10 mm de marge, comme les .tex */
+  --page-h: 277mm;     /* A4 (297 mm) moins 2 × 10 mm de marge */
   --cv-scale: 1;
 }
 
@@ -21,7 +19,7 @@
 body {
   margin: 0;
   background: #eceef1;
-  font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  font-family: 'STIX Two Text', 'Times New Roman', Georgia, serif;
   color: var(--ink);
 }
 
@@ -32,72 +30,100 @@ body {
   padding: 0;
   background: #fff;
   box-shadow: 0 2px 18px rgba(16, 20, 24, 0.16);
-  font-size: calc(10.4pt * var(--cv-scale));
-  line-height: 1.42;
+  font-size: calc(9.8pt * var(--cv-scale));
+  line-height: 1.34;
 }
 
-/* ---- En-tête : intitulé, puis nom, puis la ligne de contact ---- */
-.cv-head { border-bottom: 2px solid var(--accent); padding-bottom: 0.5em; margin-bottom: 0.9em; }
-.job {
-  margin: 0 0 0.15em;
-  font-family: 'IBM Plex Mono', ui-monospace, monospace;
-  font-size: 0.86em;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--accent);
+a { color: var(--accent); text-decoration: none; }
+
+/* ---- En-tête centré : nom, intitulé, ligne de contact (ordre des .tex) ---- */
+.cv-head {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: 0.4em;
 }
 .cv-head h1 {
-  margin: 0 0 0.22em;
-  font-size: 2.05em;
-  font-weight: 600;
-  line-height: 1.05;
-  letter-spacing: -0.01em;
+  order: 1;
+  margin: 0;
+  font-size: 2em;
+  font-weight: 700;
+  line-height: 1.15;
 }
-.contact { margin: 0; font-size: 0.9em; color: var(--soft); }
-.contact .sep { color: var(--line); padding: 0 0.45em; }
+.job {
+  order: 2;
+  margin: 0.1em 0 0.35em;
+  font-size: 1.55em;
+  font-weight: 700;
+  line-height: 1.15;
+}
+.contact { order: 3; margin: 0; font-size: 0.95em; }
+.contact .sep { color: var(--ink); padding: 0 0.55em; }
 
-.intro { margin: 0 0 1.1em; font-size: 0.97em; color: var(--soft); }
+.intro { display: none; }   /* pas d'accroche dans les .tex */
 
-/* ---- Sections ---- */
-.block { margin-bottom: 1.05em; }
+/* ---- Sections : titre gras + filet bleu pleine largeur ---- */
+.block { margin-bottom: 0.9em; }
 .block:last-child { margin-bottom: 0; }
 .block h2 {
-  margin: 0 0 0.55em;
-  font-family: 'IBM Plex Mono', ui-monospace, monospace;
-  font-size: 0.76em;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 0.35em;
+  margin: 1em 0 0.45em;
+  font-size: 1.05em;
+  font-weight: 700;
+  color: var(--ink);
+  border-bottom: 0.8pt solid var(--accent);
+  padding-bottom: 0.18em;
 }
 
-/* ---- Expériences : en-tête de poste puis les cv_points, rien d'autre ---- */
-.xp { margin-bottom: 0.85em; break-inside: avoid; }
+/* « Projets Personnels » est un sous-titre dans les .tex, sans filet */
+#block-proj h2 { border-bottom: 0; padding-bottom: 0; margin-bottom: 0.25em; }
+
+/* ---- Expériences : rôle + dates, puis organisation + lieu, puis les points ---- */
+.xp { margin-bottom: 0.7em; break-inside: avoid; }
 .xp:last-child { margin-bottom: 0; }
 .xp-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1em; }
-.xp-role { margin: 0; font-size: 1.02em; font-weight: 600; }
-.xp-role .org { font-weight: 400; }
-.xp-when { flex: none; font-size: 0.82em; color: var(--soft); white-space: nowrap; }
-.xp-where { margin: 0 0 0.3em; font-size: 0.82em; color: var(--soft); }
-.xp ul { margin: 0; padding: 0; list-style: none; }
-.xp li { position: relative; padding-left: 1em; margin: 0.16em 0; }
-.xp li::before { content: "•"; position: absolute; left: 0.15em; color: var(--accent); }
+.xp-role { margin: 0; font-size: 1em; font-weight: 700; }
+.xp-when { flex: none; font-size: 0.95em; white-space: nowrap; }
+.xp-sub { display: flex; justify-content: space-between; gap: 1em; font-size: 0.95em; }
+.xp-sub .xp-org { margin: 0; }
+.xp-sub .xp-where { margin: 0; white-space: nowrap; }
+.xp-summary { margin: 0.1em 0 0; font-size: 0.95em; }
 
-/* ---- Projets personnels : les noms seuls, en ligne pour économiser la hauteur ---- */
+/* Puces : petits carrés bleus, comme le \faSquare minuscule des .tex */
+.xp ul { margin: 0.25em 0 0; padding: 0; list-style: none; }
+.xp li { position: relative; padding-left: 1.1em; margin: 0.14em 0; text-align: justify; }
+.xp li::before {
+  content: "■";
+  position: absolute;
+  left: 0.1em;
+  top: 0.42em;
+  font-size: 0.5em;
+  color: var(--accent);
+}
+.xp li.accent { color: var(--accent); }
+
+/* ---- Projets personnels : une ligne par projet, mêmes puces carrées ---- */
 .names { margin: 0; padding: 0; list-style: none; }
-.names li { display: inline; }
-.names li::before { content: "• "; color: var(--accent); }
-.names li + li::before { content: "  • "; }
+.names li { position: relative; display: block; padding-left: 1.1em; margin: 0.14em 0; }
+.names li::before {
+  content: "■";
+  position: absolute;
+  left: 0.1em;
+  top: 0.42em;
+  font-size: 0.5em;
+  color: var(--accent);
+}
 
-.skills { margin: 0; }
-.skills .sep { color: var(--line); padding: 0 0.4em; }
+/* ---- Compétences : une ligne par catégorie, « Catégorie : liste » ---- */
+.skill-line { margin: 0.14em 0; }
+.skill-line strong { font-weight: 700; }
+
+/* ---- Formation : année en colonne étroite, libellé à la suite ---- */
+.edu-row { display: flex; gap: 0; margin: 0.14em 0; }
+.edu-row .edu-year { flex: none; width: 3.2em; font-weight: 400; color: var(--ink); }
 
 /* ---- Bandeau d'aide, écran uniquement ---- */
 .screen-bar {
-  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-family: ui-monospace, 'Cascadia Mono', monospace;
   font-size: 0.72rem;
   letter-spacing: 0.06em;
   background: #101418;
@@ -113,7 +139,7 @@ body {
 .screen-bar.overflow .hint { color: #ffc4c4; }
 
 /* ---- Impression : c'est ce rendu qui devient le PDF ---- */
-@page { size: A4; margin: 12mm 14mm; }
+@page { size: A4; margin: 10mm; }
 
 @media print {
   body { background: #fff; }
@@ -124,9 +150,5 @@ body {
     margin: 0;
     box-shadow: none;
   }
-  a { color: inherit; text-decoration: none; }
+  a { color: var(--accent); text-decoration: none; }
 }
-
-/* ---- Formation : une ligne par qualification, l'année en tête ---- */
-.edu-row { margin: 0.12em 0; font-size: 0.9em; }
-.edu-row .edu-year { display: inline-block; min-width: 2.6em; font-weight: 600; color: var(--soft); }

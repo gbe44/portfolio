@@ -11,7 +11,7 @@ cv_points:
   - Responsible for the backend, deployment and team lead (4 developers)
   - Complete migration of an existing PHP application to a Python/Angular stack
   - Agile methodology, technical mentoring, code review and support of the development team
-  - Optimization of a file processing task, reducing execution time from 25 minutes to less than 1 second
+  - ! Optimization of a file processing task, reducing execution time from 25 minutes to less than 1 second
 ---
 
 Owner of the backend and deployment of a network flow management platform for La Poste, leading a team of 4 developers: agile methodology, technical mentoring, code reviews and day-to-day support.

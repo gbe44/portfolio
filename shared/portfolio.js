@@ -201,9 +201,11 @@
      mais le générateur de CV sait où les trouver. */
   function pointsToHtml(points) {
     if (!points || !points.length) return '';
-    /* même mise en forme que mdToHtml pour une liste « - … » */
+    /* même mise en forme que mdToHtml pour une liste « - … ».
+       Le préfixe « ! » marque un point fort pour le CV (rendu en bleu là-bas) ;
+       sur le site il est simplement retiré. */
     return ['<ul>'].concat(points.map(function (p) {
-      return '<li>' + inline(escapeHtml(p)) + '</li>';
+      return '<li>' + inline(escapeHtml(p.replace(/^!\s+/, ''))) + '</li>';
     }), '</ul>').join('\n');
   }
 

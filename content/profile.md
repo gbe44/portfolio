@@ -4,9 +4,17 @@ title: Ingénieur Logiciel Freelance (Sécurité)
 tagline: J'aide les équipes à concevoir, construire et sécuriser leurs produits, du cadrage à la mise en production.
 location: Nantes, France
 email: guillaume.berthelot44@gmail.com
+phone: 
 github: https://github.com/gbe44
 linkedin: https://www.linkedin.com/in/guillaumeberthelot/
 skills: Python, Flask, FastAPI, React, JavaScript, Docker, CI/CD, PostgreSQL, MySQL, Redis, Linux, Secure SDLC, OWASP Top 10
+skill_groups:
+  - Langages et Frameworks | Python, Flask, FastAPI, React, Javascript
+  - Sécurité | Secure SDLC, OWASP Top 10, Gestion des Vulnérabilités, Bandit, Trivy, Safety, Tenable.sc, TestSSL
+  - Architecture | Microservices, API REST, Event-driven, Ordonnancement de tâches, Traitement Asynchrone
+  - Industrialisation & Système | Linux, Docker, CI/CD (GitLab CI), Nexus/Artifactory, Bash, Grafana
+  - Bases de données | MySQL, PostgreSQL, Redis
+  - Langues | Français (natif), Anglais (B2 - projets internationaux)
 availability: Disponible pour de nouvelles missions
 years: 8
 ---
