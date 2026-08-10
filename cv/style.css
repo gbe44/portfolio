@@ -91,30 +91,19 @@ a { color: var(--accent); text-decoration: none; }
 .xp-sub .xp-where { margin: 0; white-space: nowrap; }
 .xp-summary { margin: 0.1em 0 0; font-size: 0.95em; }
 
-/* Puces : petits carrés bleus, comme le \faSquare minuscule des .tex */
+/* Puces : petits carrés ambrés dans le flux du texte. Surtout pas de
+   position:absolute/relative ici : Chrome peindrait les éléments positionnés
+   dans une couche à part du PDF, et les parseurs ATS qui lisent le flux
+   retrouveraient toutes les puces en vrac à la fin du document. */
 .xp ul { margin: 0.25em 0 0; padding: 0; list-style: none; }
-.xp li { position: relative; padding-left: 1.1em; margin: 0.14em 0; text-align: justify; }
-.xp li::before {
-  content: "■";
-  position: absolute;
-  left: 0.1em;
-  top: 0.42em;
-  font-size: 0.5em;
-  color: var(--accent);
-}
+.xp li { padding-left: 1.1em; text-indent: -1.1em; margin: 0.14em 0; }
+.xp li::before { content: "▪\00a0\00a0"; color: var(--accent); }
 .xp li.accent { color: var(--accent); }
 
 /* ---- Projets personnels : une ligne par projet, mêmes puces carrées ---- */
 .names { margin: 0; padding: 0; list-style: none; }
-.names li { position: relative; display: block; padding-left: 1.1em; margin: 0.14em 0; }
-.names li::before {
-  content: "■";
-  position: absolute;
-  left: 0.1em;
-  top: 0.42em;
-  font-size: 0.5em;
-  color: var(--accent);
-}
+.names li { display: block; padding-left: 1.1em; text-indent: -1.1em; margin: 0.14em 0; }
+.names li::before { content: "▪\00a0\00a0"; color: var(--accent); }
 
 /* ---- Compétences : une ligne par catégorie, « Catégorie : liste » ---- */
 .skill-line { margin: 0.14em 0; }
