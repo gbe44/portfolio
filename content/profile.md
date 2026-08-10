@@ -1,18 +1,18 @@
 ---
 name: Guillaume Berthelot
-title: Développeur Freelance
-tagline: J'aide les équipes à concevoir, construire et fiabiliser leurs produits web.
+title: Ingénieur Logiciel Freelance (Sécurité)
+tagline: J'aide les équipes à concevoir, construire et sécuriser leurs produits, du cadrage à la mise en production.
 location: Nantes, France
 email: guillaume.berthelot44@gmail.com
-github: https://github.com/votre-compte
-linkedin: https://www.linkedin.com/in/votre-profil
-skills: Python, React, PostgresSQL, MySQL, Docker, Linux, CI/CD, Celery
+github: https://github.com/gbe44
+linkedin: https://www.linkedin.com/in/guillaumeberthelot/
+skills: Python, Flask, FastAPI, React, JavaScript, Docker, CI/CD, PostgreSQL, MySQL, Redis, Linux, Secure SDLC, OWASP Top 10
 availability: Disponible pour de nouvelles missions
 years: 8
 ---
 
-Développeur freelance basé à Nantes, j'accompagne startups et PME sur toute la chaîne de fabrication d'un produit web : cadrage technique, développement full-stack, mise en production et fiabilisation.
+Ingénieur logiciel freelance basé à Nantes, spécialisé en backend Python et sécurité applicative. Depuis 2018, j'interviens sur des produits à forte composante métier (cybersécurité, assurance, logistique), du cadrage technique à la mise en production.
 
-Mon terrain de jeu favori : les produits à forte composante métier, où il faut comprendre le domaine avant d'écrire la moindre ligne de code. J'aime les équipes courtes, les boucles de feedback rapides et le code qu'on peut relire six mois plus tard sans frémir.
+Mon terrain favori : les outils qui donnent de la visibilité et font gagner du temps aux équipes. Plateforme de gestion de surface d'attaque, automatisation de traitements réglementaires, migration d'applications existantes : architecture microservices, traitements asynchrones et industrialisation (Docker, CI/CD) sont mon quotidien.
 
-En dehors des missions, je contribue à quelques projets open source et je documente ce que j'apprends.
+Je travaille en français comme en anglais (B2, projets internationaux).

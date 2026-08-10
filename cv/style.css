@@ -126,3 +126,7 @@ body {
   }
   a { color: inherit; text-decoration: none; }
 }
+
+/* ---- Formation : une ligne par qualification, l'année en tête ---- */
+.edu-row { margin: 0.12em 0; font-size: 0.9em; }
+.edu-row .edu-year { display: inline-block; min-width: 2.6em; font-weight: 600; color: var(--soft); }

@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/30-about.css">
   <link rel="stylesheet" href="css/40-log.css">
   <link rel="stylesheet" href="css/50-payloads.css">
+  <link rel="stylesheet" href="css/55-education.css">
   <link rel="stylesheet" href="css/60-contact.css">
   <link rel="stylesheet" href="css/70-boot.css">
   <link rel="stylesheet" href="css/99-motion.css">
@@ -23,7 +24,7 @@
   <!-- Séquence de boot (décorative, retirée par JS / reduced-motion) -->
   <div id="boot" role="presentation" aria-hidden="true">
     <div class="boot-inner">
-      <p class="boot-line" data-i18n-html="boot1">&gt; INIT SYS // PORTFOLIO v1.0</p>
+      <p class="boot-line" data-i18n-html="boot1">&gt; INIT SYS // PORTFOLIO</p>
       <p class="boot-line" data-i18n-html="boot2">&gt; VÉRIF. MODULES ............ <span class="ok">OK</span></p>
       <p class="boot-line" data-i18n-html="boot3">&gt; LIAISON TÉLÉMÉTRIE ........ <span class="ok">OK</span></p>
       <p class="boot-line" data-i18n-html="boot4">&gt; CHARGEMENT DOSSIER OPÉRATEUR</p>
@@ -35,12 +36,13 @@
 
   <header class="topbar">
     <div class="wrap">
-      <span class="brand">SYS // PORTFOLIO v1.0</span>
+      <span class="brand">SYS // PORTFOLIO</span>
       <nav aria-label="Navigation principale" data-i18n-aria="navAria">
         <a href="#apropos" data-i18n="navAbout">À propos</a>
         <a href="#competences" data-i18n="navSkills">Compétences</a>
         <a href="#journal" data-i18n="navLog">Journal</a>
         <a href="#charges" data-i18n="navPayloads">Charges utiles</a>
+        <a href="#formation" data-i18n="navEdu">Formation</a>
         <a href="#contact" data-i18n="navContact">Contact</a>
       </nav>
       <div class="lang-switch" role="group" aria-label="Langue" data-i18n-aria="langAria">
@@ -103,6 +105,15 @@
         <span class="microlabel" data-i18n="payloadsMicro">Projets // Inventaire en soute</span>
       </div>
       <div class="payloads panel corners" id="payloads-list"></div>
+    </section>
+
+    <!-- FORMATION / CERTIFICATIONS -->
+    <section id="formation" aria-labelledby="formation-title" hidden>
+      <div class="section-head">
+        <h2 id="formation-title" data-i18n="eduTitle">Formation &amp; certifications</h2>
+        <span class="microlabel" data-i18n="eduMicro">Qualifications // Registre officiel</span>
+      </div>
+      <ul class="panel corners edu" id="edu-list"></ul>
     </section>
 
     <!-- CONTACT -->

@@ -15,8 +15,17 @@
   border: 2px solid var(--amber);
   border-radius: 50%;
 }
+.log-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 0.35rem;
+}
 .stamp {
   display: inline-block;
+  flex-shrink: 0;
   border: 2px solid var(--amber);
   color: var(--amber);
   font-size: 0.68rem;
@@ -24,11 +33,9 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   padding: 0.25rem 0.6rem;
-  transform: rotate(-1.6deg);
-  margin-bottom: 0.9rem;
   background: rgba(255, 176, 0, 0.06);
 }
-.log-entry h3 { margin: 0 0 0.35rem; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text); }
+.log-entry h3 { margin: 0; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text); }
 .operator { margin: 0 0 0.15rem; color: var(--amber); font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; }
 .loc-line { margin: 0 0 0.9rem; color: var(--muted); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; }
 .lead { color: var(--muted); font-style: italic; margin: 0 0 0.9rem; }

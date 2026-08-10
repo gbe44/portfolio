@@ -235,10 +235,12 @@
       return Promise.all([
         fetchDoc(base, manifest.profile, lang),
         Promise.all((manifest.experiences || []).map(function (p) { return fetchDoc(base, p, lang); })),
-        Promise.all((manifest.projects || []).map(function (p) { return fetchDoc(base, p, lang); }))
+        Promise.all((manifest.projects || []).map(function (p) { return fetchDoc(base, p, lang); })),
+        /* facultatif : absent du manifest → null, les rendus masquent la section */
+        manifest.education ? fetchDoc(base, manifest.education, lang) : Promise.resolve(null)
       ]);
     }).then(function (res) {
-      return { profile: res[0], experiences: res[1], projects: res[2] };
+      return { profile: res[0], experiences: res[1], projects: res[2], education: res[3] };
     });
   }
 

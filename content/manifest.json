@@ -1,13 +1,18 @@
 {
   "profile": "profile.md",
+  "education": "education.md",
   "experiences": [
-    "experiences/2021-agence.md",
-    "experiences/2025-neobanque.md",
-    "experiences/2023-devops-retail.md"
+    "experiences/2025-besse.md",
+    "experiences/2021-orange-caasm.md",
+    "experiences/2018-laposte-flux.md",
+    "experiences/2018-laposte-antiphishing.md",
+    "experiences/2014-debuts.md"
   ],
   "projects": [
-    "projects/datapipe.md",
-    "projects/kanbo.md",
+    "projects/forge-ia.md",
+    "projects/jeu-llm.md",
+    "projects/association.md",
+    "projects/trading-bot.md",
     "projects/portfolio.md"
   ]
 }

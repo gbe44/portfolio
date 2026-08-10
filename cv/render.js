@@ -19,6 +19,7 @@
       xp: 'Expérience professionnelle',
       projects: 'Projets personnels',
       skills: 'Compétences',
+      edu: 'Formation et certifications',
       docTitle: 'CV',
       fitOk: 'Tient sur une page',
       fitOverflow: 'DÉBORDE SUR UNE 2e PAGE — retirez une expérience ou raccourcissez des points',
@@ -29,6 +30,7 @@
       xp: 'Professional experience',
       projects: 'Personal projects',
       skills: 'Skills',
+      edu: 'Education and certifications',
       docTitle: 'Resume',
       fitOk: 'Fits on one page',
       fitOverflow: 'OVERFLOWS ONTO A 2nd PAGE — remove an experience or shorten some points',
@@ -101,6 +103,17 @@
     $('cv-skills-title').textContent = T.skills;
     $('cv-skills').innerHTML = skills.map(esc).join('<span class="sep">·</span>');
     $('block-skills').hidden = !skills.length;
+
+    /* --- Formation / certifications : « année | libellé » dans education.md --- */
+    var edu = (data.education && data.education.meta && data.education.meta.entries) || [];
+    $('cv-edu-title').textContent = T.edu;
+    $('cv-edu').innerHTML = edu.map(function (e) {
+      var sep = e.indexOf('|');
+      var year = sep !== -1 ? e.slice(0, sep).trim() : '';
+      var label = sep !== -1 ? e.slice(sep + 1).trim() : e.trim();
+      return '<p class="edu-row"><span class="edu-year">' + esc(year) + '</span>' + esc(label) + '</p>';
+    }).join('');
+    $('block-edu').hidden = !edu.length;
   }
 
   /* --- Ajustement à une page ------------------------------------------- */

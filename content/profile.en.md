@@ -1,18 +1,18 @@
 ---
 name: Guillaume Berthelot
-title: Freelance Software Developer
-tagline: I help teams design, build and harden their web products.
+title: Freelance Software Engineer (Security)
+tagline: I help teams design, build and secure their products, from scoping to production.
 location: Nantes, France
 email: guillaume.berthelot44@gmail.com
-github: https://github.com/votre-compte
-linkedin: https://www.linkedin.com/in/votre-profil
-skills: Python, React, PostgresSQL, MySQL, Docker, Linux, CI/CD, Celery
-availability: Available for new projects
+github: https://github.com/gbe44
+linkedin: https://www.linkedin.com/in/guillaumeberthelot/
+skills: Python, Flask, FastAPI, React, JavaScript, Docker, CI/CD, PostgreSQL, MySQL, Redis, Linux, Secure SDLC, OWASP Top 10
+availability: Available for new engagements
 years: 8
 ---
 
-Freelance developer based in Nantes, France. I help startups and SMEs across the whole lifecycle of a web product: technical scoping, full-stack development, deployment and reliability work.
+Freelance software engineer based in Nantes, France, specialised in Python backends and application security. Since 2018 I have been working on business-heavy products (cybersecurity, insurance, logistics), from technical scoping to production.
 
-My favourite playground: products with a strong business domain, where you need to understand the field before writing a single line of code. I like small teams, fast feedback loops, and code you can reread six months later without wincing.
+My favourite ground: tools that give teams visibility and time back. Attack-surface management platform, automation of regulatory processing, migration of legacy applications: microservice architecture, asynchronous processing and delivery industrialisation (Docker, CI/CD) are my day-to-day.
 
-Outside client work, I contribute to a few open source projects and write about what I learn.
+I work in French or English (B2, international projects).

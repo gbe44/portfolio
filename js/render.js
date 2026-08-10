@@ -134,8 +134,9 @@ function initSite(data, lang) {
   $('log-list').innerHTML = experiences.map(function (xp) {
     var m = xp.meta || {};
     var out = '<li class="log-entry"><article class="panel">';
+    out += '<div class="log-head"><h3>' + esc(m.title || T.untitledMission) + '</h3>';
     if (m.period || m.date) out += '<div class="stamp">' + esc(m.period || m.date) + '</div>';
-    out += '<h3>' + esc(m.title || T.untitledMission) + '</h3>';
+    out += '</div>';
     if (m.org) out += '<p class="operator">' + esc(T.operatorPrefix) + esc(m.org) + '</p>';
     if (m.location) out += '<p class="loc-line">' + esc(T.positionPrefix) + esc(m.location) + '</p>';
     if (m.summary) out += '<p class="lead">' + esc(m.summary) + '</p>';
@@ -192,6 +193,21 @@ function initSite(data, lang) {
       '<div class="payload-body">' + body + '</div></details>';
   }).join('');
 
+  /* --- Formation / certifications --- */
+  /* Chaque entrée du registre s'écrit « année | libellé » dans content/education.md. */
+  var eduEntries = (data.education && data.education.meta && data.education.meta.entries) || [];
+  var eduSection = document.getElementById('formation');
+  if (eduSection) {
+    eduSection.hidden = !eduEntries.length;
+    $('edu-list').innerHTML = eduEntries.map(function (e) {
+      var sep = e.indexOf('|');
+      var year = sep !== -1 ? e.slice(0, sep).trim() : '';
+      var label = sep !== -1 ? e.slice(sep + 1).trim() : e.trim();
+      return '<li class="edu-row"><span class="edu-year">' + esc(year) + '</span>' +
+        '<span class="edu-label">' + esc(label) + '</span></li>';
+    }).join('');
+  }
+
   /* --- Contact --- */
   var actions = [];
   if (profile.email) {
@@ -211,7 +227,7 @@ function initSite(data, lang) {
 
   /* --- Pied de page --- */
   if (profile.name) {
-    $('footer-id').textContent = '© ' + new Date().getFullYear() + ' ' + profile.name + ' — ' + T.footerId;
+    $('footer-id').textContent = '© ' + new Date().getFullYear() + ' ' + profile.name;
   }
 }
 

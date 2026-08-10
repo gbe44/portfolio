@@ -3,9 +3,10 @@ title: Ce portfolio
 period: 2026
 date: 2026-08
 tags: HTML, CSS, JavaScript, GitHub Pages
-summary: Le site que vous êtes en train de consulter — statique, sans framework, alimenté par des fichiers Markdown.
+summary: Le site que vous êtes en train de consulter : statique, sans framework, alimenté par des fichiers Markdown.
 status: actif
-repo: https://github.com/votre-compte/portfolio
+repo: https://github.com/gbe44/portfolio
+cv: false
 ---
 
 Un site vitrine 100 % statique : le contenu (profil, expériences, projets) vit dans des fichiers Markdown, chargés et rendus côté client par un mini-moteur maison d'environ 150 lignes.
