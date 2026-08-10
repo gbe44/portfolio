@@ -5,7 +5,6 @@ tagline: I help teams design, build and secure their products, from scoping to p
 location: Nantes, France
 email_user: guillaume.berthelot44
 email_domain: gmail.com
-phone: 
 github: https://github.com/gbe44
 linkedin: https://www.linkedin.com/in/guillaumeberthelot/
 skills: Python, Flask, FastAPI, React, JavaScript, Docker, CI/CD, PostgreSQL, MySQL, Redis, Linux, Secure SDLC, OWASP Top 10
