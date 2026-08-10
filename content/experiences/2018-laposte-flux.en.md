@@ -1,7 +1,7 @@
 ---
 title: Lead Backend Developer
 org: La Poste - Network flow management platform
-period: Nov 2018 — Apr 2021
+period: Nov 2018 - Apr 2021
 date: 2018-11
 location: Econocom - Nantes
 tags: Python, Angular, Docker, Agile

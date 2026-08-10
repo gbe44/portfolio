@@ -1,7 +1,7 @@
 ---
 title: Développeur Backend Senior
 org: Bessé - Solutions d'assurance
-period: août 2025 — aujourd'hui
+period: août 2025 - aujourd'hui
 date: 2025-08
 location: Freelance - Nantes
 tags: Python, Docker, CI/CD, RGPD

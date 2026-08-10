@@ -1,7 +1,7 @@
 ---
 title: Senior Backend Developer
 org: Bessé - Insurance solutions
-period: Aug 2025 — present
+period: Aug 2025 - present
 date: 2025-08
 location: Freelance - Nantes
 tags: Python, Docker, CI/CD, GDPR

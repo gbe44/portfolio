@@ -1,7 +1,7 @@
 ---
 title: Autres expériences
 org: Scale-up, start-up, hôpital
-period: 2014 — 2018
+period: 2014 - 2018
 date: 2014-01
 tags: ServiceNow, PHP, JavaScript
 summary: Consultant ServiceNow, développement PHP/JS et support informatique : les années où j'ai appris le terrain.

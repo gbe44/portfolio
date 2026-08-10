@@ -1,7 +1,7 @@
 ---
 title: Backend Developer
 org: La Poste - Anti-phishing solution
-period: Mar 2018 — Nov 2018
+period: Mar 2018 - Nov 2018
 date: 2018-03
 location: Econocom - Nantes
 tags: Python, Threat Intelligence, Web scraping

@@ -1,7 +1,7 @@
 ---
 title: Lead Développeur Backend
 org: La Poste - Plateforme de gestion des flux réseau
-period: nov. 2018 — avr. 2021
+period: nov. 2018 - avr. 2021
 date: 2018-11
 location: Econocom - Nantes
 tags: Python, Angular, Docker, Agile

@@ -1,7 +1,7 @@
 ---
 title: Développeur Full Stack
 org: Orange - Outil CAASM (Cyber Asset Attack Surface Management)
-period: avr. 2021 — août 2025
+period: avr. 2021 - août 2025
 date: 2021-04
 location: Freelance - Rennes (remote)
 tags: Python, Flask, FastAPI, Celery, React, Docker, GitLab CI

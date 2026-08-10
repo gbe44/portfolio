@@ -1,6 +1,6 @@
 ---
 title: Forge logicielle IA
-period: 2025 — aujourd'hui
+period: 2025 - aujourd'hui
 date: 2025-06
 tags: IA, LLM, Agents
 summary: Chaîne de fabrication logicielle de bout en bout pilotée par des agents IA, de l'expression du besoin au déploiement.

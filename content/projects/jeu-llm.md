@@ -1,6 +1,6 @@
 ---
 title: Jeu augmenté par LLM
-period: 2025 — aujourd'hui
+period: 2025 - aujourd'hui
 date: 2025-03
 tags: LLM, Game dev
 summary: Conception d'un jeu intégrant des fonctionnalités générées par des modèles de langage.

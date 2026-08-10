@@ -1,6 +1,6 @@
 ---
 title: Gestion d'association sportive
-period: 2024 — aujourd'hui
+period: 2024 - aujourd'hui
 date: 2024-01
 tags: Web, Full-stack
 summary: Application web de gestion complète d'une association sportive : saisons, membres, inscriptions, locations de matériel.

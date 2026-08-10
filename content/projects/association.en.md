@@ -1,6 +1,6 @@
 ---
 title: Sports association management
-period: 2024 — present
+period: 2024 - present
 date: 2024-01
 tags: Web, Full-stack
 summary: Full management web application for a sports association, seasons, members, registrations and equipment rentals.
