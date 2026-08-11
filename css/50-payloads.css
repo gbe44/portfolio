@@ -4,7 +4,8 @@
 
 /* Une ligne = un projet ; le détail se déplie via <details>/<summary>. */
 .payloads { padding: 0; }
-.payload { border-top: 1px solid var(--line); }
+/* scroll-margin : cible du lien « Localiser » du filtre compétences */
+.payload { border-top: 1px solid var(--line); scroll-margin-top: 5rem; }
 .payloads > .payload:first-child { border-top: none; }
 
 .payload > summary,
@@ -70,6 +71,13 @@
 /* Un seul des deux libellés est présent dans le DOM à la fois (a11y). */
 .payload:not([open]) .on-open,
 .payload[open] .on-closed { display: none; }
+
+/* ============ FILTRE COMPÉTENCES ============ */
+/* Compétence sélectionnée présente dans les modules du projet : la ligne se
+   signale même repliée (les modules ne sont visibles qu'une fois déployée). */
+.payload.has-tag-hit > summary,
+.payload.has-tag-hit > .pl-row { box-shadow: inset 3px 0 0 var(--amber); }
+.payload.has-tag-hit .pl-title { color: var(--amber-soft); }
 
 .payload-body { padding: 1.1rem 1.1rem 1.3rem; border-top: 1px dashed var(--line-soft); animation: deploy-in 0.22s ease-out; }
 /* le résumé est déjà dans la ligne repliée — sauf quand elle le masque (écrans étroits) */

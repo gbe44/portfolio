@@ -7,7 +7,7 @@ email_user: guillaume.berthelot44
 email_domain: gmail.com
 github: https://github.com/gbe44
 linkedin: https://www.linkedin.com/in/guillaumeberthelot/
-skills: Python, Flask, FastAPI, React, JavaScript, Docker, CI/CD, PostgreSQL, MySQL, Redis, Linux, Secure SDLC, OWASP Top 10
+skills: Python, Flask, FastAPI, React, JavaScript, Docker, CI/CD, PostgreSQL, MySQL, Redis, Linux, Secure SDLC, OWASP Top 10, GDPR, Celery, GitLab CI, Angular, Agile, Threat Intelligence, Web scraping, ServiceNow, PHP, AI, LLM, Agents, Game dev, Web, Full-stack, Crypto, API, HTML, CSS, GitHub Pages
 skill_groups:
   - Languages and Frameworks | Python, Flask, FastAPI, React, Javascript
   - Security | Secure SDLC, OWASP Top 10, Vulnerability Management, Bandit, Trivy, Safety, Tenable.sc, TestSSL
@@ -19,8 +19,8 @@ availability: Available for new engagements
 years: 8
 ---
 
-Freelance software engineer based in Nantes, France, specialised in Python backends and application security. Since 2018 I have been working on business-heavy products (cybersecurity, insurance, logistics), from technical scoping to production.
+Freelance software engineer based in Nantes, France, specialised in **Python backends** and **application security**. Since 2018 I have been working on business-heavy products (cybersecurity, insurance, logistics), from **technical scoping** to **production**.
 
-My favourite ground: tools that give teams visibility and time back. Attack-surface management platform, automation of regulatory processing, migration of legacy applications: microservice architecture, asynchronous processing and delivery industrialisation (Docker, CI/CD) are my day-to-day.
+My favourite ground: tools that give teams visibility and time back. **Attack-surface management** platform, automation of regulatory processing, migration of legacy applications: **microservice architecture**, **asynchronous processing** and **delivery industrialisation** (Docker, CI/CD) are my day-to-day.
 
-I work in French or English (B2, international projects).
+I work in **French or English** (B2, international projects).

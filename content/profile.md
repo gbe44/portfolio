@@ -7,7 +7,7 @@ email_user: guillaume.berthelot44
 email_domain: gmail.com
 github: https://github.com/gbe44
 linkedin: https://www.linkedin.com/in/guillaumeberthelot/
-skills: Python, Flask, FastAPI, React, JavaScript, Docker, CI/CD, PostgreSQL, MySQL, Redis, Linux, Secure SDLC, OWASP Top 10
+skills: Python, Flask, FastAPI, React, JavaScript, Docker, CI/CD, PostgreSQL, MySQL, Redis, Linux, Secure SDLC, OWASP Top 10, RGPD, Celery, GitLab CI, Angular, Agile, Threat Intelligence, Web scraping, ServiceNow, PHP, IA, LLM, Agents, Game dev, Web, Full-stack, Crypto, API, HTML, CSS, GitHub Pages
 skill_groups:
   - Langages et Frameworks | Python, Flask, FastAPI, React, Javascript
   - Sécurité | Secure SDLC, OWASP Top 10, Gestion des Vulnérabilités, Bandit, Trivy, Safety, Tenable.sc, TestSSL
@@ -19,8 +19,8 @@ availability: Disponible pour de nouvelles missions
 years: 8
 ---
 
-Ingénieur logiciel freelance basé à Nantes, spécialisé en backend Python et sécurité applicative. Depuis 2018, j'interviens sur des produits à forte composante métier (cybersécurité, assurance, logistique), du cadrage technique à la mise en production.
+Ingénieur logiciel freelance basé à Nantes, spécialisé en **backend Python** et **sécurité applicative**. Depuis 2018, j'interviens sur des produits à forte composante métier (cybersécurité, assurance, logistique), du **cadrage technique** à la **mise en production**.
 
-Mon terrain favori : les outils qui donnent de la visibilité et font gagner du temps aux équipes. Plateforme de gestion de surface d'attaque, automatisation de traitements réglementaires, migration d'applications existantes : architecture microservices, traitements asynchrones et industrialisation (Docker, CI/CD) sont mon quotidien.
+Mon terrain favori : les outils qui donnent de la visibilité et font gagner du temps aux équipes. Plateforme de **gestion de surface d'attaque**, automatisation de traitements réglementaires, migration d'applications existantes : **architecture microservices**, **traitements asynchrones** et **industrialisation** (Docker, CI/CD) sont mon quotidien.
 
-Je travaille en français comme en anglais (B2, projets internationaux).
+Je travaille en **français comme en anglais** (B2, projets internationaux).

@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="css/10-topbar.css">
   <link rel="stylesheet" href="css/20-hero.css">
   <link rel="stylesheet" href="css/30-about.css">
+  <link rel="stylesheet" href="css/35-trace.css">
   <link rel="stylesheet" href="css/40-log.css">
   <link rel="stylesheet" href="css/50-payloads.css">
   <link rel="stylesheet" href="css/55-education.css">
@@ -76,7 +77,12 @@
       </div>
       <div class="about-grid">
         <div class="panel doc" id="about-body"></div>
+        <!-- Fiche opérateur désactivée : doublon avec la télémétrie du héro.
+             Pour la réactiver : décommenter l'aside ci-dessous et rétablir les
+             deux colonnes de .about-grid (voir css/30-about.css) — le JS la
+             remplit à nouveau automatiquement.
         <aside class="panel corners about-facts" id="about-facts" aria-label="Fiche opérateur" data-i18n-aria="factsAria"></aside>
+        -->
       </div>
     </section>
 
@@ -84,9 +90,17 @@
     <section id="competences" aria-labelledby="competences-title">
       <div class="section-head">
         <h2 id="competences-title" data-i18n="skillsTitle">Compétences</h2>
-        <span class="microlabel" data-i18n="skillsMicro">Modules embarqués // Diag: OK</span>
+        <span class="microlabel" data-i18n-html="skillsMicro">Modules embarqués // <span class="micro-hint">Cliquer pour tracer dans les missions</span></span>
       </div>
       <ul class="skills" id="skills-list"></ul>
+      <!-- Ligne de statut du filtre, toujours visible : js/render.js y écrit
+           la sélection courante, ou l'état de veille quand rien n'est actif
+           (LED éteinte, « Aucune trace active », bouton Effacer masqué). -->
+      <p class="skills-status" id="skills-status" aria-live="polite">
+        <span class="led" aria-hidden="true"></span>
+        <span id="skills-status-txt" data-i18n="traceNone">Aucune trace active</span>
+        <button type="button" id="skills-status-clear" data-i18n="traceClear" hidden>✕ Effacer</button>
+      </p>
     </section>
 
     <!-- EXPÉRIENCES -->
@@ -128,6 +142,18 @@
     </section>
 
   </main>
+
+  <!-- Navigateur de trace : compteur + flèches le long de la barre de
+       défilement, et repères des correspondances sur toute la hauteur.
+       Affiché par js/render.js quand le filtre compétences a des résultats. -->
+  <div id="trace-nav" hidden>
+    <div class="trace-rail" id="trace-rail"></div>
+    <div class="trace-ctrl" role="group" aria-label="Navigation entre les correspondances" data-i18n-aria="traceNavAria">
+      <button type="button" id="trace-prev" aria-label="Correspondance précédente" data-i18n-aria="tracePrevAria">▲</button>
+      <span id="trace-count" aria-hidden="true">--/--</span>
+      <button type="button" id="trace-next" aria-label="Correspondance suivante" data-i18n-aria="traceNextAria">▼</button>
+    </div>
+  </div>
 
   <footer>
     <div class="wrap">

@@ -4,7 +4,7 @@ org: La Poste - Solution anti-phishing
 period: mars 2018 - nov. 2018
 date: 2018-03
 location: Econocom - Nantes
-tags: Python, Threat Intelligence, Web scraping
+tags: Python, Threat Intelligence, Web scraping, MySQL
 summary: Plateforme d'analyse automatisée d'emails suspects, construite en collaboration avec le SOC.
 cv: true
 cv_points:

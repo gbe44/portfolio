@@ -3,7 +3,18 @@
    Chargée par index.html — l'ordre des <link> fait la cascade. */
 
 /* ============ À PROPOS ============ */
-.about-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 1.4rem; align-items: start; }
+/* Fiche opérateur désactivée (aside commenté dans index.html) → le texte
+   occupe toute la largeur. Pour la réactiver, remplacer la colonne unique par :
+   grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); */
+.about-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.4rem; align-items: start; }
+
+/* Mots-clés du paragraphe (les **gras** du Markdown de profile.md) */
+#about-body strong {
+  color: var(--amber-soft);
+  font-weight: 700;
+  background: rgba(255, 176, 0, 0.08);
+  padding: 0.05em 0.3em;
+}
 .about-facts .row {
   display: flex;
   justify-content: space-between;
@@ -18,20 +29,85 @@
 .about-facts .v.ok { color: var(--green); }
 
 /* ============ COMPÉTENCES ============ */
-.skills { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.6rem; }
+/* Invite d'interaction du microlabel : la partie actionnable s'affiche en
+   ambre et pulse doucement pour accrocher l'œil du visiteur non initié.
+   (Animation neutralisée par 99-motion.css si mouvement réduit.) */
+.micro-hint { color: var(--amber); animation: hint-pulse 2.4s ease-in-out infinite; }
+@keyframes hint-pulse { 50% { opacity: 0.45; } }
+
+/* Chaque compétence est un bouton : cliquer trace le module dans le journal
+   de mission et les projets (voir « filtre compétences » dans js/render.js). */
+/* Chips compactes dimensionnées sur leur contenu, dans l'esprit des puces
+   « Modules » du journal de mission. */
+.skills { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .skills li {
   background: var(--panel);
   border: 1px solid var(--line);
-  padding: 0.55rem 0.8rem;
+}
+.skills .skill-btn {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  padding: 0.32rem 0.6rem;
   display: flex;
   align-items: baseline;
-  gap: 0.7rem;
-  font-size: 0.85rem;
+  gap: 0.5rem;
+  font-size: 0.76rem;
   font-weight: 500;
+  text-align: left;
+  white-space: nowrap;
 }
-.skills .idx { color: var(--amber); font-size: 0.66rem; letter-spacing: 0.1em; flex: none; }
+.skills li:hover { border-color: var(--amber); }
+.skills li.is-active {
+  border-color: var(--amber);
+  background: rgba(255, 176, 0, 0.07);
+}
+.skills li.is-active .skill-btn { color: var(--amber-soft); }
+.skills li.is-active .idx { color: var(--amber); }
+
+/* Ligne de statut du filtre : visible dès qu'une compétence est sélectionnée,
+   avec compte des correspondances et lien « Localiser ». */
+.skills-status {
+  margin: 0.9rem 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+.skills-status .led { width: 8px; height: 8px; }
+.skills-status .hl { color: var(--amber-soft); }
+#skills-status-locate {
+  color: var(--amber);
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+#skills-status-locate:hover { color: var(--amber-soft); text-decoration: underline; }
+#skills-status-clear {
+  font: inherit;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--line);
+  padding: 0.2rem 0.55rem;
+  cursor: pointer;
+}
+#skills-status-clear:hover { color: var(--amber); border-color: var(--amber); }
+.skills .idx { color: var(--amber); font-size: 0.6rem; letter-spacing: 0.1em; flex: none; }
 
 /* ---- Responsive ---- */
 @media (max-width: 720px) {
   .about-grid { grid-template-columns: 1fr; }
+  /* Les microlabels de section sont masqués sur mobile (00-base.css), mais
+     celui-ci porte l'invite du filtre compétences → il reste affiché. */
+  #competences .section-head .microlabel { display: block; margin-left: 0; }
 }

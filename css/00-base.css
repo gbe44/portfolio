@@ -134,7 +134,9 @@ main section { margin: 3.5rem 0; scroll-margin-top: 5rem; }
 .led--off { background: #4a5563; }
 .led--blink { animation: ledblink 1.6s steps(1) infinite; }
 .led--pulse { animation: ledpulse 2.2s ease-in-out infinite; }
+.led--bounce { animation: ledbounce 0.9s ease-in-out infinite; }
 @keyframes ledblink { 50% { opacity: 0.25; box-shadow: none; } }
+@keyframes ledbounce { 50% { transform: translateY(-4px); } }
 @keyframes ledpulse {
   0%, 100% { box-shadow: 0 0 4px rgba(63, 185, 80, 0.5); }
   50% { box-shadow: 0 0 12px rgba(63, 185, 80, 1); }

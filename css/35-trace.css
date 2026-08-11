@@ -1,0 +1,83 @@
+/* Navigateur de trace : flèches ↑/↓ près de la barre de défilement et
+   repères des correspondances du filtre compétences sur le rail.
+   Brique de style du prototype « Mission Control ».
+   Chargée par index.html — l'ordre des <link> fait la cascade. */
+
+/* ============ COMMANDES (fixes, à droite, mi-hauteur) ============ */
+.trace-ctrl {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 45; /* au-dessus de la topbar (40), sous les scanlines (49) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  padding: 0.3rem 0.25rem;
+  background: var(--panel);
+  border: 1px solid var(--amber);
+  box-shadow: 0 0 12px rgba(255, 176, 0, 0.3);
+}
+.trace-ctrl button {
+  font: inherit;
+  font-size: 0.85rem;
+  line-height: 1;
+  color: var(--amber);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem 0.45rem;
+}
+.trace-ctrl button:hover { color: var(--amber-soft); }
+#trace-count {
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  padding: 0.1rem 0;
+}
+
+/* ============ RAIL DE REPÈRES (pleine hauteur, bord droit) ============ */
+.trace-rail {
+  position: fixed;
+  top: 0;
+  right: 2px;
+  width: 10px;
+  height: 100vh;
+  z-index: 45;
+}
+.trace-tick {
+  position: absolute;
+  right: 0;
+  width: 10px;
+  height: 4px;
+  background: var(--amber);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(255, 176, 0, 0.8);
+}
+.trace-tick:hover,
+.trace-tick.is-current { background: var(--amber-soft); height: 6px; }
+
+/* ============ CARTE CIBLÉE ============ */
+/* La carte sur laquelle on vient de sauter : double flash ambre à l'arrivée,
+   puis halo (mission) ou teinte de fond (projet) — pas de second cadre
+   par-dessus la bordure ambre déjà posée par le filtre.
+   (Animations neutralisées globalement par 99-motion.css si mouvement réduit.) */
+.log-entry.tag-current > .panel,
+.payload.tag-current {
+  animation: trace-flash 0.8s ease-out 2;
+}
+.log-entry.tag-current > .panel { box-shadow: 0 0 16px rgba(255, 176, 0, 0.3); }
+/* le fond reste dans les limites exactes de la ligne, pas de débord */
+.payload.tag-current { background: rgba(255, 176, 0, 0.05); }
+@keyframes trace-flash {
+  0% { background: rgba(255, 176, 0, 0.16); }
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 720px) {
+  /* mi-hauteur gênerait la lecture sur mobile → coin bas droit */
+  .trace-ctrl { top: auto; bottom: 18px; transform: none; }
+}
