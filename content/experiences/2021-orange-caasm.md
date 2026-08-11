@@ -4,7 +4,7 @@ org: Orange - Outil CAASM (Cyber Asset Attack Surface Management)
 period: avr. 2021 - août 2025
 date: 2021-04
 location: Freelance - Rennes (remote)
-tags: Python, Flask, FastAPI, Celery, React, Docker, GitLab CI
+tags: Python, Flask, FastAPI, Celery, React, Docker, GitLab CI, Sys Admin Linux
 summary: Référent technique d'un outil de cartographie de la surface d'attaque cyber : plus de 150 000 actifs inventoriés et 50+ scans automatisés par semaine.
 cv: true
 cv_points:

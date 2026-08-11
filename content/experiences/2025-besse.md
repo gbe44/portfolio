@@ -4,7 +4,7 @@ org: Bessé - Solutions d'assurance
 period: août 2025 - aujourd'hui
 date: 2025-08
 location: Freelance - Nantes
-tags: Python, Docker, CI/CD, RGPD
+tags: Python, Docker, CI/CD, RGPD, Sys Admin Linux
 summary: Automatisation des traitements réglementaires (DSN) et amélioration continue de l'ERP interne d'un courtier en assurance.
 cv: true
 cv_points:

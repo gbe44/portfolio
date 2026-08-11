@@ -7,7 +7,7 @@ email_user: guillaume.berthelot44
 email_domain: gmail.com
 github: https://github.com/gbe44
 linkedin: https://www.linkedin.com/in/guillaumeberthelot/
-skills: Python, Flask, FastAPI, React, JavaScript, Docker, CI/CD, PostgreSQL, MySQL, Redis, Linux, Secure SDLC, OWASP Top 10, RGPD, Celery, GitLab CI, Angular, Agile, Threat Intelligence, Web scraping, ServiceNow, PHP, IA, LLM, Agents, Game dev, Web, Full-stack, Crypto, API, HTML, CSS, GitHub Pages
+skills: Python, Flask, FastAPI, React, JavaScript, Docker, CI/CD, PostgreSQL, MySQL, Redis, Sys Admin Linux, Secure SDLC, OWASP Top 10, RGPD, Celery, GitLab CI, Angular, Agile, Threat Intelligence, Web scraping, IA, LLM, Agents, Game dev, Web, Full-stack, Crypto, API, HTML, CSS, GitHub Pages ServiceNow, PHP
 skill_groups:
   - Langages et Frameworks | Python, Flask, FastAPI, React, Javascript
   - Sécurité | Secure SDLC, OWASP Top 10, Gestion des Vulnérabilités, Bandit, Trivy, Safety, Tenable.sc, TestSSL
