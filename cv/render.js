@@ -106,23 +106,19 @@
     }).join('');
     $('block-proj').hidden = !projects.length;
 
-    /* --- Compétences : par catégories (« Catégorie | a, b, c »), sinon la liste plate.
+    /* --- Compétences : par catégories (« Catégorie | a, b, c »).
        `cv_skill_groups` est dédié au CV — le site a son propre `site_skill_groups` ;
        repli sur l'ancienne clé `skill_groups` si un contenu ne l'a pas renommée. --- */
     $('cv-skills-title').textContent = T.skills;
     var groups = p.cv_skill_groups || p.skill_groups || [];
-    if (groups.length) {
-      $('cv-skills').innerHTML = groups.map(function (g) {
-        var sep = g.indexOf('|');
-        var cat = sep !== -1 ? g.slice(0, sep).trim() : '';
-        var items = sep !== -1 ? g.slice(sep + 1).trim() : g.trim();
-        return '<p class="skill-line">' + (cat ? '<strong>' + esc(cat) + '</strong> : ' : '') +
-          esc(items) + '</p>';
-      }).join('');
-    } else {
-      $('cv-skills').innerHTML = '<p class="skill-line">' + (p.skills || []).map(esc).join(', ') + '</p>';
-    }
-    $('block-skills').hidden = !groups.length && !(p.skills || []).length;
+    $('cv-skills').innerHTML = groups.map(function (g) {
+      var sep = g.indexOf('|');
+      var cat = sep !== -1 ? g.slice(0, sep).trim() : '';
+      var items = sep !== -1 ? g.slice(sep + 1).trim() : g.trim();
+      return '<p class="skill-line">' + (cat ? '<strong>' + esc(cat) + '</strong> : ' : '') +
+        esc(items) + '</p>';
+    }).join('');
+    $('block-skills').hidden = !groups.length;
 
     /* --- Formation / certifications : « année | libellé » dans education.md --- */
     var edu = (data.education && data.education.meta && data.education.meta.entries) || [];

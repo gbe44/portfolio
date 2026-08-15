@@ -126,10 +126,11 @@ function initSite(data, lang) {
   /* --- Compétences --- */
   /* Groupées par catégories via `site_skill_groups` de profile.md
      (« Catégorie | a, b, c ») — indépendant de `cv_skill_groups`, qui
-     alimente le CV ; repli sur la liste plate `skills:` si les groupes
-     manquent. Cliquer allume le module (tag) du même nom — insensible à la
-     casse, parenthèse finale ignorée (« CI/CD (GitLab CI) » cible le tag
-     « CI/CD »). Câblage plus bas, après le rendu du journal et des projets. */
+     alimente le CV. Cliquer allume le module (tag) du même nom — insensible
+     à la casse, parenthèse finale ignorée (« CI/CD (GitLab CI) » cible le
+     tag « CI/CD »). Câblage plus bas, après le rendu du journal et des
+     projets. Sans groupes, la baie automatique ci-dessous récupère tous
+     les tags : la section reste fonctionnelle. */
   var normTag = function (t) { return t.trim().toLowerCase(); };
   var skillKey = function (t) { return normTag(t.replace(/\s*\([^)]*\)\s*$/, '')); };
   var skillGroups = (profile.site_skill_groups || []).map(function (g) {
@@ -140,7 +141,6 @@ function initSite(data, lang) {
         .map(function (s) { return s.trim(); }).filter(Boolean)
     };
   });
-  if (!skillGroups.length) skillGroups = [{ label: '', items: profile.skills || [] }];
   /* Baie automatique « Modules complémentaires » : tout tag de mission ou
      de projet sans chip dans les catégories ci-dessus y atterrit — le
      filtre couvre ainsi 100 % des tags sans alourdir skill_groups (qui
