@@ -141,6 +141,25 @@ function initSite(data, lang) {
     };
   });
   if (!skillGroups.length) skillGroups = [{ label: '', items: profile.skills || [] }];
+  /* Baie automatique « Modules complémentaires » : tout tag de mission ou
+     de projet sans chip dans les catégories ci-dessus y atterrit — le
+     filtre couvre ainsi 100 % des tags sans alourdir skill_groups (qui
+     alimente aussi le CV). Elle se vide d'elle-même quand un tag est
+     recasé dans une vraie catégorie. */
+  var coveredSkills = {};
+  skillGroups.forEach(function (g) {
+    g.items.forEach(function (s) { coveredSkills[skillKey(s)] = true; });
+  });
+  var extraSkills = [];
+  experiences.concat(projects).forEach(function (doc) {
+    (((doc || {}).meta || {}).tags || []).forEach(function (t) {
+      var k = normTag(t);
+      if (coveredSkills[k]) return;
+      coveredSkills[k] = true;
+      extraSkills.push(t.trim());
+    });
+  });
+  if (extraSkills.length) skillGroups.push({ label: T.extraSkillsLabel, items: extraSkills });
   /* clé normalisée → libellé d'origine, pour la ligne de statut du filtre */
   var skillLabels = {};
   var skillIdx = 0;
