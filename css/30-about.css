@@ -29,24 +29,29 @@
 
 /* Chaque compétence est un bouton : cliquer trace le module dans le journal
    de mission et les projets (voir « filtre compétences » dans js/render.js). */
-/* Groupes de compétences : une catégorie titrée + ses chips (skill_groups
-   de profile.md, mêmes données que le CV). */
-.skill-group { margin: 0 0 1.1rem; }
-.skill-group:last-of-type { margin-bottom: 0; }
+/* Baies d'équipement : chaque catégorie est un panneau à crochets de coin,
+   la grille remplit la largeur (prototype design/baies). */
+#skills-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+.skill-group { margin: 0; padding: 0.85rem 1rem 1rem; }
 .skill-group-label {
-  margin: 0 0 0.45rem;
+  margin: 0 0 0.6rem;
   font-size: 0.62rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--amber);
 }
-.skill-group-label::before { content: "▸ "; color: var(--amber); }
+.skill-group-label::before { content: "▸ "; }
 
 /* Chips compactes dimensionnées sur leur contenu, dans l'esprit des puces
-   « Modules » du journal de mission. */
+   « Modules » du journal de mission (fond panel-2 pour ressortir du panneau). */
 .skills { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .skills li {
-  background: var(--panel);
+  background: var(--panel-2);
   border: 1px solid var(--line);
 }
 .skills .skill-btn {

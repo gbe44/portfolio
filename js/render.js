@@ -150,7 +150,7 @@ function initSite(data, lang) {
       '<span class="idx" aria-hidden="true">M' + pad2(++skillIdx) + '</span>' + esc(s) + '</button></li>';
   }
   $('skills-list').innerHTML = skillGroups.map(function (g) {
-    return '<div class="skill-group">' +
+    return '<div class="skill-group panel corners">' +
       (g.label ? '<p class="skill-group-label">' + esc(g.label) + '</p>' : '') +
       '<ul class="skills">' + g.items.map(skillChip).join('') + '</ul></div>';
   }).join('');
