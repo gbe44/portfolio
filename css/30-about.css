@@ -37,13 +37,46 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.1rem;
+  counter-reset: bay;
 }
 .skill-group {
   position: relative;
   margin: 0;
-  background: var(--panel);
+  background-color: var(--panel);
   border: 1px solid var(--line);
-  padding: 1.15rem 1rem 1rem;
+  padding: 1.15rem 1rem 1.4rem;
+  counter-increment: bay;
+  /* vis de fixation : un point métallique à chaque coin intérieur */
+  background-image:
+    radial-gradient(circle at 7px 7px, #4f5a68 1.4px, transparent 2.4px),
+    radial-gradient(circle at calc(100% - 7px) 7px, #4f5a68 1.4px, transparent 2.4px),
+    radial-gradient(circle at 7px calc(100% - 7px), #4f5a68 1.4px, transparent 2.4px),
+    radial-gradient(circle at calc(100% - 7px) calc(100% - 7px), #4f5a68 1.4px, transparent 2.4px);
+}
+/* marquage au pochoir : numéro de baie en bas à droite */
+.skill-group::after {
+  content: "BAY-" counter(bay, decimal-leading-zero);
+  position: absolute;
+  right: 0.7rem;
+  bottom: 0.35rem;
+  font-size: 0.52rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0.55;
+  pointer-events: none;
+}
+/* bande de signalisation : rayures diagonales ambre qui ferment le rack */
+#skills-list::after {
+  content: "";
+  grid-column: 1 / -1;
+  height: 7px;
+  border: 1px solid var(--line-soft);
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 176, 0, 0.4) 0 8px,
+    transparent 8px 16px
+  );
 }
 .skill-group-label {
   position: absolute;
