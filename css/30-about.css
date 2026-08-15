@@ -29,21 +29,39 @@
 
 /* Chaque compétence est un bouton : cliquer trace le module dans le journal
    de mission et les projets (voir « filtre compétences » dans js/render.js). */
-/* Baies d'équipement : chaque catégorie est un panneau à crochets de coin,
-   la grille remplit la largeur. Pas d'align-items : les baies d'une même
-   rangée s'étirent à la même hauteur, pour un rack régulier. */
+/* Baies d'équipement : cadre à étiquette gravée dans la bordure, façon
+   cartouche de schéma technique — volontairement distinct des panneaux à
+   crochets de coin du reste du site. Pas d'align-items : les baies d'une
+   même rangée s'étirent à la même hauteur, pour un rack régulier. */
 #skills-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1rem;
+  gap: 1.1rem;
 }
-.skill-group { margin: 0; padding: 0.85rem 1rem 1rem; }
+.skill-group {
+  position: relative;
+  margin: 0;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 1.15rem 1rem 1rem;
+}
 .skill-group-label {
-  margin: 0 0 0.6rem;
+  position: absolute;
+  top: -0.6em;
+  left: 0.75rem;
+  max-width: calc(100% - 1.5rem);
+  margin: 0;
+  padding: 0 0.5rem;
+  /* moitié haute couleur de page, moitié basse couleur de panneau :
+     l'étiquette interrompt le trait sans halo visible */
+  background: linear-gradient(180deg, var(--bg) 50%, var(--panel) 50%);
   font-size: 0.62rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--amber);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .skill-group-label::before { content: "▸ "; }
 
