@@ -8,13 +8,21 @@ email_domain: gmail.com
 github: https://github.com/gbe44
 linkedin: https://www.linkedin.com/in/guillaumeberthelot/
 skills: Python, Flask, FastAPI, React, JavaScript, Docker, CI/CD, PostgreSQL, MySQL, Redis, Sys Admin Linux, Secure SDLC, OWASP Top 10, RGPD, Celery, GitLab CI, Angular, Agile, Threat Intelligence, Web scraping, IA, LLM, Agents, Game dev, Web, Full-stack, Crypto, API, HTML, CSS, GitHub Pages, ServiceNow, PHP
-skill_groups:
+cv_skill_groups:
   - Langages et Frameworks | Python, Flask, FastAPI, React, Javascript
   - Sécurité | Secure SDLC, OWASP Top 10, Gestion des Vulnérabilités, Bandit, Trivy, Safety, Tenable.sc, TestSSL
   - Architecture | Microservices, API REST, Event-driven, Ordonnancement de tâches, Traitement Asynchrone
   - Industrialisation & Système | Linux, Docker, CI/CD (GitLab CI), Nexus/Artifactory, Bash, Grafana
   - Bases de données | MySQL, PostgreSQL, Redis
   - Langues | Français (natif), Anglais (B2)
+site_skill_groups:
+  - Langages et Frameworks | Python, PHP, Javascript, HTML, CSS, Flask, FastAPI, React, Angular
+  - Sécurité | Secure SDLC, OWASP Top 10, RGPD, Threat Intelligence, Gestion des Vulnérabilités, Bandit, Trivy, Safety, Tenable.sc, TestSSL
+  - Architecture | Microservices, API REST, API, Event-driven, Celery, Traitement Asynchrone, Web scraping, Web, Full-stack
+  - Industrialisation & Système | Sys Admin Linux, Docker, CI/CD, GitLab CI, Nexus/Artifactory, Bash, Grafana, GitHub Pages
+  - Bases de données | MySQL, PostgreSQL, Redis
+  - IA & Explorations | IA, LLM, Agents, Game dev, Crypto
+  - Méthodes & Outils | Agile, ServiceNow
 availability: Disponible pour de nouvelles missions
 years: 8
 ---

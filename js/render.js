@@ -124,15 +124,15 @@ function initSite(data, lang) {
   }
 
   /* --- Compétences --- */
-  /* Groupées par catégories via `skill_groups` de profile.md
-     (« Catégorie | a, b, c ») — les mêmes données que le CV ; repli sur la
-     liste plate `skills:` si les groupes manquent. Cliquer allume le module
-     (tag) du même nom — insensible à la casse, parenthèse finale ignorée
-     (« CI/CD (GitLab CI) » cible le tag « CI/CD »). Câblage plus bas, après
-     le rendu du journal et des projets. */
+  /* Groupées par catégories via `site_skill_groups` de profile.md
+     (« Catégorie | a, b, c ») — indépendant de `cv_skill_groups`, qui
+     alimente le CV ; repli sur la liste plate `skills:` si les groupes
+     manquent. Cliquer allume le module (tag) du même nom — insensible à la
+     casse, parenthèse finale ignorée (« CI/CD (GitLab CI) » cible le tag
+     « CI/CD »). Câblage plus bas, après le rendu du journal et des projets. */
   var normTag = function (t) { return t.trim().toLowerCase(); };
   var skillKey = function (t) { return normTag(t.replace(/\s*\([^)]*\)\s*$/, '')); };
-  var skillGroups = (profile.skill_groups || []).map(function (g) {
+  var skillGroups = (profile.site_skill_groups || []).map(function (g) {
     var sep = g.indexOf('|');
     return {
       label: sep !== -1 ? g.slice(0, sep).trim() : '',

@@ -106,9 +106,11 @@
     }).join('');
     $('block-proj').hidden = !projects.length;
 
-    /* --- Compétences : par catégories (« Catégorie | a, b, c »), sinon la liste plate --- */
+    /* --- Compétences : par catégories (« Catégorie | a, b, c »), sinon la liste plate.
+       `cv_skill_groups` est dédié au CV — le site a son propre `site_skill_groups` ;
+       repli sur l'ancienne clé `skill_groups` si un contenu ne l'a pas renommée. --- */
     $('cv-skills-title').textContent = T.skills;
-    var groups = p.skill_groups || [];
+    var groups = p.cv_skill_groups || p.skill_groups || [];
     if (groups.length) {
       $('cv-skills').innerHTML = groups.map(function (g) {
         var sep = g.indexOf('|');
