@@ -14,7 +14,7 @@ skill_groups:
   - Architecture | Microservices, API REST, Event-driven, Ordonnancement de tâches, Traitement Asynchrone
   - Industrialisation & Système | Linux, Docker, CI/CD (GitLab CI), Nexus/Artifactory, Bash, Grafana
   - Bases de données | MySQL, PostgreSQL, Redis
-  - Langues | Français (natif), Anglais (B2 - projets internationaux)
+  - Langues | Français (natif), Anglais (B2)
 availability: Disponible pour de nouvelles missions
 years: 8
 ---

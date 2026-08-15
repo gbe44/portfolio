@@ -80,13 +80,15 @@
 }
 .skill-group-label {
   position: absolute;
-  top: -0.6em;
+  /* hauteur déterministe (line-height 1.2 → 1.2em) remontée de sa
+     demi-hauteur + demi-bordure : le trait passe pile au milieu de
+     l'étiquette, là où le dégradé bascule de --bg à --panel */
+  top: calc(-0.6em - 0.5px);
+  line-height: 1.2;
   left: 0.75rem;
   max-width: calc(100% - 1.5rem);
   margin: 0;
   padding: 0 0.5rem;
-  /* moitié haute couleur de page, moitié basse couleur de panneau :
-     l'étiquette interrompt le trait sans halo visible */
   background: linear-gradient(180deg, var(--bg) 50%, var(--panel) 50%);
   font-size: 0.62rem;
   letter-spacing: 0.2em;
@@ -96,7 +98,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.skill-group-label::before { content: "▸ "; }
 
 /* Chips compactes dimensionnées sur leur contenu, dans l'esprit des puces
    « Modules » du journal de mission (fond panel-2 pour ressortir du panneau). */
