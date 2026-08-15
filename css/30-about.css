@@ -66,7 +66,8 @@
   opacity: 0.55;
   pointer-events: none;
 }
-/* bande de signalisation : rayures diagonales ambre qui ferment le rack */
+/* Bande de signalisation (rayures diagonales ambre fermant le rack) —
+   désactivée, conservée pour réutilisation éventuelle :
 #skills-list::after {
   content: "";
   grid-column: 1 / -1;
@@ -78,6 +79,7 @@
     transparent 8px 16px
   );
 }
+*/
 .skill-group-label {
   position: absolute;
   /* hauteur déterministe (line-height 1.2 → 1.2em) remontée de sa

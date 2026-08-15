@@ -15,13 +15,12 @@ cv_skill_groups:
   - Bases de données | MySQL, PostgreSQL, Redis
   - Langues | Français (natif), Anglais (B2)
 site_skill_groups:
-  - Langages et Frameworks | Python, PHP, Javascript, HTML, CSS, Flask, FastAPI, React, Angular
+  - Langages et Frameworks | Python, Flask, FastAPI, React, Angular, Javascript
   - Sécurité | Secure SDLC, OWASP Top 10, RGPD, Threat Intelligence, Gestion des Vulnérabilités, Bandit, Trivy, Safety, Tenable.sc, TestSSL
   - Architecture | Microservices, API REST, API, Event-driven, Celery, Traitement Asynchrone, Web scraping, Web, Full-stack
   - Industrialisation & Système | Sys Admin Linux, Docker, CI/CD, GitLab CI, Nexus/Artifactory, Bash, Grafana, GitHub Pages
   - Bases de données | MySQL, PostgreSQL, Redis
   - IA & Explorations | IA, LLM, Agents, Game dev, Crypto
-  - Méthodes & Outils | Agile, ServiceNow
 availability: Disponible pour de nouvelles missions
 years: 8
 ---

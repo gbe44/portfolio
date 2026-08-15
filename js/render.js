@@ -129,8 +129,8 @@ function initSite(data, lang) {
      alimente le CV. Cliquer allume le module (tag) du même nom — insensible
      à la casse, parenthèse finale ignorée (« CI/CD (GitLab CI) » cible le
      tag « CI/CD »). Câblage plus bas, après le rendu du journal et des
-     projets. Sans groupes, la baie automatique ci-dessous récupère tous
-     les tags : la section reste fonctionnelle. */
+     projets. La liste est strictement manuelle : un tag sans chip n'est
+     simplement pas traçable depuis la section. */
   var normTag = function (t) { return t.trim().toLowerCase(); };
   var skillKey = function (t) { return normTag(t.replace(/\s*\([^)]*\)\s*$/, '')); };
   var skillGroups = (profile.site_skill_groups || []).map(function (g) {
@@ -141,25 +141,6 @@ function initSite(data, lang) {
         .map(function (s) { return s.trim(); }).filter(Boolean)
     };
   });
-  /* Baie automatique « Modules complémentaires » : tout tag de mission ou
-     de projet sans chip dans les catégories ci-dessus y atterrit — le
-     filtre couvre ainsi 100 % des tags sans alourdir skill_groups (qui
-     alimente aussi le CV). Elle se vide d'elle-même quand un tag est
-     recasé dans une vraie catégorie. */
-  var coveredSkills = {};
-  skillGroups.forEach(function (g) {
-    g.items.forEach(function (s) { coveredSkills[skillKey(s)] = true; });
-  });
-  var extraSkills = [];
-  experiences.concat(projects).forEach(function (doc) {
-    (((doc || {}).meta || {}).tags || []).forEach(function (t) {
-      var k = normTag(t);
-      if (coveredSkills[k]) return;
-      coveredSkills[k] = true;
-      extraSkills.push(t.trim());
-    });
-  });
-  if (extraSkills.length) skillGroups.push({ label: T.extraSkillsLabel, items: extraSkills });
   /* clé normalisée → libellé d'origine, pour la ligne de statut du filtre */
   var skillLabels = {};
   var skillIdx = 0;
