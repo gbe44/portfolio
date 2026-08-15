@@ -21,4 +21,4 @@ Four years as technical lead of a Cyber Asset Attack Surface Management tool: ma
 
 Working closely with the VOC manager, from requirements gathering to demonstrations, I designed and grew a microservices architecture (10+ containers, 3 databases) with a Python backend (Flask, FastAPI, Celery) and a React frontend: a centralized inventory of **150,000+ assets** fed by 5 third-party APIs, asynchronous collection and event-driven scanners.
 
-Outcome: about **70 days per year saved** for the main user, **continuous** scan coverage across the whole perimeter and a significant reduction in vulnerabilities.
+Outcome: about **70 days per year saved** for the main user, **continuous scan coverage** across the whole perimeter and a significant reduction in vulnerabilities.

@@ -1,6 +1,6 @@
 ---
 name: Guillaume Berthelot
-title: Software Engineer (Security)
+title: Software Engineer
 tagline: I help teams design, build and secure their products, from scoping to production.
 location: Nantes, France
 email_user: guillaume.berthelot44

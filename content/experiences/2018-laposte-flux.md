@@ -16,4 +16,4 @@ cv_points:
 
 Responsable du backend et du déploiement d'une plateforme de gestion des flux réseau pour La Poste, avec le lead d'une **équipe de 4 développeurs** : méthodologie agile, mentorat technique, revues de code et accompagnement au quotidien.
 
-Le chantier principal : la migration complète d'une application PHP existante vers une stack Python/Angular, **sans interrompre le service**. Parmi les faits d'armes, l'optimisation d'un traitement de fichiers dont le temps d'exécution est passé de **25 minutes à moins d'une seconde**.
+Le chantier principal : la migration complète d'une application PHP existante vers une stack Python/Angular, **sans interrompre le service**. Parmi les points clefs, l'optimisation d'un traitement de fichiers dont le temps d'exécution est passé de **25 minutes à moins d'une seconde**.

@@ -19,6 +19,6 @@ cv_points:
 
 Quatre ans comme référent technique d'un outil de Cyber Asset Attack Surface Management : cartographier l'ensemble des actifs exposés, croiser les sources d'inventaire et orchestrer les scanners de vulnérabilités pour donner au VOC une vision consolidée de la surface d'attaque.
 
-En collaboration étroite avec le responsable VOC, du recueil des besoins jusqu'aux démonstrations, j'ai conçu et fait vivre une architecture microservices (10+ conteneurs, 3 bases de données) avec un backend Python (Flask, FastAPI, Celery) et un frontend React : inventaire centralisé de plus de **150 000 actifs** alimenté par 5 API tierces, collecte asynchrone et scanners déclenchés par événements.
+En collaboration étroite avec le responsable VOC, du recueil des besoins jusqu'aux démonstrations, j'ai conçu et fait vivre une architecture microservices (10+ conteneurs, 3 bases de données) avec un backend Python (Flask, FastAPI, Celery) et un frontend React pour créer un inventaire centralisé de plus de **150 000 actifs** alimenté par 5 API tierces, collecte asynchrone et scanners déclenchés par événements.
 
-Résultat : environ **70 jours par an économisés** pour l'utilisateur principal, une couverture de scan **continue** sur l'ensemble du périmètre et une réduction significative des vulnérabilités.
+Résultat : environ **70 jours par an économisés** pour l'utilisateur principal, une **couverture de scan continue** sur l'ensemble du périmètre et une réduction significative des vulnérabilités.
