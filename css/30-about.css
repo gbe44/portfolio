@@ -30,12 +30,12 @@
 /* Chaque compétence est un bouton : cliquer trace le module dans le journal
    de mission et les projets (voir « filtre compétences » dans js/render.js). */
 /* Baies d'équipement : chaque catégorie est un panneau à crochets de coin,
-   la grille remplit la largeur (prototype design/baies). */
+   la grille remplit la largeur. Pas d'align-items : les baies d'une même
+   rangée s'étirent à la même hauteur, pour un rack régulier. */
 #skills-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1rem;
-  align-items: start;
 }
 .skill-group { margin: 0; padding: 0.85rem 1rem 1rem; }
 .skill-group-label {
