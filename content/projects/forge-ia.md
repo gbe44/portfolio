@@ -7,6 +7,6 @@ summary: Chaîne de fabrication logicielle de bout en bout pilotée par des agen
 status: actif
 ---
 
-Expérimentation d'une chaîne complète de production logicielle assistée par LLM : spécification, génération de code, tests et déploiement orchestrés par des agents.
+Expérimentation d'une chaîne complète de production logicielle **assistée par LLM** : spécification, génération de code, tests et déploiement **orchestrés par des agents**.
 
 *À étoffer : stack, état d'avancement, enseignements.*

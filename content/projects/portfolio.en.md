@@ -9,7 +9,7 @@ repo: https://github.com/gbe44/portfolio
 cv: false
 ---
 
-A fully static portfolio: the content (profile, experience, projects) lives in Markdown files, fetched and rendered client-side by a ~150-line homemade engine.
+A **fully static** portfolio: the content (profile, experience, projects) lives in Markdown files, fetched and rendered client-side by a ~150-line **homemade engine**.
 
 - No build step: adding an experience = adding one `.md` file.
 - Deployed for free on GitHub Pages.

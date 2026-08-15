@@ -1,0 +1,7 @@
+# CV générés localement par tools/make-cv-local.sh
+# (en ligne, l'Action GitHub les produit et les publie avec le site)
+cv-*.pdf
+
+# Puppeteer installé par le script CV local
+node_modules/
+package-lock.json

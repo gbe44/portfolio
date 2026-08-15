@@ -7,14 +7,6 @@
    occupe toute la largeur. Pour la réactiver, remplacer la colonne unique par :
    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); */
 .about-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.4rem; align-items: start; }
-
-/* Mots-clés du paragraphe (les **gras** du Markdown de profile.md) */
-#about-body strong {
-  color: var(--amber-soft);
-  font-weight: 700;
-  background: rgba(255, 176, 0, 0.08);
-  padding: 0.05em 0.3em;
-}
 .about-facts .row {
   display: flex;
   justify-content: space-between;
@@ -37,6 +29,19 @@
 
 /* Chaque compétence est un bouton : cliquer trace le module dans le journal
    de mission et les projets (voir « filtre compétences » dans js/render.js). */
+/* Groupes de compétences : une catégorie titrée + ses chips (skill_groups
+   de profile.md, mêmes données que le CV). */
+.skill-group { margin: 0 0 1.1rem; }
+.skill-group:last-of-type { margin-bottom: 0; }
+.skill-group-label {
+  margin: 0 0 0.45rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.skill-group-label::before { content: "▸ "; color: var(--amber); }
+
 /* Chips compactes dimensionnées sur leur contenu, dans l'esprit des puces
    « Modules » du journal de mission. */
 .skills { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }

@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mission Control — Portfolio développeur freelance</title>
-  <meta name="description" content="Portfolio façon salle de contrôle spatiale : profil, journal de mission, projets et contact d'un développeur freelance.">
+  <title>Mission Control — Portfolio développeur</title>
+  <meta name="description" content="Portfolio façon salle de contrôle spatiale : profil, journal de mission, projets et contact d'un développeur.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
@@ -47,7 +47,6 @@
         <a href="#contact" data-i18n="navContact">Contact</a>
       </nav>
       <div class="lang-switch" role="group" aria-label="Langue" data-i18n-aria="langAria">
-        <span class="microlabel" aria-hidden="true">Lang:</span>
         <button type="button" class="lang-btn" data-lang="fr" aria-pressed="true">FR</button>
         <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
       </div>
@@ -92,7 +91,8 @@
         <h2 id="competences-title" data-i18n="skillsTitle">Compétences</h2>
         <span class="microlabel" data-i18n-html="skillsMicro">Modules embarqués // <span class="micro-hint">Cliquer pour tracer dans les missions</span></span>
       </div>
-      <ul class="skills" id="skills-list"></ul>
+      <!-- Groupes de compétences (skill_groups de profile.md), rendus par JS -->
+      <div id="skills-list"></div>
       <!-- Ligne de statut du filtre, toujours visible : js/render.js y écrit
            la sélection courante, ou l'état de veille quand rien n'est actif
            (LED éteinte, « Aucune trace active », bouton Effacer masqué). -->

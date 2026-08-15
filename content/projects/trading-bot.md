@@ -7,6 +7,6 @@ summary: Bot de trading de cryptomonnaies sur le marché SPOT, avec gestion de p
 status: en pause
 ---
 
-Bot de trading automatisé sur le marché SPOT : stratégies paramétrables, suivi de portefeuille et journalisation des ordres.
+Bot de trading automatisé sur le marché SPOT : **stratégies paramétrables**, suivi de portefeuille et journalisation des ordres.
 
 *À étoffer : exchanges supportés, stratégie, bilan.*

@@ -4,7 +4,7 @@ org: La Poste - Solution anti-phishing
 period: mars 2018 - nov. 2018
 date: 2018-03
 location: Econocom - Nantes
-tags: Python, Threat Intelligence, Web scraping, MySQL
+tags: Python, Threat Intelligence, Web scraping, MySQL, Secure SDLC, OWASP Top 10
 summary: Plateforme d'analyse automatisée d'emails suspects, construite en collaboration avec le SOC.
 cv: true
 cv_points:
@@ -13,6 +13,6 @@ cv_points:
   - Architecture distribuée avec jobs asynchrones et parallélisation
 ---
 
-Développement, en collaboration avec le SOC, d'une plateforme d'analyse automatisée des emails suspects signalés par les collaborateurs : chaque signalement déclenche un moteur d'analyse multi-critères (web scraping, WHOIS, captures d'écran, threat intelligence) pour qualifier la menace.
+Développement, en collaboration avec le SOC, d'une plateforme d'**analyse automatisée** des emails suspects signalés par les collaborateurs : chaque signalement déclenche un moteur d'analyse **multi-critères** (web scraping, WHOIS, captures d'écran, threat intelligence) pour qualifier la menace.
 
-Le tout repose sur une architecture distribuée avec jobs asynchrones et parallélisation des analyses.
+Le tout repose sur une **architecture distribuée** avec jobs asynchrones et parallélisation des analyses.

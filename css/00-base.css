@@ -179,6 +179,14 @@ main section { margin: 3.5rem 0; scroll-margin-top: 5rem; }
   font-size: 0.95rem;
   margin: 1.2rem 0 0.6rem;
 }
+/* Mots-clés en surbrillance : les **gras** du Markdown (profil, missions,
+   projets) ressortent en ambre. */
+.doc strong {
+  color: var(--amber-soft);
+  font-weight: 700;
+  background: rgba(255, 176, 0, 0.08);
+  padding: 0.05em 0.3em;
+}
 .doc code {
   background: #0c1016;
   border: 1px solid var(--line-soft);

@@ -8,7 +8,7 @@
 :root {
   --ink: #000;
   --soft: #333;
-  --accent: #b06f00;   /* l'ambre du site, assombri pour rester lisible sur blanc */
+  --accent: #8d5a01;   /* l'ambre du site, assombri pour rester lisible sur blanc */
   --mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', monospace;
   --page-w: 190mm;     /* A4 (210 mm) moins 2 × 10 mm de marge, comme les .tex */
   --page-h: 277mm;     /* A4 (297 mm) moins 2 × 10 mm de marge */

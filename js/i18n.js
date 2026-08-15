@@ -6,8 +6,8 @@
 /* ==================== DICTIONNAIRE FR / EN ==================== */
 const L = {
   fr: {
-    docTitle: 'Mission Control — Portfolio développeur freelance',
-    docDesc: "Portfolio façon salle de contrôle spatiale : profil, journal de mission, projets et contact d'un développeur freelance.",
+    docTitle: 'Mission Control — Portfolio développeur',
+    docDesc: "Portfolio façon salle de contrôle spatiale : profil, journal de mission, projets et contact d'un développeur.",
     boot1: '&gt; INIT SYS // PORTFOLIO',
     boot2: '&gt; VÉRIF. MODULES ............ <span class="ok">OK</span>',
     boot3: '&gt; LIAISON TÉLÉMÉTRIE ........ <span class="ok">OK</span>',
@@ -81,8 +81,8 @@ const L = {
     loadError: 'Erreur de chargement du contenu :'
   },
   en: {
-    docTitle: 'Mission Control — Freelance developer portfolio',
-    docDesc: 'Space mission control style portfolio: profile, mission log, projects and contact for a freelance developer.',
+    docTitle: 'Mission Control — Developer portfolio',
+    docDesc: 'Space mission control style portfolio: profile, mission log, projects and contact for a software developer.',
     boot1: '&gt; INIT SYS // PORTFOLIO',
     boot2: '&gt; MODULE CHECK .............. <span class="ok">OK</span>',
     boot3: '&gt; TELEMETRY LINK ............ <span class="ok">OK</span>',

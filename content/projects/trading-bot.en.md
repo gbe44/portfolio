@@ -7,6 +7,6 @@ summary: Cryptocurrency trading bot on the SPOT market, with portfolio managemen
 status: paused
 ---
 
-Automated trading bot on the SPOT market: configurable strategies, portfolio tracking and order logging.
+Automated trading bot on the SPOT market: **configurable strategies**, portfolio tracking and order logging.
 
 *To flesh out: supported exchanges, strategy, results.*

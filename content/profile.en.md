@@ -1,6 +1,6 @@
 ---
 name: Guillaume Berthelot
-title: Freelance Software Engineer (Security)
+title: Software Engineer (Security)
 tagline: I help teams design, build and secure their products, from scoping to production.
 location: Nantes, France
 email_user: guillaume.berthelot44
@@ -19,7 +19,7 @@ availability: Available for new engagements
 years: 8
 ---
 
-Freelance software engineer based in Nantes, France, specialised in **Python backends** and **application security**. Since 2018 I have been working on business-heavy products (cybersecurity, insurance, logistics), from **technical scoping** to **production**.
+Software engineer based in Nantes, France, specialised in **Python backends** and **application security**. Since 2018 I have been working on business-heavy products (cybersecurity, insurance, logistics), from **technical scoping** to **production**.
 
 My favourite ground: tools that give teams visibility and time back. **Attack-surface management** platform, automation of regulatory processing, migration of legacy applications: **microservice architecture**, **asynchronous processing** and **delivery industrialisation** (Docker, CI/CD) are my day-to-day.
 

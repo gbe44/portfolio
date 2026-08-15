@@ -7,6 +7,6 @@ summary: Full management web application for a sports association, seasons, memb
 status: active
 ---
 
-Management web application for a sports association: season cycles, member records, registrations and equipment rentals, designed to be run by non-technical volunteers.
+Management web application for a sports association: season cycles, member records, registrations and equipment rentals, designed to be run by **non-technical volunteers**.
 
 *To flesh out: stack, deployment, user feedback.*

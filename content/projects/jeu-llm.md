@@ -7,6 +7,6 @@ summary: Conception d'un jeu intégrant des fonctionnalités générées par des
 status: actif
 ---
 
-Conception d'un jeu dont certaines mécaniques s'appuient sur des modèles de langage : dialogues, narration ou comportements générés dynamiquement.
+Conception d'un jeu dont certaines mécaniques s'appuient sur des **modèles de langage** : dialogues, narration ou comportements **générés dynamiquement**.
 
 *À étoffer : concept, moteur, état d'avancement.*

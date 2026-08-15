@@ -9,7 +9,7 @@ repo: https://github.com/gbe44/portfolio
 cv: false
 ---
 
-Un site vitrine 100 % statique : le contenu (profil, expériences, projets) vit dans des fichiers Markdown, chargés et rendus côté client par un mini-moteur maison d'environ 150 lignes.
+Un site vitrine **100 % statique** : le contenu (profil, expériences, projets) vit dans des fichiers Markdown, chargés et rendus côté client par un **mini-moteur maison** d'environ 150 lignes.
 
 - Aucune étape de build : ajouter une expérience = ajouter un fichier `.md`.
 - Déployé gratuitement sur GitHub Pages.

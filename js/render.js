@@ -124,18 +124,35 @@ function initSite(data, lang) {
   }
 
   /* --- Compétences --- */
-  /* Liste manuelle : `skills:` de profile.md définit le contenu et l'ordre.
-     Chaque compétence est un bouton : cliquer allume le module (tag) du même
-     nom — insensible à la casse — dans le journal et les projets (câblage
-     plus bas, après leur rendu). */
+  /* Groupées par catégories via `skill_groups` de profile.md
+     (« Catégorie | a, b, c ») — les mêmes données que le CV ; repli sur la
+     liste plate `skills:` si les groupes manquent. Cliquer allume le module
+     (tag) du même nom — insensible à la casse, parenthèse finale ignorée
+     (« CI/CD (GitLab CI) » cible le tag « CI/CD »). Câblage plus bas, après
+     le rendu du journal et des projets. */
   var normTag = function (t) { return t.trim().toLowerCase(); };
-  var skills = profile.skills || [];
+  var skillKey = function (t) { return normTag(t.replace(/\s*\([^)]*\)\s*$/, '')); };
+  var skillGroups = (profile.skill_groups || []).map(function (g) {
+    var sep = g.indexOf('|');
+    return {
+      label: sep !== -1 ? g.slice(0, sep).trim() : '',
+      items: (sep !== -1 ? g.slice(sep + 1) : g).split(',')
+        .map(function (s) { return s.trim(); }).filter(Boolean)
+    };
+  });
+  if (!skillGroups.length) skillGroups = [{ label: '', items: profile.skills || [] }];
   /* clé normalisée → libellé d'origine, pour la ligne de statut du filtre */
   var skillLabels = {};
-  skills.forEach(function (s) { skillLabels[normTag(s)] = s.trim(); });
-  $('skills-list').innerHTML = skills.map(function (s, i) {
-    return '<li><button type="button" class="skill-btn" data-skill="' + esc(normTag(s)) + '" aria-pressed="false">' +
-      '<span class="idx" aria-hidden="true">M' + pad2(i + 1) + '</span>' + esc(s) + '</button></li>';
+  var skillIdx = 0;
+  function skillChip(s) {
+    skillLabels[skillKey(s)] = s;
+    return '<li><button type="button" class="skill-btn" data-skill="' + esc(skillKey(s)) + '" aria-pressed="false">' +
+      '<span class="idx" aria-hidden="true">M' + pad2(++skillIdx) + '</span>' + esc(s) + '</button></li>';
+  }
+  $('skills-list').innerHTML = skillGroups.map(function (g) {
+    return '<div class="skill-group">' +
+      (g.label ? '<p class="skill-group-label">' + esc(g.label) + '</p>' : '') +
+      '<ul class="skills">' + g.items.map(skillChip).join('') + '</ul></div>';
   }).join('');
 
   /* --- Utilitaires de rendu partagés --- */

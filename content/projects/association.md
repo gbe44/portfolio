@@ -7,6 +7,6 @@ summary: Application web de gestion complète d'une association sportive : saiso
 status: actif
 ---
 
-Application web de gestion pour une association sportive : cycles de saisons, fichier des membres, inscriptions et locations de matériel, le tout pensé pour être administré par des bénévoles non techniques.
+Application web de gestion pour une association sportive : cycles de saisons, fichier des membres, inscriptions et locations de matériel, le tout pensé pour être administré par des **bénévoles non techniques**.
 
 *À étoffer : stack, mise en ligne, retours des utilisateurs.*
