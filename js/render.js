@@ -164,6 +164,27 @@ function initSite(data, lang) {
       }).join('') + '</ul>';
   }
 
+  /* --- Phases de mission ---
+     Dans le corps d'une expérience, un titre `## briefing`, `## operations`
+     ou `## debrief` (clés fixes, traduites ici) découpe le récit en étapes
+     rendues comme les rubriques d'un ordre de mission. Sans marqueur, le
+     texte s'affiche tel quel. */
+  var PHASES = ['briefing', 'operations', 'debrief'];
+  var PHASE_RE = /<h2>(briefing|operations|debrief)<\/h2>/i;
+  function phased(html) {
+    if (!html || !PHASE_RE.test(html)) return html;
+    var parts = html.split(new RegExp(PHASE_RE.source, 'gi'));
+    var out = parts[0];
+    for (var i = 1; i < parts.length; i += 2) {
+      var key = parts[i].toLowerCase();
+      var num = String(PHASES.indexOf(key) + 1).padStart(2, '0');
+      out += '<section class="phase phase--' + key + '">' +
+        '<h4 class="phase-label"><span class="phase-num">' + num + '</span>' + esc(T.phases[key] || key) + '</h4>' +
+        (parts[i + 1] || '') + '</section>';
+    }
+    return out;
+  }
+
   /* --- Journal de mission (expériences) --- */
   $('log-list').innerHTML = experiences.map(function (xp) {
     var m = xp.meta || {};
@@ -173,7 +194,7 @@ function initSite(data, lang) {
     out += '</div>';
     if (m.org) out += '<p class="operator">' + esc(T.operatorPrefix) + esc(m.org) + '</p>';
     if (m.location) out += '<p class="loc-line">' + esc(T.positionPrefix) + esc(m.location) + '</p>';
-    if (xp.html) out += '<div class="doc">' + xp.html + '</div>';
+    if (xp.html) out += '<div class="doc">' + phased(xp.html) + '</div>';
     out += modules(m.tags);
     out += '</article></li>';
     return out;

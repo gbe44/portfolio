@@ -54,6 +54,25 @@
   padding: 0.18rem 0.5rem;
 }
 
+/* ============ PHASES DE MISSION ============ */
+/* Rubriques d'un ordre de mission (briefing / opérations / debrief),
+   produites par js/render.js à partir des marqueurs `## briefing`… du .md */
+.phase { margin: 1rem 0 0; padding: 0 0 0 0.9rem; border-left: 2px solid var(--line); }
+.phase-label {
+  margin: 0 0 0.35rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+.phase-num { color: var(--muted); font-weight: 400; margin-right: 0.6em; }
+.phase-num::after { content: "//"; margin-left: 0.6em; }
+.phase p { margin: 0 0 0.6rem; }
+.phase p:last-child { margin-bottom: 0; }
+.phase--debrief { border-left-color: var(--amber); }
+
 /* ============ FILTRE COMPÉTENCES ============ */
 /* Compétence sélectionnée (voir js/render.js) : le module correspondant
    s'allume, et la carte qui le contient est signalée. */
