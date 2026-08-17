@@ -13,4 +13,5 @@ A **fully static** portfolio: the content (profile, experience, projects) lives 
 
 - No build step: adding an experience = adding one `.md` file.
 - Deployed for free on GitHub Pages.
-- Five art directions prototyped before picking the final one.
+- PDF résumé generated automatically from the same Markdown files by a GitHub Action, in French and English.
+- Six art directions prototyped before picking the final one.

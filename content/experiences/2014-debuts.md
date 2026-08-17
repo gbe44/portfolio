@@ -8,4 +8,4 @@ summary: Consultant ServiceNow, développement PHP/JS et support informatique.
 cv: true
 ---
 
-Avant de me spécialiser dans le backend et la sécurité : consultant ServiceNow dans une scale-up, développeur PHP/JS dans une start-up, et support informatique en milieu hospitalier. Trois environnements très différents qui m'ont appris à concevoir et améliorer des solutions **qui parle au métier**.
+Avant de me spécialiser dans le backend et la sécurité : consultant ServiceNow dans une scale-up, développeur PHP/JS dans une start-up, et support informatique en milieu hospitalier. Trois environnements très différents qui m'ont appris à concevoir et améliorer des solutions **qui parlent au métier**.
