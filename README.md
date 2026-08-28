@@ -110,6 +110,11 @@ npm run webp -- --out content/media/dojo ~/Images/dashboard.png
 # → content/media/dojo/dashboard.webp (réduite à 1600 px si besoin ; --width, --quality)
 ```
 
+Pas obligatoire : le workflow GitHub convertit lui-même, à chaque push, les PNG/JPEG
+déposés dans `content/media/` (y compris depuis l'interface web de GitHub), supprime
+les originaux, réécrit les références dans les `.md` et commite le tout avant de
+publier. `npm run media` fait la même chose en local.
+
 Deux façons de les utiliser, sur une expérience comme sur un projet :
 
 ```markdown
@@ -285,6 +290,7 @@ Notes :
 ├── cv/                   # gabarit du CV PDF (même contenu, mise en page sobre)
 ├── tools/make-cv.mjs     # imprime cv/ en cv-fr.pdf et cv-en.pdf (Chrome headless)
 ├── tools/make-webp.mjs   # convertit des captures en WebP pour content/media/
+├── tools/convert-media.mjs # normalise content/media/ en WebP (job « media » du workflow)
 ├── .github/workflows/    # génère les CV puis publie le site
 ├── shared/portfolio.js   # frontmatter + rendu Markdown + chargement + reload dev
 ├── serve.sh              # serveur local

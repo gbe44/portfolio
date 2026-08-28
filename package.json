@@ -4,7 +4,8 @@
   "description": "Outils locaux du portfolio : génération du CV PDF et conversion des captures en WebP",
   "scripts": {
     "cv": "tools/make-cv-local.sh",
-    "webp": "node tools/make-webp.mjs"
+    "webp": "node tools/make-webp.mjs",
+    "media": "node tools/convert-media.mjs"
   },
   "dependencies": {
     "pdf-parse": "^2.4.5",
