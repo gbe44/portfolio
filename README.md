@@ -79,6 +79,47 @@ Champs par type :
 `tags` et `skills` sont des listes séparées par des virgules ; tous les autres champs
 sont du texte libre. Les champs optionnels absents sont ignorés proprement.
 
+### Phases d'une mission
+
+Dans le corps d'une expérience, trois titres à clés fixes découpent le récit en
+rubriques d'ordre de mission, rendues `01 // Briefing`, `02 // Opérations`,
+`03 // Debrief` (libellés traduits par `js/i18n.js`) :
+
+```markdown
+Une phrase d'introduction, hors rubriques.
+
+## briefing
+Le contexte et le problème de départ.
+
+## operations
+Ce qui a été fait.
+
+## debrief
+Le résultat.
+```
+
+Sans marqueur, le texte s'affiche tel quel. Le CV n'en tient pas compte.
+
+### Captures d'écran
+
+Les images vivent dans `content/media/<projet>/` (WebP conseillé, 1600 px de large
+maximum, quelques dizaines de Ko). Deux façons de les utiliser, sur une expérience
+comme sur un projet :
+
+```markdown
+---
+gallery:                        # bande « Imagerie » sous le texte, avec visionneuse
+  - dojo/dashboard.webp | Tableau de bord d'une saison
+  - dojo/inscription.webp | Workflow d'inscription
+---
+
+Une image dans le récit : ![Le kanban des agents](forge/kanban.webp)
+```
+
+Les chemins sont relatifs à `content/media/` ; une URL absolue est laissée telle
+quelle. Un seul jeu d'images sert les deux langues, seule la légende est traduite
+dans chaque `.md`. Le CV ignore les images.
+
 ## Le CV PDF
 
 Le CV n'est pas un document séparé : il est **fabriqué à partir des mêmes `.md`**.

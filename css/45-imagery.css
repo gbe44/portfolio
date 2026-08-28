@@ -1,0 +1,172 @@
+/* Imagerie : captures d'écran des missions et projets, et leur visionneuse.
+   Brique de style du prototype « Mission Control ».
+   Chargée par index.html — l'ordre des <link> fait la cascade.
+
+   Contenu : `gallery:` dans le frontmatter (voir README) → js/render.js
+   produit la bande .imagery ; #viewer est la boîte de dialogue plein écran. */
+
+/* ============ BANDE DE VIGNETTES ============ */
+.imagery { margin: 1.1rem 0 0; padding-top: 0.8rem; border-top: 1px dashed var(--line-soft); }
+.img-label {
+  display: block;
+  margin-bottom: 0.6rem;
+  color: var(--muted);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.shots {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.75rem;
+}
+.shot { min-width: 0; }
+.shot-btn {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  cursor: zoom-in;
+  /* Au repos la capture est légèrement éteinte, comme un écran en veille */
+  filter: saturate(0.55) brightness(0.8);
+  transition: filter 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.shot-btn img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.shot-btn::after {
+  /* crochets de coin, version réduite de .corners */
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--amber), var(--amber)) left top / 10px 2px,
+    linear-gradient(var(--amber), var(--amber)) left top / 2px 10px,
+    linear-gradient(var(--amber), var(--amber)) right bottom / 10px 2px,
+    linear-gradient(var(--amber), var(--amber)) right bottom / 2px 10px;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.shot-num {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 0.12rem 0.4rem;
+  background: rgba(10, 13, 18, 0.85);
+  color: var(--amber);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+}
+.shot-btn:hover,
+.shot-btn:focus-visible {
+  filter: none;
+  border-color: var(--amber);
+  box-shadow: 0 0 10px rgba(255, 176, 0, 0.3);
+  outline: none;
+}
+.shot-btn:hover::after,
+.shot-btn:focus-visible::after { opacity: 1; }
+.shot-cap {
+  display: block;
+  margin-top: 0.4rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+  line-height: 1.35;
+}
+
+/* Image posée dans le corps d'un texte (`![légende](fichier)`) */
+.doc img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0.9rem 0;
+  border: 1px solid var(--line);
+  cursor: zoom-in;
+}
+
+/* ============ VISIONNEUSE ============ */
+body.viewer-open { overflow: hidden; }
+.viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5rem 4rem;
+  background: rgba(6, 8, 11, 0.94);
+  animation: viewer-in 0.18s ease-out;
+}
+.viewer[hidden] { display: none; }
+@keyframes viewer-in { from { opacity: 0; } to { opacity: 1; } }
+
+.viewer-fig {
+  margin: 0;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+.viewer-frame {
+  position: relative;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 4px;
+  max-width: 100%;
+  max-height: calc(100vh - 9rem);
+  display: flex;
+}
+.viewer-frame img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 9rem - 10px);
+  object-fit: contain;
+}
+.viewer-cap {
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.viewer-cap #viewer-count { color: var(--amber); }
+
+.viewer-close,
+.viewer-nav {
+  position: absolute;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--amber-soft);
+  font: inherit;
+  font-size: 0.8rem;
+  line-height: 1;
+  padding: 0.6rem 0.8rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.viewer-close { top: 1rem; right: 1rem; }
+.viewer-prev { left: 1rem; top: 50%; transform: translateY(-50%); }
+.viewer-next { right: 1rem; top: 50%; transform: translateY(-50%); }
+.viewer-close:hover, .viewer-nav:hover,
+.viewer-close:focus-visible, .viewer-nav:focus-visible {
+  border-color: var(--amber);
+  color: var(--amber);
+  outline: none;
+}
+
+@media (max-width: 640px) {
+  .shots { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+  .viewer { padding: 3.5rem 0.6rem 4rem; }
+  .viewer-prev { left: 0.6rem; top: auto; bottom: 1rem; transform: none; }
+  .viewer-next { right: 0.6rem; top: auto; bottom: 1rem; transform: none; }
+}
