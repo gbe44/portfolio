@@ -103,8 +103,14 @@ Sans marqueur, le texte s'affiche tel quel. Le CV n'en tient pas compte.
 ### Captures d'écran
 
 Les images vivent dans `content/media/<projet>/` (WebP conseillé, 1600 px de large
-maximum, quelques dizaines de Ko). Deux façons de les utiliser, sur une expérience
-comme sur un projet :
+maximum, quelques dizaines de Ko). Pour convertir une capture PNG/JPEG :
+
+```bash
+npm run webp -- --out content/media/dojo ~/Images/dashboard.png
+# → content/media/dojo/dashboard.webp (réduite à 1600 px si besoin ; --width, --quality)
+```
+
+Deux façons de les utiliser, sur une expérience comme sur un projet :
 
 ```markdown
 ---
@@ -278,6 +284,7 @@ Notes :
 │   └── manifest.json     # liste + ordre d'affichage des fichiers
 ├── cv/                   # gabarit du CV PDF (même contenu, mise en page sobre)
 ├── tools/make-cv.mjs     # imprime cv/ en cv-fr.pdf et cv-en.pdf (Chrome headless)
+├── tools/make-webp.mjs   # convertit des captures en WebP pour content/media/
 ├── .github/workflows/    # génère les CV puis publie le site
 ├── shared/portfolio.js   # frontmatter + rendu Markdown + chargement + reload dev
 ├── serve.sh              # serveur local

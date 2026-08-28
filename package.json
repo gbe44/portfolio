@@ -1,0 +1,13 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "description": "Outils locaux du portfolio : génération du CV PDF et conversion des captures en WebP",
+  "scripts": {
+    "cv": "tools/make-cv-local.sh",
+    "webp": "node tools/make-webp.mjs"
+  },
+  "dependencies": {
+    "pdf-parse": "^2.4.5",
+    "puppeteer": "^25.5.0"
+  }
+}
