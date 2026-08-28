@@ -9,7 +9,8 @@
   --ink: #000;
   --soft: #333;
   --accent: #8d5a01;   /* l'ambre du site, assombri pour rester lisible sur blanc */
-  --mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', monospace;
+  /* police unique du CV — corps, titres, dates, contact (chiffres tabulaires) */
+  --cv-font: 'STIX Two Text', 'Times New Roman', Georgia, serif;
   --page-w: 190mm;     /* A4 (210 mm) moins 2 × 10 mm de marge, comme les .tex */
   --page-h: 277mm;     /* A4 (297 mm) moins 2 × 10 mm de marge */
   --cv-scale: 1;
@@ -20,7 +21,8 @@
 body {
   margin: 0;
   background: #eceef1;
-  font-family: 'STIX Two Text', 'Times New Roman', Georgia, serif;
+  font-family: var(--cv-font);
+  font-variant-numeric: tabular-nums;
   color: var(--ink);
 }
 
@@ -58,7 +60,7 @@ a { color: var(--accent); text-decoration: none; }
   font-weight: 700;
   line-height: 1.15;
 }
-.contact { order: 3; margin: 0.15em 0 0; font-family: var(--mono); font-size: 0.78em; }
+.contact { order: 3; margin: 0.15em 0 0; font-size: 0.85em; }
 .contact .sep { color: var(--ink); padding: 0 0.55em; }
 
 .intro { display: none; }   /* pas d'accroche dans les .tex */
@@ -85,7 +87,7 @@ a { color: var(--accent); text-decoration: none; }
 .xp:last-child { margin-bottom: 0; }
 .xp-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1em; }
 .xp-role { margin: 0; font-size: 1em; font-weight: 700; }
-.xp-when { flex: none; font-family: var(--mono); font-size: 0.75em; white-space: nowrap; }
+.xp-when { flex: none; font-size: 0.88em; color: var(--soft); white-space: nowrap; }
 .xp-sub { display: flex; justify-content: space-between; gap: 1em; font-size: 0.95em; }
 .xp-sub .xp-org { margin: 0; }
 .xp-sub .xp-where { margin: 0; white-space: nowrap; }
@@ -111,7 +113,7 @@ a { color: var(--accent); text-decoration: none; }
 
 /* ---- Formation : année en colonne étroite, libellé à la suite ---- */
 .edu-row { display: flex; gap: 0; margin: 0.14em 0; align-items: baseline; }
-.edu-row .edu-year { flex: none; width: 4.2em; font-family: var(--mono); font-size: 0.82em; color: var(--ink); }
+.edu-row .edu-year { flex: none; width: 3.6em; font-size: 0.92em; color: var(--soft); }
 
 /* ---- Bandeau d'aide, écran uniquement ---- */
 .screen-bar {
