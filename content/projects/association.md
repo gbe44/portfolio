@@ -11,3 +11,5 @@ Application web complète pour un club de **kendo et iaido** : cycle des saisons
 
 - Backend **FastAPI** + SQLAlchemy sur MySQL, frontend **React** (Vite, Tailwind), authentification JWT avec quatre rôles (admin, bureau, enseignant, adhérent).
 - Déploiement conteneurisé (Docker Compose, Nginx, HTTPS Let's Encrypt) sur un VPS, développement piloté par un backlog GitHub Projects.
+
+Le projet est en production mais toujours en cours d'amélioration : une fonctionnalité de suivi des compétitions est à prévoir, ainsi que le MCO mensuel, un système de gestion calendaire des entraînements, et bien d'autres !
