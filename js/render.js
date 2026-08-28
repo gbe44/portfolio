@@ -164,6 +164,50 @@ function initSite(data, lang) {
       }).join('') + '</ul>';
   }
 
+  /* --- Imagerie : bande de captures d'une mission ou d'un projet ---
+     `meta.gallery` vient de shared/portfolio.js ({ src, caption }). Chaque
+     vignette est un bouton qui ouvre la visionneuse (voir plus bas). */
+  var galleries = [];
+  function imagery(m) {
+    var g = m.gallery;
+    if (!g || !g.length) return '';
+    var gid = galleries.push(g) - 1;
+    var count = g.length === 1 ? T.shotOne : g.length + T.shotMany;
+    return '<div class="imagery">' +
+      '<span class="img-label">' + esc(T.imageryLabel) + esc(count) + '</span>' +
+      '<ul class="shots">' + g.map(function (shot, i) {
+        return '<li class="shot">' +
+          '<button type="button" class="shot-btn" data-gallery="' + gid + '" data-index="' + i + '"' +
+            ' aria-label="' + esc(T.viewerOpen) + esc(shot.caption || pad2(i + 1)) + '">' +
+            '<img loading="lazy" src="' + esc(shot.src) + '" alt="' + esc(shot.caption) + '">' +
+            '<span class="shot-num" aria-hidden="true">' + pad2(i + 1) + '</span>' +
+          '</button>' +
+          (shot.caption ? '<span class="shot-cap">' + esc(shot.caption) + '</span>' : '') +
+        '</li>';
+      }).join('') + '</ul></div>';
+  }
+
+  /* --- Phases de mission ---
+     Dans le corps d'une expérience, un titre `## briefing`, `## operations`
+     ou `## debrief` (clés fixes, traduites ici) découpe le récit en étapes
+     rendues comme les rubriques d'un ordre de mission. Sans marqueur, le
+     texte s'affiche tel quel. */
+  var PHASES = ['briefing', 'operations', 'debrief'];
+  var PHASE_RE = /<h2>(briefing|operations|debrief)<\/h2>/i;
+  function phased(html) {
+    if (!html || !PHASE_RE.test(html)) return html;
+    var parts = html.split(new RegExp(PHASE_RE.source, 'gi'));
+    var out = parts[0];
+    for (var i = 1; i < parts.length; i += 2) {
+      var key = parts[i].toLowerCase();
+      var num = String(PHASES.indexOf(key) + 1).padStart(2, '0');
+      out += '<section class="phase phase--' + key + '">' +
+        '<h4 class="phase-label"><span class="phase-num">' + num + '</span>' + esc(T.phases[key] || key) + '</h4>' +
+        (parts[i + 1] || '') + '</section>';
+    }
+    return out;
+  }
+
   /* --- Journal de mission (expériences) --- */
   $('log-list').innerHTML = experiences.map(function (xp) {
     var m = xp.meta || {};
@@ -173,7 +217,8 @@ function initSite(data, lang) {
     out += '</div>';
     if (m.org) out += '<p class="operator">' + esc(T.operatorPrefix) + esc(m.org) + '</p>';
     if (m.location) out += '<p class="loc-line">' + esc(T.positionPrefix) + esc(m.location) + '</p>';
-    if (xp.html) out += '<div class="doc">' + xp.html + '</div>';
+    if (xp.html) out += '<div class="doc">' + phased(xp.html) + '</div>';
+    out += imagery(m);
     out += modules(m.tags);
     out += '</article></li>';
     return out;
@@ -199,6 +244,7 @@ function initSite(data, lang) {
     var body = '';
     if (m.summary) body += '<p class="lead">' + esc(m.summary) + '</p>';
     if (pr.html) body += '<div class="doc">' + pr.html + '</div>';
+    body += imagery(m);
     body += modules(m.tags);
     var links = [];
     if (m.repo) links.push('<a class="btn" href="' + esc(m.repo) + '" target="_blank" rel="noopener">' + esc(T.repoLink) + '</a>');
@@ -412,6 +458,66 @@ function initSite(data, lang) {
   if (profile.availability) {
     $('contact-avail-txt').textContent = profile.availability;
     $('contact-avail').hidden = false;
+  }
+
+  /* --- Visionneuse de captures --- */
+  /* Une seule boîte de dialogue (#viewer dans index.html) pour toutes les
+     galeries. Ouverte depuis une vignette ou une image du corps de texte ;
+     flèches et Échap au clavier, focus rendu à l'élément d'origine. */
+  var viewer = $('viewer');
+  if (viewer) {
+    var vImg = $('viewer-img'), vCount = $('viewer-count'), vTxt = $('viewer-txt');
+    var vItems = [], vIndex = 0, vOrigin = null;
+
+    function showShot(i) {
+      vIndex = (i + vItems.length) % vItems.length;
+      var shot = vItems[vIndex];
+      vImg.src = shot.src;
+      vImg.alt = shot.caption || '';
+      vCount.textContent = T.viewerRef + pad2(vIndex + 1) + '/' + pad2(vItems.length);
+      vTxt.textContent = shot.caption ? ' // ' + shot.caption : '';
+      var single = vItems.length < 2;
+      $('viewer-prev').hidden = single;
+      $('viewer-next').hidden = single;
+    }
+    function openViewer(items, index, origin) {
+      vItems = items; vOrigin = origin;
+      viewer.hidden = false;
+      document.body.classList.add('viewer-open');
+      showShot(index);
+      $('viewer-close').focus();
+    }
+    function closeViewer() {
+      viewer.hidden = true;
+      document.body.classList.remove('viewer-open');
+      vImg.removeAttribute('src');
+      if (vOrigin && vOrigin.focus) vOrigin.focus();
+      vOrigin = null;
+    }
+
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('.shot-btn');
+      if (btn) {
+        openViewer(galleries[+btn.getAttribute('data-gallery')], +btn.getAttribute('data-index'), btn);
+        return;
+      }
+      /* Image posée dans le texte : visionneuse à une seule capture. */
+      var img = e.target.closest('.doc img');
+      if (img) openViewer([{ src: img.getAttribute('src'), caption: img.getAttribute('alt') || '' }], 0, img);
+    });
+    $('viewer-close').addEventListener('click', closeViewer);
+    $('viewer-prev').addEventListener('click', function () { showShot(vIndex - 1); });
+    $('viewer-next').addEventListener('click', function () { showShot(vIndex + 1); });
+    viewer.addEventListener('click', function (e) {
+      /* clic sur le fond (hors image, légende et boutons) → fermeture */
+      if (e.target === viewer || e.target.classList.contains('viewer-fig')) closeViewer();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (viewer.hidden) return;
+      if (e.key === 'Escape') closeViewer();
+      else if (e.key === 'ArrowLeft') showShot(vIndex - 1);
+      else if (e.key === 'ArrowRight') showShot(vIndex + 1);
+    });
   }
 
   /* --- Pied de page --- */

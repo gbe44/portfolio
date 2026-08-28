@@ -1,12 +1,14 @@
 ---
-title: Jeu augmenté par LLM
-period: 2025 - aujourd'hui
-date: 2025-03
-tags: LLM, Game dev
-summary: Conception d'un jeu intégrant des fonctionnalités générées par des modèles de langage.
+title: Truckmania, jeu de gestion
+period: 2026 - aujourd'hui
+date: 2026-03
+tags: Flutter, Dart, SQLite, LLM, Game design
+summary: Jeu mobile de gestion d'une entreprise de transport routier en Europe, avec une couche de dialogue et d'événements générés par LLM en préparation.
 status: actif
 ---
 
-Conception d'un jeu dont certaines mécaniques s'appuient sur des **modèles de langage** : dialogues, narration ou comportements **générés dynamiquement**.
+Simulation de gestion d'une **entreprise de transport routier** en Europe : flotte de camions, recrutement et moral des chauffeurs, contrats et négoce de marchandises, entretien, finances, progression de l'entreprise, courses et mini-jeux.
 
-*À étoffer : concept, moteur, état d'avancement.*
+- Application **Flutter** multiplateforme (Android, Windows), état géré avec Riverpod, base **SQLite** locale via Drift, notifications push, moteur de temps de jeu accéléré.
+- Une trentaine de services de gameplay : génération de contrats, incidents de mission, réglementation des chauffeurs, gérant IA, quêtes, prestige, modes casual et hardcore.
+- Volet **LLM** en préparation : un système de discussion avec les chauffeurs pour créer de l'interaction et déclencher des **événements en jeu** générés dynamiquement.

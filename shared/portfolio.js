@@ -14,6 +14,10 @@
  *
  * Les clés `tags` et `skills` du frontmatter sont converties en tableaux
  * (valeurs séparées par des virgules). Tout le reste est une chaîne.
+ *
+ * Images : `gallery` (liste « fichier | légende ») et `cover` désignent des
+ * fichiers de content/media/ ; les images du corps (`![légende](fichier)`)
+ * y sont résolues de la même façon. Une URL absolue est laissée telle quelle.
  */
 (function () {
   'use strict';
@@ -205,11 +209,29 @@
     }
     return attempt.then(function (text) {
       var parsed = parseFrontmatter(text);
+      var meta = parsed.meta;
+      var mediaBase = base + 'content/media/';
+      function mediaUrl(src) {
+        return /^(https?:)?\/\/|^\/|^data:/.test(src) ? src : mediaBase + src;
+      }
+      /* `gallery` : chaque entrée « fichier | légende » devient { src, caption }. */
+      if (Array.isArray(meta.gallery)) {
+        meta.gallery = meta.gallery.map(function (item) {
+          var cut = item.indexOf('|');
+          var src = (cut === -1 ? item : item.slice(0, cut)).trim();
+          var caption = cut === -1 ? '' : item.slice(cut + 1).trim();
+          return src ? { src: mediaUrl(src), caption: caption } : null;
+        }).filter(Boolean);
+      }
+      if (typeof meta.cover === 'string' && meta.cover) meta.cover = mediaUrl(meta.cover);
       /* Les `cv_points` et le `summary` restent dans meta : le générateur de
          CV les consomme, le site n'affiche que la prose du corps Markdown. */
+      var html = mdToHtml(parsed.body).replace(/<img src="([^"]*)"/g, function (_, src) {
+        return '<img loading="lazy" src="' + mediaUrl(src) + '"';
+      });
       return {
-        meta: parsed.meta,
-        html: mdToHtml(parsed.body),
+        meta: meta,
+        html: html,
         raw: parsed.body
       };
     });

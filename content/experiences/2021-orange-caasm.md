@@ -19,6 +19,10 @@ cv_points:
 
 Quatre ans comme référent technique d'un outil de Cyber Asset Attack Surface Management : cartographier l'ensemble des actifs exposés, croiser les sources d'inventaire et orchestrer les scanners de vulnérabilités pour donner au VOC une vision consolidée de la surface d'attaque.
 
-En collaboration étroite avec le responsable VOC, du recueil des besoins jusqu'aux démonstrations, j'ai conçu et fait vivre une architecture microservices (10+ conteneurs, 3 bases de données) avec un backend Python (Flask, FastAPI, Celery) et un frontend React pour créer un inventaire centralisé de plus de **150 000 actifs** alimenté par 5 API tierces, collecte asynchrone et scanners déclenchés par événements.
+Le responsable du VOC voulait un outil d'automatisation de scans de vulnérabilités, et ma première mission était l'automatisation de l'enregistrement de deux CSV dans une base de données pour qu'un scan TenableSC puisse les consommer.
 
-Résultat : environ **70 jours par an économisés** pour l'utilisateur principal, une **couverture de scan continue** sur l'ensemble du périmètre et une réduction significative des vulnérabilités.
+L'objectif rapidement atteint, nous avons pris goût à faire grandir l'outil ensemble : connexion des autres sources d'inventaire, passage en SaaS avec interface, automatisation de scans récurrents/de remédiation, ajout des scanners TestSSL et nmap. Avec, en chemin, leur lot de surprises : IPv4-IPv6, qualité inégale des données selon les sources, procédures et outils tiers qui changent.
+
+Quatre ans plus tard, j'ai eu la chance d'avoir porté seul la conception d'une solution en architecture microservices (10+ conteneurs, 3 bases de données) : un inventaire centralisé de plus de **150 000 équipements**, alimenté par 5 API tierces en collecte asynchrone et connecté à 3 scanners déclenchés par événements.
+
+Résultat : **70 jours par an économisés** pour le responsable du VOC, autant estimé pour les autres utilisateurs, une **couverture de scan continue** sur l'ensemble du périmètre et une **réduction significative des vulnérabilités**.

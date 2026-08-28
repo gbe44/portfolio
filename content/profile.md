@@ -25,7 +25,7 @@ availability: Disponible pour de nouvelles missions
 years: 8
 ---
 
-Ingénieur logiciel basé à Nantes, spécialisé en **backend Python** et **sécurité applicative**. Depuis 2018, j'interviens sur des produits à forte composante métier (cybersécurité, assurance, logistique), du **cadrage technique** à la **mise en production**.
+Ingénieur logiciel basé à Nantes, spécialisé en **backend Python** et **sécurité applicative**. Depuis 2018, j'interviens sur des produits à forte composante métier (infrastructure et réseau, cybersécurité, assurance), du **cadrage technique** à la **mise en production**.
 
 Mon terrain de prédilection : les outils qui donnent de la visibilité et font gagner du temps aux équipes. Plateforme de **gestion de surface d'attaque**, automatisation de traitements réglementaires, migration d'applications existantes : **architecture microservices**, **traitements asynchrones** et **industrialisation** (Docker, CI/CD) sont mon quotidien.
 

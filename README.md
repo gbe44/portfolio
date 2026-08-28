@@ -79,6 +79,58 @@ Champs par type :
 `tags` et `skills` sont des listes séparées par des virgules ; tous les autres champs
 sont du texte libre. Les champs optionnels absents sont ignorés proprement.
 
+### Phases d'une mission
+
+Dans le corps d'une expérience, trois titres à clés fixes découpent le récit en
+rubriques d'ordre de mission, rendues `01 // Briefing`, `02 // Opérations`,
+`03 // Debrief` (libellés traduits par `js/i18n.js`) :
+
+```markdown
+Une phrase d'introduction, hors rubriques.
+
+## briefing
+Le contexte et le problème de départ.
+
+## operations
+Ce qui a été fait.
+
+## debrief
+Le résultat.
+```
+
+Sans marqueur, le texte s'affiche tel quel. Le CV n'en tient pas compte.
+
+### Captures d'écran
+
+Les images vivent dans `content/media/<projet>/` (WebP conseillé, 1600 px de large
+maximum, quelques dizaines de Ko). Pour convertir une capture PNG/JPEG :
+
+```bash
+npm run webp -- --out content/media/dojo ~/Images/dashboard.png
+# → content/media/dojo/dashboard.webp (réduite à 1600 px si besoin ; --width, --quality)
+```
+
+Pas obligatoire : le workflow GitHub convertit lui-même, à chaque push, les PNG/JPEG
+déposés dans `content/media/` (y compris depuis l'interface web de GitHub), supprime
+les originaux, réécrit les références dans les `.md` et commite le tout avant de
+publier. `npm run media` fait la même chose en local.
+
+Deux façons de les utiliser, sur une expérience comme sur un projet :
+
+```markdown
+---
+gallery:                        # bande « Imagerie » sous le texte, avec visionneuse
+  - dojo/dashboard.webp | Tableau de bord d'une saison
+  - dojo/inscription.webp | Workflow d'inscription
+---
+
+Une image dans le récit : ![Le kanban des agents](forge/kanban.webp)
+```
+
+Les chemins sont relatifs à `content/media/` ; une URL absolue est laissée telle
+quelle. Un seul jeu d'images sert les deux langues, seule la légende est traduite
+dans chaque `.md`. Le CV ignore les images.
+
 ## Le CV PDF
 
 Le CV n'est pas un document séparé : il est **fabriqué à partir des mêmes `.md`**.
@@ -237,6 +289,8 @@ Notes :
 │   └── manifest.json     # liste + ordre d'affichage des fichiers
 ├── cv/                   # gabarit du CV PDF (même contenu, mise en page sobre)
 ├── tools/make-cv.mjs     # imprime cv/ en cv-fr.pdf et cv-en.pdf (Chrome headless)
+├── tools/make-webp.mjs   # convertit des captures en WebP pour content/media/
+├── tools/convert-media.mjs # normalise content/media/ en WebP (job « media » du workflow)
 ├── .github/workflows/    # génère les CV puis publie le site
 ├── shared/portfolio.js   # frontmatter + rendu Markdown + chargement + reload dev
 ├── serve.sh              # serveur local

@@ -15,4 +15,4 @@ cv_points:
 
 Built, in collaboration with the SOC, a platform for the **automated analysis** of suspicious emails reported by employees: each report triggers a **multi-criteria** analysis engine (web scraping, WHOIS, screenshots, threat intelligence) to qualify the threat.
 
-Everything runs on a **distributed architecture** with asynchronous jobs and parallelised analyses.
+Everything runs on an **event-driven architecture** with asynchronous jobs and parallelised analyses.

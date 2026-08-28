@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/30-about.css">
   <link rel="stylesheet" href="css/35-trace.css">
   <link rel="stylesheet" href="css/40-log.css">
+  <link rel="stylesheet" href="css/45-imagery.css">
   <link rel="stylesheet" href="css/50-payloads.css">
   <link rel="stylesheet" href="css/55-education.css">
   <link rel="stylesheet" href="css/60-contact.css">
@@ -153,6 +154,18 @@
       <span id="trace-count" aria-hidden="true">--/--</span>
       <button type="button" id="trace-next" aria-label="Correspondance suivante" data-i18n-aria="traceNextAria">▼</button>
     </div>
+  </div>
+
+  <!-- Visionneuse de captures : remplie et pilotée par js/render.js,
+       ouverte depuis les vignettes « Imagerie » des missions et projets. -->
+  <div id="viewer" class="viewer" hidden role="dialog" aria-modal="true" aria-label="Visionneuse de captures" data-i18n-aria="viewerAria">
+    <button type="button" class="viewer-close" id="viewer-close" aria-label="Fermer la visionneuse" data-i18n-aria="viewerClose">✕</button>
+    <button type="button" class="viewer-nav viewer-prev" id="viewer-prev" aria-label="Capture précédente" data-i18n-aria="viewerPrev">◀</button>
+    <figure class="viewer-fig">
+      <div class="viewer-frame corners"><img id="viewer-img" alt=""></div>
+      <figcaption class="viewer-cap"><span id="viewer-count"></span><span id="viewer-txt"></span></figcaption>
+    </figure>
+    <button type="button" class="viewer-nav viewer-next" id="viewer-next" aria-label="Capture suivante" data-i18n-aria="viewerNext">▶</button>
   </div>
 
   <footer>

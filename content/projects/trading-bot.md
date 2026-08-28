@@ -1,12 +1,12 @@
 ---
-title: Bot de trading crypto
-period: 2023
-date: 2023-01
-tags: Python, Crypto, API
-summary: Bot de trading de cryptomonnaies sur le marché SPOT, avec gestion de portefeuille.
+title: Parangon, bot de trading crypto
+period: 2024 - 2025
+date: 2024-05
+tags: Python, FastAPI, WebSocket, React, Binance API
+summary: Socle d'un bot de trading sur le marché SPOT de Binance : flux de prix temps réel, classement des actifs, valorisation du portefeuille et tableau de bord web.
 status: en pause
 ---
 
-Bot de trading automatisé sur le marché SPOT : **stratégies paramétrables**, suivi de portefeuille et journalisation des ordres.
+Socle d'un bot de trading de cryptomonnaies sur le marché **SPOT**, branché sur le testnet de Binance pour expérimenter sans risque.
 
-*À étoffer : exchanges supportés, stratégie, bilan.*
+- Backend **FastAPI** + SQLAlchemy : un processus dédié consomme le flux **WebSocket** de Binance, classe les actifs en continu selon variation et volume, et valorise le portefeuille en USDT.

@@ -60,7 +60,7 @@ a { color: var(--accent); text-decoration: none; }
   font-weight: 700;
   line-height: 1.15;
 }
-.contact { order: 3; margin: 0.15em 0 0; font-size: 0.85em; }
+.contact { order: 3; margin: 0.15em 0 0; font-size: 0.9em; }
 .contact .sep { color: var(--ink); padding: 0 0.55em; }
 
 .intro { display: none; }   /* pas d'accroche dans les .tex */
@@ -87,7 +87,7 @@ a { color: var(--accent); text-decoration: none; }
 .xp:last-child { margin-bottom: 0; }
 .xp-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1em; }
 .xp-role { margin: 0; font-size: 1em; font-weight: 700; }
-.xp-when { flex: none; font-size: 0.88em; color: var(--soft); white-space: nowrap; }
+.xp-when { flex: none; font-size: 0.9em; white-space: nowrap; }
 .xp-sub { display: flex; justify-content: space-between; gap: 1em; font-size: 0.95em; }
 .xp-sub .xp-org { margin: 0; }
 .xp-sub .xp-where { margin: 0; white-space: nowrap; }
@@ -113,7 +113,7 @@ a { color: var(--accent); text-decoration: none; }
 
 /* ---- Formation : année en colonne étroite, libellé à la suite ---- */
 .edu-row { display: flex; gap: 0; margin: 0.14em 0; align-items: baseline; }
-.edu-row .edu-year { flex: none; width: 3.6em; font-size: 0.92em; color: var(--soft); }
+.edu-row .edu-year { flex: none; width: 3.6em; font-size: 0.95em; color: var(--ink); }
 
 /* ---- Bandeau d'aide, écran uniquement ---- */
 .screen-bar {
