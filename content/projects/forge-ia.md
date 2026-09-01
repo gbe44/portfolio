@@ -5,6 +5,14 @@ date: 2025-06
 tags: IA, LLM, Agents
 summary: Chaîne de fabrication logicielle de bout en bout pilotée par des agents IA, de l'expression du besoin au déploiement et monitoring.
 status: actif
+gallery:
+  - forge/accounts.webp | Administration des comptes Git et clef Claude Code
+  - forge/environnement.webp | Paramétrage des environnement cible pour projet
+  - forge/infrastructure_log.webp | Page de monitoring de l'infrastructure
+  - forge/setup_deploy.webp | Paramètres de déploiement
+  - forge/nouveau_projet.webp | Initialisation d'un projet
+  - forge/kanban.webp | Visualisation Kanban
+  - forge/avancement.webp | Gestion des tâches
 ---
 
 Expérimentation d'une chaîne complète de production logicielle **assistée par LLM** : de l'issue au déploiement, chaque étape est prise en charge par des **agents orchestrés**, avec points de contrôle humains.

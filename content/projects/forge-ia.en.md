@@ -5,6 +5,14 @@ date: 2025-06
 tags: AI, LLM, Agents
 summary: End-to-end software production line driven by AI agents, from requirements to deployment.
 status: active
+gallery:
+  - forge/accounts.webp | Git accounts and Claude Code key administration
+  - forge/environnement.webp | Target environment settings for a project
+  - forge/infrastructure_log.webp | Infrastructure monitoring page
+  - forge/setup_deploy.webp | Deployment settings
+  - forge/nouveau_projet.webp | Project initialisation
+  - forge/kanban.webp | Kanban view
+  - forge/avancement.webp | Task management
 ---
 
 Experimenting with a complete **LLM-assisted** software production chain: from issue to deployment, every step is handled by **orchestrated agents**, with human checkpoints.

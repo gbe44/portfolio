@@ -6,13 +6,6 @@ tags: HTML, CSS, JavaScript, GitHub Pages
 summary: The site you are looking at, static, framework-free and powered by Markdown files.
 status: active
 repo: https://github.com/gbe44/portfolio
-gallery:
-  - portfolio/01-mission-control.webp | Mission Control, the chosen direction
-  - portfolio/02-terminal.webp | Terminal
-  - portfolio/03-neobrutalisme.webp | Neo-brutalism
-  - portfolio/04-editorial.webp | Editorial
-  - portfolio/05-bento.webp | Bento
-  - portfolio/06-bento-nasa.webp | NASA-punk bento
 cv: false
 ---
 

@@ -5,6 +5,11 @@ date: 2025-08
 tags: Python, FastAPI, React, MySQL, Docker, GDPR
 summary: Web application managing a dojo's members: seasons, registrations, medical certificates, grades and payments, run by volunteers.
 status: active
+gallery:
+  - dojo/dashboard.webp | Site dashboard
+  - dojo/formulaire_inscription.webp | Yearly registration form
+  - dojo/inscription.webp | Yearly registrations management table
+  - dojo/profil.webp | Profile management page
 ---
 
 Full web application for a **kendo and iaido** club: season cycles, member records, yearly registrations with automatic fee calculation, payment and grade tracking. Designed to be run day to day by **non-technical volunteers**.
