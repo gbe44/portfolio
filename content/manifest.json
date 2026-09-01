@@ -10,9 +10,9 @@
   ],
   "projects": [
     "projects/forge-ia.md",
-    "projects/jeu-llm.md",
     "projects/association.md",
-    "projects/trading-bot.md",
-    "projects/portfolio.md"
+    "projects/portfolio.md",
+    "projects/jeu-llm.md",
+    "projects/trading-bot.md"
   ]
 }
