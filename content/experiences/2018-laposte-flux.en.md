@@ -4,7 +4,7 @@ org: La Poste - Network flow management platform
 period: Nov 2018 - Apr 2021
 date: 2018-11
 location: Econocom - Nantes
-tags: Python, Angular, Docker, Agile, Sys Admin Linux, Secure SDLC, OWASP Top 10
+tags: Python, Flask, Angular, Docker, REST API, Agile, CI/CD, Sys Admin Linux, Secure SDLC, OWASP Top 10, MySQL
 summary: Backend owner and lead of a 4-developer team; complete migration of a PHP application to a Python/Angular stack.
 cv: true
 cv_points:

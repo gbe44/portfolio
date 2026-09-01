@@ -4,7 +4,7 @@ org: La Poste - Anti-phishing solution
 period: Mar 2018 - Nov 2018
 date: 2018-03
 location: Econocom - Nantes
-tags: Python, Threat Intelligence, Web scraping, MySQL, Secure SDLC, OWASP Top 10
+tags: Python, Flask, Threat Intelligence, Web scraping, MySQL, Bash, Asynchronous Processing, REST API, Secure SDLC, Sys Admin Linux
 summary: Platform for the automated analysis of suspicious emails, built in collaboration with the SOC.
 cv: true
 cv_points:

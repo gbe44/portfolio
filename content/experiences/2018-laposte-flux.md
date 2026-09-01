@@ -4,7 +4,7 @@ org: La Poste - Plateforme de gestion des flux réseau
 period: nov. 2018 - avr. 2021
 date: 2018-11
 location: Econocom - Nantes
-tags: Python, Angular, Docker, Agile, Sys Admin Linux, Secure SDLC, OWASP Top 10
+tags: Python, Flask, Angular, Docker, API REST, Agile, CI/CD, Sys Admin Linux, Secure SDLC, OWASP Top 10, MySQL
 summary: Responsable du backend et lead d'une équipe de 4 développeurs ; migration complète d'une application PHP vers une stack Python/Angular.
 cv: true
 cv_points:

@@ -3,7 +3,7 @@ title: Autres expériences
 org: Scale-up, start-up, hôpital
 period: 2014 - 2018
 date: 2014-01
-tags: ServiceNow, PHP, JavaScript
+tags: ServiceNow, PHP, JavaScript, Bash
 summary: Consultant ServiceNow, développement PHP/JS et support informatique.
 cv: true
 ---

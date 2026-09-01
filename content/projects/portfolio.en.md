@@ -2,7 +2,7 @@
 title: This portfolio
 period: 2026
 date: 2026-08
-tags: HTML, CSS, JavaScript, GitHub Pages
+tags: HTML, CSS, JavaScript, GitHub Pages, AI
 summary: The site you are looking at, static, framework-free and powered by Markdown files.
 status: active
 repo: https://github.com/gbe44/portfolio

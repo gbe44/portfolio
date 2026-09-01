@@ -2,7 +2,7 @@
 title: Parangon, bot de trading crypto
 period: 2024 - 2025
 date: 2024-05
-tags: Python, FastAPI, WebSocket, React, Binance API
+tags: Python, FastAPI, WebSocket, React, Binance API, Crypto
 summary: Socle d'un bot de trading sur le marché SPOT de Binance : flux de prix temps réel, classement des actifs, valorisation du portefeuille et tableau de bord web.
 status: en pause
 ---

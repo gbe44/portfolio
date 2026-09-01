@@ -2,7 +2,7 @@
 title: Kendo and iaido dojo management
 period: 2025 - present
 date: 2025-08
-tags: Python, FastAPI, React, MySQL, Docker, GDPR
+tags: Python, FastAPI, React, MySQL, Docker, GDPR, Threat Intelligence, Vulnerability management, REST API, CI/CD, Sys Admin Linux, AI
 summary: Web application managing a dojo's members: seasons, registrations, medical certificates, grades and payments, run by volunteers.
 status: active
 gallery:

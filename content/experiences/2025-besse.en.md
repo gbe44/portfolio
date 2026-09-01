@@ -4,7 +4,7 @@ org: Bessé - Insurance solutions
 period: Aug 2025 - present
 date: 2025-08
 location: Nantes
-tags: Python, Docker, CI/CD, GDPR, Sys Admin Linux, Secure SDLC, OWASP Top 10
+tags: Python, PostgreSQL, Docker, REST API, GDPR, CI/CD, Artifactory, Sys Admin Linux, Secure SDLC, OWASP Top 10, Grafana
 summary: Automation of regulatory processing (DSN) and continuous improvement of the internal ERP of an insurance broker.
 cv: true
 cv_points:

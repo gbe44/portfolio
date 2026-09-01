@@ -2,7 +2,7 @@
 title: AI software forge
 period: 2025 - present
 date: 2025-06
-tags: AI, LLM, Agents
+tags: AI, LLM, Agents, CI/CD, Artifactory
 summary: End-to-end software production line driven by AI agents, from requirements to deployment.
 status: active
 gallery:

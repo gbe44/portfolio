@@ -2,7 +2,7 @@
 title: Ce portfolio
 period: 2026
 date: 2026-08
-tags: HTML, CSS, JavaScript, GitHub Pages
+tags: HTML, CSS, JavaScript, GitHub Pages, IA
 summary: Le site que vous êtes en train de consulter : statique, sans framework, alimenté par des fichiers Markdown.
 status: actif
 repo: https://github.com/gbe44/portfolio

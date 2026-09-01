@@ -2,9 +2,9 @@
 title: Truckmania, jeu de gestion
 period: 2026 - aujourd'hui
 date: 2026-03
-tags: Flutter, Dart, SQLite, LLM, Game design
+tags: Flutter, Dart, SQLite, IA, LLM, Game design
 summary: Jeu mobile de gestion d'une entreprise de transport routier en Europe, avec une couche de dialogue et d'événements générés par LLM en préparation.
-status: actif
+status: en pause
 ---
 
 Simulation de gestion d'une **entreprise de transport routier** en Europe : flotte de camions, recrutement et moral des chauffeurs, contrats et négoce de marchandises, entretien, finances, progression de l'entreprise, courses et mini-jeux.

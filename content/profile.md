@@ -9,18 +9,18 @@ github: https://github.com/gbe44
 linkedin: https://www.linkedin.com/in/guillaumeberthelot/
 cv_skill_groups:
   - Langages et Frameworks | Python, Flask, FastAPI, React, Javascript
-  - Sécurité | Secure SDLC, OWASP Top 10, Gestion des Vulnérabilités, Bandit, Trivy, Safety, Tenable.sc, TestSSL
+  - Sécurité | Secure SDLC, OWASP Top 10, Gestion des Vulnérabilités, Tenable.sc, TestSSL
   - Architecture | Microservices, API REST, Event-driven, Ordonnancement de tâches, Traitement Asynchrone
-  - Industrialisation & Système | Linux, Docker, CI/CD (GitLab CI), Nexus/Artifactory, Bash, Grafana
+  - Industrialisation & Système | Linux, Docker, CI/CD, Artifactory, Bash, Grafana
   - Bases de données | MySQL, PostgreSQL, Redis
   - Langues | Français (natif), Anglais (B2)
 site_skill_groups:
   - Langages et Frameworks | Python, Flask, FastAPI, React, Angular, Javascript
-  - Sécurité | Secure SDLC, OWASP Top 10, RGPD, Threat Intelligence, Gestion des Vulnérabilités, Bandit, Trivy, Safety, Tenable.sc, TestSSL
-  - Architecture | Microservices, API REST, API, Event-driven, Celery, Traitement Asynchrone, Web scraping, Web, Full-stack
-  - Industrialisation & Système | Sys Admin Linux, Docker, CI/CD, GitLab CI, Nexus/Artifactory, Bash, Grafana, GitHub Pages
+  - Sécurité | Secure SDLC, OWASP Top 10, RGPD, Threat Intelligence, Gestion des Vulnérabilités, Tenable.sc, TestSSL
+  - Architecture | Microservices, API REST, Event-driven, Celery, Traitement Asynchrone, Web scraping
+  - Industrialisation & Système | Sys Admin Linux, Docker, CI/CD, Artifactory, Bash, Grafana, GitHub Pages
   - Bases de données | MySQL, PostgreSQL, Redis
-  - IA & Explorations | IA, LLM, Agents, Game dev, Crypto
+  - IA & Explorations | IA, LLM, Agents, Game design, Crypto
 availability: Disponible pour de nouvelles missions
 years: 8
 ---
