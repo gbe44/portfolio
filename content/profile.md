@@ -5,7 +5,6 @@ tagline: J'aide les équipes à concevoir, construire et sécuriser leurs produi
 location: Nantes, France
 email_user: contact.guillaume.berthelot
 email_domain: gmail.com
-github: https://github.com/gbe44
 linkedin: https://www.linkedin.com/in/guillaumeberthelot/
 cv_skill_groups:
   - Langages et Frameworks | Python, Flask, FastAPI, React, Javascript
