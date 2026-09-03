@@ -11,7 +11,6 @@ gallery:
   - forge/infrastructure_log.webp | Page de monitoring de l'infrastructure
   - forge/setup_deploy.webp | Paramètres de déploiement
   - forge/nouveau_projet.webp | Initialisation d'un projet
-  - forge/kanban.webp | Visualisation Kanban
   - forge/avancement.webp | Gestion des tâches
 ---
 
